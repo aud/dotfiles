@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Set launch services preference
+defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 1
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+sudo nvram SystemAudioVolume=" "
+
+# Set keyboard defaults. 
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+# Set tap behaviour
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write com.apple.mouse.tapBehaviour -int 1
+
+# Set Finder defaults
+defaults write com.apple.finder DisableAllAnimations -bool true
+defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.finder WarnOnEmptyTrash -bool false
+
+# Set dir permissions
+chflags nohidden $HOME/Library
+defaults write com.apple.finder FXInfoPanesExpanded -dict \
+    General -bool true \
+    OpenWith -bool true \
+    Privileges -bool true
+
+# Dock
+defaults write $HOME/Library/Preferences/.GlobalPreferences.plist AppleInterfaceTheme -string "Dark"
+defaults write com.apple.dock mouse-over-hilite-stack -bool true
+defaults write com.apple.dock mineffect -string "scale"
+defaults write com.apple.dock minimize-to-application -bool true
+defaults write com.apple.dock persistent-apps -array
+defaults write com.apple.dock static-only -bool true
+defaults write NSGlobalDomain _HIHideMenuBar -bool true
+defaults write com.apple.dashboard mcx-disabled -bool true
+defaults write com.apple.dock dashboard-in-overlay -bool true
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0.15
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock tilesize -int 45
+defaults write com.apple.dock largesize -int 55
+
+# Set trackpad speed and key repeat
+defaults write -g com.apple.mouse.scaling 4
+defaults write nsglobaldomain keyrepeat -int 1
+defaults write nsglobaldomain initialkeyrepeat -int 10
+
+# Set battery percentage
+defaults write com.apple.menuextra.battery ShowPercent -string "YES"
+defaults write com.apple.menuextra.battery ShowTime -string "NO"
+
+# Reset changed apps
+for app in cfprefsd Dock finder systemuiserver; do
+  killall "${app}" &> /dev/null
+done
