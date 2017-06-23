@@ -1,7 +1,8 @@
 #!/bin/bash
 
 install_packages() {
-  bash packages/homebrew.sh
+  bash packages/homebrew/homebrew.sh
+  bash packages/iterm/iterm.sh
 }
 
 begin() {
