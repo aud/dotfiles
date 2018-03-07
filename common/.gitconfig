@@ -1,8 +1,8 @@
 [user]
-	email = elliot.dohm@shopify.com
-	name = Elliot Dohm
+  email = elliot.dohm@shopify.com
+  name = Elliot Dohm
 [core]
-	editor = vim
+  editor = vim
   excludesfile = /Users/elliotdohm/.gitignore
 
 [alias]
