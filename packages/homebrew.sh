@@ -28,7 +28,7 @@ install_packages() {
 }
 
 install_casks() {
-  for pkg in iterm2 google-chrome spotify sublime-text; do
+  for pkg in iterm2 google-chrome spotify; do
     check_if_cask_exists "${pkg}"
   done
 }
