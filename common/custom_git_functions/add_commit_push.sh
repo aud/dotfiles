@@ -16,7 +16,9 @@ add_or_push_with_commits() {
 
       Add all, commit with message, push to current branch.
         - git ac -m 'message' -p
+        - git ac -mp 'message'
         - git ac -p -m 'message'
+        - git ac -pm 'message'
 
       Add all and commit with message.
         - git ac -m 'message'
