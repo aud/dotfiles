@@ -1,0 +1,19 @@
+[user]
+	email = elliot.dohm@shopify.com
+	name = Elliot Dohm
+[core]
+	editor = vim
+  excludesfile = /Users/elliotdohm/.gitignore
+
+[alias]
+  branch-name = "!git rev-parse --abbrev-ref HEAD"
+  publish = "!f() { if [ $# -eq 0 ]; then git push -u origin $(git branch-name); elif [ "${1}" == "-f" ]; then git push -f origin $(git branch-name); else echo "${1} is an invalid argument!"; fi }; f"
+  cob = "checkout -b"
+  s = "status"
+  d = "diff"
+  dm = "diff master"
+  rh = "reset --hard origin/master"
+  co = "checkout"
+  rbm = "!git rebase -i origin/master"
+  c = "commit -m"
+  ac = "!git add -A && git commit -m"
