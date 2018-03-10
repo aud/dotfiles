@@ -38,10 +38,6 @@ nmap <C-w>- :resize -10<CR>
 nmap <C-w>> :vertical resize +10<CR>
 nmap <C-w>< :vertical resize -10<CR>
 
-" Temporarily disable, screen space is valuable!
-" Display line numbers
-" set number
-
 " Toggle line numbers
 nmap <leader>L :set invnumber<CR>
 
