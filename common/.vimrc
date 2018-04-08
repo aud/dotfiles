@@ -121,8 +121,13 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-" Set lightline colorscheme
-let g:lightline = { 'colorscheme': 'onedark' }
+" Set lightline colorscheme and display full path
+let g:lightline = {
+      \ 'colorscheme': 'onedark',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
+      \ }
+      \ }
 
 " Set 256 colors
 set t_Co=256
