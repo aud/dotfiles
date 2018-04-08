@@ -1,31 +1,34 @@
-" Don't try to be vi compatible
 set nocompatible
 
-" Helps force plugins to load correctly when it is turned back on below
-filetype off
-
-" Turn on syntax highlighting
-syntax on
-
-" For plugins to load correctly
-filetype plugin indent on
+" Remap leader to ,
+let mapleader=","
 
 " Security
 set modelines=0
 
-" Show line numbers
+" Display line numbers
 set number
 
-" Show file stats
+" Display ruler on status line
 set ruler
 
-" Blink cursor on error instead of beeping (grr)
-" set visualbell
-
-" Encoding
+" Encoding UTF
 set encoding=utf-8
 
-" Whitespace
+" Highlight search matches
+set hlsearch
+
+" Start searching immediately
+set incsearch
+
+" Case sensitive searches
+set ignorecase
+set smartcase
+
+" Highlight matching braces
+set showmatch
+
+" Text wrapping
 set wrap
 set textwidth=79
 set formatoptions=tcqrn1
@@ -35,33 +38,30 @@ set softtabstop=2
 set expandtab
 set noshiftround
 
-" Cursor motion
+" Cursor motions
 set scrolloff=3
 set backspace=indent,eol,start
-set matchpairs+=<:> " use % to jump between pairs
-runtime! macros/matchit.vim
 
-" Move up/down editor lines
-inoremap kj <Esc>
-
-" Allow hidden buffers
+" Hidden buffers
 set hidden
 
-" Rendering
+" Vim fast rendering
 set ttyfast
+
+" Always display status line
+set laststatus=2
+
+" Vim lightline already displays mode, remove the superfluous default text
+set noshowmode
+
+" Display command output
+set showcmd
 
 " Set tabstop/shiftwidth to 4 for Go
 autocmd Filetype go setlocal ts=4 sw=4
 
-" Status bar
-set laststatus=2
-
-" Last line
-set showmode
-set showcmd
-
-" change the mapleader from \ to ,
-let mapleader=","
+" Remap ESC to kj
+inoremap kj <Esc>
 
 " Remap tab pane switching to ctrl
 nmap <C-h> <C-w>h
@@ -75,7 +75,7 @@ nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 
-" FZF Stuff
+" FZF remappings
 nnoremap <leader>p :GFiles<CR>
 nnoremap <leader>f :Files<CR>
 
@@ -90,12 +90,24 @@ Plug 'tpope/vim-fugitive'
 Plug 'fatih/vim-go'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
-Plug 'nanotech/jellybeans.vim'
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
+Plug 'danchoi/ri.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'itchyny/lightline.vim'
 call plug#end()
 
-" Custom functions
-" Strip trailing whitespace
+" vim-test output to vimterminal
+let test#strategy = 'vimterminal'
+
+" Custom aliases
+" Replace all matches in project. Syntax: ReplaceAll foo bar
+command! -nargs=+ ReplaceAll :call ReplaceFunc(<f-args>)
+function! ReplaceFunc(arg1, arg2)
+  execute "vimgrep /" . a:arg1 . "/gj **/* | cfdo %s/" . a:arg1 . "/" . a:arg2 . "/g | update"
+endfunction
+
+" Strip trailing whitespace automatically
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
@@ -109,15 +121,13 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-syntax on
-colorscheme jellybeans
+" Set lightline colorscheme
+let g:lightline = { 'colorscheme': 'onedark' }
 
-" Searching
-nnoremap / /\v
-vnoremap / /\v
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-set showmatch
-map <leader><space> :let @/=''<cr> " clear search
+" Set 256 colors
+set t_Co=256
+set termguicolors
+let g:onedark_termcolors=256
+syntax on
+set background=dark
+colorscheme onedark
