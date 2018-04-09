@@ -95,10 +95,12 @@ Plug 'tpope/vim-eunuch'
 Plug 'danchoi/ri.vim'
 Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
+Plug 'benmills/vimux'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
-" vim-test output to vimterminal
-let test#strategy = 'vimterminal'
+" vim-test output to vimux
+let test#strategy = 'vimux'
 
 " Custom aliases
 " Replace all matches in project. Syntax: ReplaceAll foo bar
