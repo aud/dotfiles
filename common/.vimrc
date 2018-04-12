@@ -123,6 +123,17 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
+command! Run :call ExecuteByFileType()
+function! ExecuteByFileType()
+  let current_filetype = &filetype
+
+  if current_filetype == 'ruby'
+     execute '!ruby %'
+   elseif current_filetype == 'go'
+     execute 'GoRun %'
+   end
+endfunction
+
 " Set lightline colorscheme and display full path
 let g:lightline = {
       \ 'colorscheme': 'onedark',
