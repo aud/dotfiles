@@ -130,7 +130,11 @@ function! ExecuteByFileType()
   if current_filetype == 'ruby'
      execute '!ruby %'
    elseif current_filetype == 'go'
-     execute 'GoRun %'
+     execute '!go run %'
+   elseif current_filetype == 'c'
+     execute '!clang % && ./a.out'
+   else
+     echo 'Unknown file type
    end
 endfunction
 
