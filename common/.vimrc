@@ -6,6 +6,9 @@ let mapleader=","
 " Security
 set modelines=0
 
+" Disable annoying fucking visual bell
+set belloff=all
+
 " Display line numbers
 set number
 
@@ -63,11 +66,14 @@ autocmd Filetype go setlocal ts=4 sw=4
 " Remap ESC to kj
 inoremap kj <Esc>
 
-" Remap tab pane switching to ctrl
+" Remap split switching
 nmap <C-h> <C-w>h
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
+
+" Remap C-w-T to C-T (Move current in context split into a new tab)
+nmap <C-T> <C-w>T
 
 " Remap keys for vim-test
 nmap <silent> <leader>t :TestNearest<CR>
@@ -78,6 +84,15 @@ nmap <silent> <leader>l :TestLast<CR>
 " FZF remappings
 nnoremap <leader>p :GFiles<CR>
 nnoremap <leader>f :Files<CR>
+
+" Ripgrep remappings
+nnoremap <leader>g :Rgrep<CR>
+
+" " Moving around in insert mode
+" inoremap <C-h> <C-o>h
+" inoremap <C-l> <C-o>a
+" inoremap <C-j> <C-o>j
+" inoremap <C-k> <C-o>k
 
 " Plug
 call plug#begin('~/.vim/plugged')
@@ -93,11 +108,19 @@ Plug 'tpope/vim-endwise'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
 Plug 'danchoi/ri.vim'
-Plug 'joshdick/onedark.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'itchyny/lightline.vim'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-rails'
+Plug 'ervandew/supertab'
+
+" Typescript
+Plug 'quramy/tsuquyomi'
 call plug#end()
+
+" Disable new line by default after choosing an option on tab completion with supertab
+" let g:SuperTabCrMapping = 1
 
 " vim-test output to vimux
 let test#strategy = 'vimux'
@@ -128,28 +151,66 @@ function! ExecuteByFileType()
   let current_filetype = &filetype
 
   if current_filetype == 'ruby'
-     execute '!ruby %'
+     execute '!clear && ruby %'
    elseif current_filetype == 'go'
-     execute '!go run %'
+     execute '!clear && go run %'
    elseif current_filetype == 'c'
-     execute '!clang % && ./a.out'
+     execute '!clear && clang % && ./a.out'
    else
-     echo 'Unknown file type
+     echo 'Unknown file type'
    end
 endfunction
 
-" Set lightline colorscheme and display full path
-let g:lightline = {
-      \ 'colorscheme': 'onedark',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
-      \ }
-      \ }
+" Custom strategy for vim-test to allow jest to recognize `debugger`.
+" More specifically, this prefixes the jest call with node inspect,
+" then resets after the test is complete.
+command! TestDebug :call ExecuteTestDebug()
+function! ExecuteTestDebug()
+  let jest = test#javascript#jest#executable()
+  let g:test#javascript#jest#executable = 'node inspect ' . jest
 
-" Set 256 colors
-set t_Co=256
+  execute ':TestNearest'
+
+  let g:test#javascript#jest#executable = jest
+endfunction
+
+" source: https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Rgrep call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
+" Set lightline colorscheme and display full path
+" let g:lightline = {
+"       \ 'colorscheme': 'onedark',
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
+"       \ }
+"       \ }
+
+" Set 256 colors for dracula colour scheme
+let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+
+" Paste without identation in insert more
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
 set termguicolors
-let g:onedark_termcolors=256
+set t_Co=256
 syntax on
-set background=dark
-colorscheme onedark
+color dracula
