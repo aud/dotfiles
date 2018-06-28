@@ -28,6 +28,9 @@ alias du="dev up"
 alias dj="dev up; dev s"
 alias vi="/usr/local/bin/vim"
 
+# https://github.com/robbyrussell/oh-my-zsh/issues/433
+alias rake='noglob rake'
+
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
@@ -45,6 +48,17 @@ source ~/.bash_profile
 
 # Must be after sourcing bashprofile
 alias gopath="$GOPATH/src/github.com/aud"
+
+# Hack to set default ruby version
+chruby 2.5.0
+
+# Source: https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
+# --files: List files that would be searched but do not search
+# --no-ignore: Do not respect .gitignore, etc...
+# --hidden: Search hidden files and folders
+# --follow: Follow symlinks
+# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 # For dev golang
 # export PATH=$GOPATH/bin:$PATH
