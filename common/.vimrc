@@ -108,6 +108,7 @@ Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-rails'
 Plug 'ervandew/supertab'
+Plug 'andrewradev/splitjoin.vim'
 
 " Typescript
 Plug 'quramy/tsuquyomi'
