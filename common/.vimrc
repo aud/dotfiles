@@ -88,12 +88,6 @@ nnoremap <leader>f :Files<CR>
 " Ripgrep remappings
 nnoremap <leader>g :Rgrep<CR>
 
-" " Moving around in insert mode
-" inoremap <C-h> <C-o>h
-" inoremap <C-l> <C-o>a
-" inoremap <C-j> <C-o>j
-" inoremap <C-k> <C-o>k
-
 " Plug
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
