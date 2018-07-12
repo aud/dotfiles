@@ -25,8 +25,9 @@ set modelines=0
 " Disable annoying fucking visual bell
 set belloff=all
 
+" Temporarily disable, screen space is valuable!
 " Display line numbers
-set number
+" set number
 
 " Display ruler on status line
 set ruler
@@ -69,9 +70,6 @@ set ttyfast
 
 " Always display status line
 set laststatus=2
-
-" Vim lightline already displays mode, remove the superfluous default text
-set noshowmode
 
 " Display command output
 set showcmd
@@ -120,7 +118,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
 Plug 'danchoi/ri.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'itchyny/lightline.vim'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-rails'
@@ -198,14 +195,6 @@ endfunction
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 command! -bang -nargs=* Rgrep call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
-
-" Set lightline colorscheme and display full path
-" let g:lightline = {
-"       \ 'colorscheme': 'onedark',
-"       \ 'active': {
-"       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
-"       \ }
-"       \ }
 
 " Set 256 colors for dracula colour scheme
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
