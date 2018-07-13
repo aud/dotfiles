@@ -22,15 +22,31 @@ let mapleader=","
 " Security
 set modelines=0
 
+" 256 colours
+set termguicolors
+set t_Co=256
+
+" Turn on syntax
+syntax on
+
 " Disable annoying fucking visual bell
 set belloff=all
+
+" Increase vim pane resizing size, as the default is quite low.
+nmap <C-w>+ :resize +10<CR>
+nmap <C-w>- :resize -10<CR>
+nmap <C-w>> :vertical resize +10<CR>
+nmap <C-w>< :vertical resize -10<CR>
 
 " Temporarily disable, screen space is valuable!
 " Display line numbers
 " set number
 
+" Toggle line numbers
+nmap <leader>L :set invnumber<CR>
+
 " Display ruler on status line
-set ruler
+" set ruler
 
 " Encoding UTF
 set encoding=utf-8
@@ -68,9 +84,6 @@ set hidden
 " Vim fast rendering
 set ttyfast
 
-" Always display status line
-set laststatus=2
-
 " Display command output
 set showcmd
 
@@ -100,9 +113,6 @@ nmap <silent> <leader>l :TestLast<CR>
 nnoremap <leader>p :GFiles<CR>
 nnoremap <leader>f :Files<CR>
 
-" Ripgrep remappings
-nnoremap <leader>g :Rgrep<CR>
-
 " Plug
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -111,25 +121,21 @@ Plug 'tpope/vim-commentary'
 Plug 'janko-m/vim-test'
 Plug 'craigemery/vim-autotag'
 Plug 'tpope/vim-fugitive'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
-Plug 'danchoi/ri.vim'
+Plug 'danchoi/ri.vim', { 'for': 'ruby' }
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-rails'
-Plug 'ervandew/supertab'
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'andrewradev/splitjoin.vim'
 
 " Typescript
-Plug 'quramy/tsuquyomi'
+Plug 'quramy/tsuquyomi', { 'for': 'typescript' }
 call plug#end()
-
-" Disable new line by default after choosing an option on tab completion with supertab
-" let g:SuperTabCrMapping = 1
 
 " vim-test output to vimux
 let test#strategy = 'vimux'
@@ -143,30 +149,34 @@ endfunction
 
 " Strip trailing whitespace automatically
 function! <SID>StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
     let _s=@/
     let l = line(".")
     let c = col(".")
-    " Do the business:
+
     %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
+
     let @/=_s
     call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
+" Quick execution commands for commonly used filetypes.
 command! Run :call ExecuteByFileType()
 function! ExecuteByFileType()
-  let current_filetype = &filetype
+  let currentFileType = &filetype
 
-  if current_filetype == 'ruby'
+  if currentFileType == 'ruby'
      execute '!clear && ruby %'
-   elseif current_filetype == 'go'
+   elseif currentFileType == 'go'
      execute '!clear && go run %'
-   elseif current_filetype == 'c'
+   elseif currentFileType == 'c'
      execute '!clear && clang % && ./a.out'
+   elseif currentFileType == 'cpp'
+     execute '!clear && g++ % -o output && ./output'
+   elseif currentFileType == 'lua'
+     execute '!clear && lua %'
    else
-     echo 'Unknown file type'
+     echo 'Unknown file type. Reminder: If commonly used, add to vimrc.'
    end
 endfunction
 
@@ -183,24 +193,35 @@ function! ExecuteTestDebug()
   let g:test#javascript#jest#executable = jest
 endfunction
 
-" source: https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
-command! -bang -nargs=* Rgrep call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+" Basic tab autocomplete instead of using a third party package, like Supertab.
+imap <tab> <c-r>=InsertTabWrapper()<cr>
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
 
-" Set 256 colors for dracula colour scheme
-let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+" Disable status bar by default, as it's rarely useful.
+nnoremap <leader>S :call ToggleStatusBar()<CR>
+let s:statusHidden = 0
+function! ToggleStatusBar()
+    if s:statusHidden == 0
+        let s:statusHidden = 1
 
-" Paste without identation in insert more
+        set laststatus=0
+        set noruler
+    else
+        let s:statusHidden = 0
+
+        set laststatus=2
+        set ruler
+    endif
+endfunction
+
+" Paste without identation in insert mode.
 let &t_SI .= "\<Esc>[?2004h"
 let &t_EI .= "\<Esc>[?2004l"
 
@@ -211,7 +232,23 @@ function! XTermPasteBegin()
   return ""
 endfunction
 
-set termguicolors
-set t_Co=256
-syntax on
+" Use ripgrep for fzf and alias to <leader>g. Credit to:
+" https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
+command! -bang -nargs=* Rgrep call fzf#vim#grep(s:rgoptions.shellescape(<q-args>), 1, <bang>0)
+nnoremap <leader>g :Rgrep<CR>
+let s:rgoptions='rg
+  \ --column
+  \ --line-number
+  \ --no-heading
+  \ --fixed-strings
+  \ --ignore-case
+  \ --hidden
+  \ --follow
+  \ --glob "!.git/*"
+  \ --color "always" '
+
+" Set 256 colors for dracula colour scheme
+let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+
 color dracula
