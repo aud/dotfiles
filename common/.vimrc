@@ -180,6 +180,36 @@ function! ExecuteByFileType()
   end
 endfunction
 
+" Create file (&&|| directories recursively) relative to the current working
+" directory. This is an alternative to the `autochdir` vim setting, which isn't
+" ideal when attempting to open files outside of the relative directory.
+command! -nargs=1 Cwd :call NewFileInCwd(<q-args>)
+function! NewFileInCwd(path)
+  let cwd = expand('%:h')
+  let path = a:path
+
+  let splitArgs = split(path, '/')
+
+  if len(splitArgs) == 1
+    let name = splitArgs[0]
+    let cmd = 'e ' . cwd . '/' . name
+  else
+    let name = splitArgs[-1]
+
+    " Extract all arguments except for last elm and join back into list.
+    let pathToBeCreated = join(splitArgs[0:-2], '/')
+    let dirFullPathToBeCreated = cwd . '/' . pathToBeCreated
+
+    if !isdirectory(dirFullPathToBeCreated)
+      call mkdir(dirFullPathToBeCreated, 'p')
+    end
+
+    let cmd = 'e ' . dirFullPathToBeCreated . '/' . name
+  end
+
+  execute cmd
+endfunction
+
 " Custom strategy for vim-test to allow jest to recognize `debugger`.
 " More specifically, this prefixes the jest call with node inspect,
 " then resets after the test is complete.
