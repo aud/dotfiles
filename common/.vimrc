@@ -149,14 +149,14 @@ endfunction
 
 " Strip trailing whitespace automatically
 function! <SID>StripTrailingWhitespaces()
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
 
-    %s/\s\+$//e
+  %s/\s\+$//e
 
-    let @/=_s
-    call cursor(l, c)
+  let @/=_s
+  call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
@@ -166,18 +166,18 @@ function! ExecuteByFileType()
   let currentFileType = &filetype
 
   if currentFileType == 'ruby'
-     execute '!clear && ruby %'
-   elseif currentFileType == 'go'
-     execute '!clear && go run %'
-   elseif currentFileType == 'c'
-     execute '!clear && clang % && ./a.out'
-   elseif currentFileType == 'cpp'
-     execute '!clear && g++ % -o output && ./output'
-   elseif currentFileType == 'lua'
-     execute '!clear && lua %'
-   else
-     echo 'Unknown file type. Reminder: If commonly used, add to vimrc.'
-   end
+    execute '!clear && ruby %'
+  elseif currentFileType == 'go'
+    execute '!clear && go run %'
+  elseif currentFileType == 'c'
+    execute '!clear && clang % && ./a.out'
+  elseif currentFileType == 'cpp'
+    execute '!clear && g++ % -o output && ./output'
+  elseif currentFileType == 'lua'
+    execute '!clear && lua %'
+  else
+    echo 'Unknown file type. Reminder: If commonly used, add to vimrc.'
+  end
 endfunction
 
 " Custom strategy for vim-test to allow jest to recognize `debugger`.
@@ -208,17 +208,17 @@ endfunction
 nnoremap <leader>S :call ToggleStatusBar()<CR>
 let s:statusHidden = 0
 function! ToggleStatusBar()
-    if s:statusHidden == 0
-        let s:statusHidden = 1
+  if s:statusHidden == 0
+    let s:statusHidden = 1
 
-        set laststatus=0
-        set noruler
-    else
-        let s:statusHidden = 0
+    set laststatus=0
+    set noruler
+  else
+    let s:statusHidden = 0
 
-        set laststatus=2
-        set ruler
-    endif
+    set laststatus=2
+    set ruler
+  endif
 endfunction
 
 " Paste without identation in insert mode.
@@ -237,15 +237,15 @@ endfunction
 command! -bang -nargs=* Rgrep call fzf#vim#grep(s:rgoptions.shellescape(<q-args>), 1, <bang>0)
 nnoremap <leader>g :Rgrep<CR>
 let s:rgoptions='rg
-  \ --column
-  \ --line-number
-  \ --no-heading
-  \ --fixed-strings
-  \ --ignore-case
-  \ --hidden
-  \ --follow
-  \ --glob "!.git/*"
-  \ --color "always" '
+      \ --column
+      \ --line-number
+      \ --no-heading
+      \ --fixed-strings
+      \ --ignore-case
+      \ --hidden
+      \ --follow
+      \ --glob "!.git/*"
+      \ --color "always" '
 
 " Set 256 colors for dracula colour scheme
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
