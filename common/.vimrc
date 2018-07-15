@@ -238,13 +238,13 @@ endfunction
 nnoremap <leader>S :call ToggleStatusBar()<CR>
 let s:statusHidden = 0
 function! ToggleStatusBar()
-  if s:statusHidden == 0
-    let s:statusHidden = 1
+  if s:statusHidden
+    let s:statusHidden = 0
 
     set laststatus=0
     set noruler
   else
-    let s:statusHidden = 0
+    let s:statusHidden = 1
 
     set laststatus=2
     set ruler
