@@ -5,7 +5,7 @@ defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 1
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 sudo nvram SystemAudioVolume=" "
 
-# Set keyboard defaults. 
+# Set keyboard defaults.
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
@@ -19,6 +19,8 @@ defaults write com.apple.mouse.tapBehaviour -int 1
 defaults write com.apple.finder DisableAllAnimations -bool true
 defaults write com.apple.finder ShowPathbar -bool true
 defaults write com.apple.finder WarnOnEmptyTrash -bool false
+# Show hidden files in finder
+defaults write com.apple.finder AppleShowAllFiles YES
 
 # Set dir permissions
 chflags nohidden $HOME/Library

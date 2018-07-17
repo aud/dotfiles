@@ -9,8 +9,8 @@
   # git push && git push -f
   branch-name = "!git rev-parse --abbrev-ref HEAD"
 
-  ac = "!sh ~/.custom_git_functions/add_commit_push.sh"
-  publish = "!sh ~/.custom_git_functions/publish.sh"
+  ac = "!sh ~/.git_functions/add_commit_push.sh"
+  publish = "!sh ~/.git_functions/publish.sh"
 
   cob = "checkout -b"
   s = "status"
