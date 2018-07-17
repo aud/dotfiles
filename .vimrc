@@ -133,9 +133,41 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'andrewradev/splitjoin.vim'
 
-" Typescript
-Plug 'quramy/tsuquyomi', { 'for': 'typescript' }
+" Tsuquyomi doesn't talk to TsServer using jobs (vim 8), so any compiler checks
+" are often pretty slow as they are not async. For example, this was after
+" browsing a couple files:
+" count  total (s)   self (s)  function
+" 13  5.084426   4.754910  tsuquyomi#tsClient#sendRequest()
+" 3   4.772378   0.000136  tsuquyomi#reloadAndGeterr()
+" 3   4.772092   0.000148  tsuquyomi#geterr()
+" 3   4.771944   0.000648  tsuquyomi#createFixlist()
+" 4   4.549294   0.000810  tsuquyomi#tsClient#sendCommandSyncEvents()
+" 3   4.547639   0.000237  tsuquyomi#tsClient#tsGeterr()
+" Plug 'quramy/tsuquyomi', { 'for': 'typescript' }
+
+Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
 call plug#end()
+
+" Register lsp for typescript-language-server
+" (https://github.com/theia-ide/typescript-language-server)
+if executable('typescript-language-server')
+  let g:LanguageClient_serverCommands = {
+        \ 'typescript': ['typescript-language-server', '--stdio']
+        \ }
+
+  " Alias for language definition lookup.
+  nnoremap <leader>Ld :call LanguageClient_textDocument_definition()<cr>
+
+  " Change default gutter icon to something less intrusive. Example format:
+  " https://github.com/autozimu/LanguageClient-neovim/blob/next/doc/LanguageClient.txt#L83-L109
+  let g:LanguageClient_diagnosticsDisplay={}
+  for i in range(1, 4)
+    let g:LanguageClient_diagnosticsDisplay[i] = { 'signText': '.' }
+  endfor
+endif
 
 " vim-test output to vimux
 let test#strategy = 'vimux'
