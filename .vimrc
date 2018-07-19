@@ -161,12 +161,14 @@ if executable('typescript-language-server')
   " Alias for language definition lookup.
   nnoremap <leader>Ld :call LanguageClient_textDocument_definition()<cr>
 
-  " Change default gutter icon to something less intrusive. Example format:
-  " https://github.com/autozimu/LanguageClient-neovim/blob/next/doc/LanguageClient.txt#L83-L109
-  let g:LanguageClient_diagnosticsDisplay={}
-  for i in range(1, 4)
-    let g:LanguageClient_diagnosticsDisplay[i] = { 'signText': '.' }
-  endfor
+  " 0.5 seconds delay of `textDocument_didChange` before text is sent to the
+  " language server. Sending the entire document everytime the document is
+  " changed causes some slowdown in vim, and is unnecessary.
+  let g:LanguageClient_changeThrottle = 0.5
+
+  " Completely remove the gutter, resizing is distracting and the optional
+  " quickfix list is a much less intrusive workflow.
+  let g:LanguageClient_diagnosticsSignsMax = 0
 endif
 
 " vim-test output to vimux
