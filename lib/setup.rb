@@ -18,7 +18,7 @@ module Dotfiles
     def steps
       runner = Runner.new
 
-      runner.add_step('build symlinks') { Symlinks.build(runner) }
+      runner.add_step_child('build symlinks') { Symlinks }
 
       runner.run!
     end
