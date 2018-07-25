@@ -1,3 +1,5 @@
+require 'byebug'
+
 module Dotfiles
   class Runner
     MissingBlockError = Class.new(StandardError)
@@ -14,10 +16,9 @@ module Dotfiles
     def add_step_child(name, &block)
       raise MissingBlockError unless block_given?
 
-      require 'byebug'
+      steps = extract_steps_from_class(block.call)
 
       byebug
-      block.call(&:step_child_steps)
     end
 
     def run!
@@ -30,13 +31,14 @@ module Dotfiles
 
     private
 
-    def step_child_steps
-      yield.tap do |klass|
-        # Get methods
-        klass.const_get(:Steps).instance_methods(false)
+    def extract_steps_from_class(klass)
+      _klass = klass.const_get(:Steps).instance_methods(false)
+      # ...
+    end
 
-        # Get `msg` from method arguments, raise with message if doesn't exist.
-        # Append to steps.
+    def foo(x, y)
+      method(__method__).parameters.map do |_, name|
+        binding.local_variable_get(name)
       end
     end
 

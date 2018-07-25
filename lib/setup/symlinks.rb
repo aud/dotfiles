@@ -5,7 +5,7 @@ module Dotfiles
     class Symlinks < Dotfiles::Setup
       # Maybe this should be a struct, or anon class to avoid lookup conflicts.
       class Steps
-        def vim
+        def vim(message = 'create vim symlinks')
         end
       end
       # class << self
