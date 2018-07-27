@@ -109,6 +109,12 @@ nmap <silent> <leader>l :TestLast<CR>
 nnoremap <leader>p :GFiles<CR>
 nnoremap <leader>f :Files<CR>
 
+" Map to fold everything except current visual selection into folds.
+vnoremap <leader>zz <Esc>`<kzfgg`>jzfG`<
+
+" Map to unfold all active folds in file.
+nmap <leader>zZ <Esc>zRzz
+
 " Plug
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
