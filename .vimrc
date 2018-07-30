@@ -47,6 +47,9 @@ nmap <leader>L :set invnumber<CR>
 " Encoding UTF
 set encoding=utf-8
 
+" Change dotted split seperator to solid line.
+set fillchars+=vert:│
+
 " Highlight search matches
 set hlsearch
 
@@ -272,15 +275,19 @@ endfunction
 
 " Disable status bar by default, as it's rarely useful.
 nnoremap <leader>S :call ToggleStatusBar()<CR>
-let s:statusHidden = 0
+let g:statusHidden = 0
+
+set laststatus=0
+set noruler
+
 function! ToggleStatusBar()
-  if s:statusHidden
-    let s:statusHidden = 0
+  if g:statusHidden
+    let g:statusHidden = 0
 
     set laststatus=0
     set noruler
   else
-    let s:statusHidden = 1
+    let g:statusHidden = 1
 
     set laststatus=2
     set ruler
