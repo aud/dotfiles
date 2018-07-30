@@ -29,3 +29,6 @@
   ls = "log --pretty=format:"%C(yellow)%h%Cred%d\\ [%ad]\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat --date=relative"
   # List all git aliases
   la = "!git config -l | grep alias | cut -c 7-"
+
+[commit]
+  template = ~/.gitmessage
