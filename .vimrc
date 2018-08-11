@@ -79,10 +79,6 @@ nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 
-" FIXME: This doesn't work.
-" Remap C-w-T to C-T (Move current in context split into a new tab)
-" inoremap <C-T> <C-w>T
-
 " Remap keys for vim-test
 nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
