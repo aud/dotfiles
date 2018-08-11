@@ -1,19 +1,3 @@
-" This is in response to issue: https://github.com/vim/vim/issues/3117. Vim
-" version `8.1.0150` builds with Python 3, and uses the `imp` Python module,
-" which was deprecated in Python 3.4 in favour of `importlib`. As a result of
-" this deprecation, everytime vim is started this error appears:
-" ============================================================================
-" Error detected while processing
-" /Users/elliotdohm/.vim/plugged/vim-autotag/plugin/autotag.vim:
-" DeprecationWarning: the imp module is deprecated in favour of importlib; see
-" the module's documentation for alternative uses
-" ============================================================================
-" This is pretty annoying, so this silences it if vim is build with Python 3.
-" Once this is fixed upstream, this hack should be removed.
-if has('python3')
-  silent! python3 1
-endif
-
 set nocompatible
 
 " Remap leader to ,
