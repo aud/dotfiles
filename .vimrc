@@ -137,6 +137,7 @@ Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'andrewradev/splitjoin.vim'
+Plug 'tpope/vim-obsession'
 
 " Tsuquyomi doesn't talk to TsServer using jobs (vim 8), so any compiler checks
 " are often pretty slow as they are not async. For example, this was after
