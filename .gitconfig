@@ -35,3 +35,6 @@
 [commit]
   template = ~/.gitmessage
   verbose = true
+
+[interactive]
+  singleKey = true
