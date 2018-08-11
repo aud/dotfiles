@@ -25,9 +25,6 @@ nmap <C-w>< :vertical resize -10<CR>
 " Toggle line numbers
 nmap <leader>L :set invnumber<CR>
 
-" Display ruler on status line
-" set ruler
-
 " Encoding UTF
 set encoding=utf-8
 
