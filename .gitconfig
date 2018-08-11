@@ -19,6 +19,8 @@
   rh = "reset --hard origin/master"
   co = "checkout"
   rbm = "!git rebase -i origin/master"
+  branch-desc="!f() { git branch --sort=-committerdate | head -n4 ; }; f"
+  branch-asc="!f() { git branch --sort=committerdate | head -n4 ; }; f"
   c = "commit -m"
 
   # Show commits with diff.
