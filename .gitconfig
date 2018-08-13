@@ -38,3 +38,6 @@
 
 [interactive]
   singleKey = true
+
+[status]
+  showUntrackedFiles = all
