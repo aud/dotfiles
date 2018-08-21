@@ -17,10 +17,10 @@ syntax on
 set belloff=all
 
 " Increase vim pane resizing size, as the default is quite low.
-nmap <C-w>+ :resize +10<CR>
-nmap <C-w>- :resize -10<CR>
-nmap <C-w>> :vertical resize +10<CR>
-nmap <C-w>< :vertical resize -10<CR>
+nmap <C-w>+ :resize +15<CR>
+nmap <C-w>- :resize -15<CR>
+nmap <C-w>> :vertical resize +15<CR>
+nmap <C-w>< :vertical resize -15<CR>
 
 " Toggle line numbers
 nmap <leader>L :set invnumber<CR>
