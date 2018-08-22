@@ -23,6 +23,7 @@ nmap <C-w>> :vertical resize +15<CR>
 nmap <C-w>< :vertical resize -15<CR>
 
 " Toggle line numbers
+set invnumber
 nmap <leader>L :set invnumber<CR>
 
 " Encoding UTF
