@@ -17,5 +17,11 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.g
 # Remove duplicate entries in history file.
 export HISTCONTROL=ignoreboth:erasedups
 
+# Number of lines in history file.
+export HISTFILESIZE=50000
+
+# Number of lines in history to keep in memory.
+export HISTSIZE=10000
+
 # Source fzf.
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
