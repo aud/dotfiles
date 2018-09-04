@@ -14,5 +14,8 @@ chruby 2.5.0
 # Set default fzf command for vim to use rg instead of find.
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
+# Remove duplicate entries in history file.
+export HISTCONTROL=ignoreboth:erasedups
+
 # Source fzf.
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
