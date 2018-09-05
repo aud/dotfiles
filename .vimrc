@@ -90,6 +90,12 @@ nmap <silent> <leader>l :TestLast<CR>
 nnoremap <leader>p :GFiles<CR>
 nnoremap <leader>f :Files<CR>
 
+" Prefer tmux panes instead of vim
+let g:fzf_prefer_tmux = 1
+
+" Set fzf height to 20%
+let g:fzf_layout = { 'down': '20%' }
+
 " Map to fold everything except current visual selection into folds.
 vnoremap <leader>zz <Esc>`<kzfgg`>jzfG`<
 
