@@ -33,7 +33,6 @@
   la = "!git config -l | grep alias | cut -c 7-"
 
 [commit]
-  template = ~/.gitmessage
   verbose = true
 
 [interactive]
