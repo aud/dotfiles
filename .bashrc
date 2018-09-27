@@ -23,5 +23,8 @@ export HISTFILESIZE=50000
 # Number of lines in history to keep in memory.
 export HISTSIZE=10000
 
+# Add golang to PATH
+export PATH=$PATH:/usr/local/go/bin
+
 # Source fzf.
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

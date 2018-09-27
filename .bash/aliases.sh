@@ -14,8 +14,3 @@ alias vi="/usr/local/bin/vim"
 
 # Default to xterm with ssh
 alias ssh='TERM=xterm ssh'
-
-# This alias should be better. Doesn't need to be direct path, also this
-# doesn't support the `cd` protocol. Also will likely be unnecessary once full
-# Go module support is released.
-alias gopath="$GOPATH/src/github.com/aud"
