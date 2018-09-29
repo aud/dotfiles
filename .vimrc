@@ -315,4 +315,6 @@ let s:rgoptions='rg
       \ --glob "!.git/*"
       \ --color "always" '
 
+" Disable italics
+let g:dracula_italic = 0
 color dracula
