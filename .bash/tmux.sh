@@ -2,7 +2,7 @@
 function rename_tmux_window_to_wd {
   local last_pwd=''
 
-  if [[ $TERM == 'tmux-256color' && $PWD != $last_pwd ]]; then
+  if [[ $TERM == 'xterm' && $PWD != $last_pwd ]]; then
     last_pwd=$PWD
     tmux rename-window ${PWD//*\//}
   fi
