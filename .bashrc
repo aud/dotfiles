@@ -5,7 +5,7 @@ fi
 
 # Hack to set default ruby version.
 if command -v chruby >/dev/null 2>&1; then
-  chruby 2.5.0
+  chruby 2.5.0 >/dev/null 2>&1
 fi
 
 # Source all files in ~/.bash, assume they are executable.
