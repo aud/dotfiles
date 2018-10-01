@@ -28,8 +28,9 @@ export HISTSIZE=10000
 # Add golang to PATH
 export PATH=$PATH:/usr/local/go/bin
 
-# Cycle through tab autocomplete options
+# Tab autocomplete options
 bind 'TAB:menu-complete'
+bind '"\e[Z":menu-complete-backward'
 bind 'set menu-complete-display-prefix on'
 bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
