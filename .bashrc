@@ -13,6 +13,11 @@ for file in ~/.bash/*; do
   source $file
 done
 
+# Add .bin/ to path
+if [[ -d $HOME/.bin ]]; then
+  export PATH=$HOME/.bin:$PATH
+fi
+
 # Set default fzf command for vim to use rg instead of find.
 export FZF_DEFAULT_COMMAND='rg --files --follow --hidden --glob "!.git/*"'
 
