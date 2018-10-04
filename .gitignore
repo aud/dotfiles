@@ -1,0 +1,7 @@
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/node_modules
