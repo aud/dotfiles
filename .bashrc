@@ -9,7 +9,7 @@ if command -v chruby >/dev/null 2>&1; then
 fi
 
 # Source all files in ~/.bash, assume they are executable.
-for file in ~/.bash/*; do
+for file in $HOME/.bash/*; do
   source $file
 done
 
