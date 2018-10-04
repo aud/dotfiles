@@ -1,3 +1,3 @@
-if [[ -f '~/.tmux/plugins/tpm' ]]; then
-  echo 22
+if [[ -d $HOME/tmux/plugins/tpm ]]; then
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
