@@ -18,6 +18,7 @@ brew 'yarn'
 brew 'sqlite'
 brew 'openssl'
 brew 'redis'
+brew 'pkg-config'
 
 cask 'slack-beta'
 cask 'iterm2-beta'
