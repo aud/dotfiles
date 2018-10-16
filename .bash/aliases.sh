@@ -5,6 +5,8 @@ alias dd="dev down"
 alias du="dev up"
 alias dj="dev up; dev s"
 
+alias py="python"
+
 # Aliases for commonly used general commands.
 alias c="clear"
 alias ls="ls -G"

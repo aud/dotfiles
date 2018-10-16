@@ -40,3 +40,9 @@
 
 [status]
   showUntrackedFiles = all
+
+[diff]
+  tool = vimdiff
+
+[difftool]
+  prompt = false

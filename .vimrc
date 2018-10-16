@@ -206,6 +206,8 @@ function! ExecuteByFileType()
     execute '!clear && g++ % -o output && ./output'
   elseif currentFileType == 'lua'
     execute '!clear && lua %'
+  elseif currentFileType == 'python'
+    execute '!clear && python %'
   else
     echo 'Unknown file type. Reminder: If commonly used, add to vimrc.'
   end
@@ -315,3 +317,52 @@ let s:rgoptions='rg
 " Disable italics
 let g:dracula_italic = 0
 color dracula
+
+" let s:git_status_dictionary = {
+"             \ "A": "Added",
+"             \ "B": "Broken",
+"             \ "C": "Copied",
+"             \ "D": "Deleted",
+"             \ "M": "Modified",
+"             \ "R": "Renamed",
+"             \ "T": "Changed",
+"             \ "U": "Unmerged",
+"             \ "X": "Unknown"
+"             \ }
+
+" function! _TestFunc()
+"   " for buf in range(1, bufnr('$'))
+"   "   if bufname(buf) =~ "origin"
+"   "     execute ':bd'
+"   "   endif
+"   " endfor
+"   " for winnr in range(1, winnr('$'))
+"   "   if getwinvar(winnr, '&syntax') == 'qf'
+"   "       execute ':bd'
+"   "   endif
+"   " endfor
+
+"   execute ':tabonly'
+"   execute ':Gdiff origin/tmp.txt'
+" endfunction
+" command! TestFunc :call _TestFunc()
+
+" autocmd FileType qf nnoremap <buffer> <CR> <CR>:TestFunc<CR>
+
+" function! GetDiffFiles(base, branch)
+"   let base = a:base
+"   let branch = a:branch
+
+"   let diff_status = system('git diff --name-status ' . 'origin/' . base . '...' . branch)
+
+"   let list_data = '{
+"         \ "filename": matchstr(v:val, "\\S\\+$"),
+"         \ "text": s:git_status_dictionary[matchstr(v:val, "^\\w")]
+"         \ }'
+
+"   call setqflist(map(split(diff_status, '\n'), list_data))
+
+"   copen
+" endfunction
+
+" command! -nargs=+ DiffRev :call GetDiffFiles(<f-args>)
