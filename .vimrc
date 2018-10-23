@@ -96,12 +96,6 @@ let g:fzf_prefer_tmux = 1
 " Set fzf height to 20%
 let g:fzf_layout = { 'down': '20%' }
 
-" Map to fold everything except current visual selection into folds.
-vnoremap <leader>zz <Esc>`<kzfgg`>jzfG`<
-
-" Map to unfold all active folds in file.
-nmap <leader>zZ <Esc>zRzz
-
 " Install vim plug if not already installed.
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs

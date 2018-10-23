@@ -30,8 +30,11 @@ export HISTFILESIZE=50000
 # Number of lines in history to keep in memory.
 export HISTSIZE=10000
 
+export GOPATH=$HOME
+
 # Add golang to PATH
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$GOPATH/bin:$PATH
 
 # Tab autocomplete options
 bind 'TAB:menu-complete'

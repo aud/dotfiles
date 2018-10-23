@@ -7,7 +7,7 @@ alias dj="dev up; dev s"
 
 # Aliases for commonly used general commands.
 alias c="clear"
-alias ls="ls -G"
+alias ls="ls -Ga"
 
 # Alias vi to vim.
 alias vi="/usr/local/bin/vim"
