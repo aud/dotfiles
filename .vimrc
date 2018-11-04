@@ -3,6 +3,9 @@ set nocompatible
 " Remap leader to ,
 let mapleader=","
 
+" Ignore .netrwhist history
+let g:netrw_dirhistmax = 0
+
 " Security
 set modelines=0
 
@@ -128,19 +131,11 @@ Plug 'autozimu/LanguageClient-neovim', {
 call plug#end()
 
 " Register lsp for typescript-language-server
-" (https://github.com/theia-ide/typescript-language-server)
-if executable('typescript-language-server')
+" https://github.com/sourcegraph/javascript-typescript-langserver
+if executable('javascript-typescript-langserver')
   let g:LanguageClient_serverCommands = {
-        \ 'typescript': ['typescript-language-server', '--stdio']
+        \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio']
         \ }
-
-  " Alias for language definition lookup.
-  nnoremap <leader>Ld :call LanguageClient_textDocument_definition()<cr>
-
-  " 0.5 seconds delay of `textDocument_didChange` before text is sent to the
-  " language server. Sending the entire document everytime the document is
-  " changed causes some slowdown in vim, and is unnecessary.
-  let g:LanguageClient_changeThrottle = 0.5
 
   " Completely remove the gutter, resizing is distracting and the optional
   " quickfix list is a much less intrusive workflow.
