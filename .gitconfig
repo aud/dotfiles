@@ -40,5 +40,6 @@
 
 [status]
   showUntrackedFiles = all
+
 [diff]
-	algorithm = patience
+  algorithm = patience
