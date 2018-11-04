@@ -185,6 +185,8 @@ function! ExecuteByFileType()
     execute '!clear && g++ % -o output && ./output'
   elseif currentFileType == 'lua'
     execute '!clear && lua %'
+  elseif currentFileType == 'python'
+    execute '!clear && python3 %'
   else
     echo 'Unknown file type. Reminder: If commonly used, add to vimrc.'
   end
