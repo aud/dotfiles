@@ -163,28 +163,6 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-" Quick execution commands for commonly used filetypes.
-command! Run :call ExecuteByFileType()
-function! ExecuteByFileType()
-  let currentFileType = &filetype
-
-  if currentFileType == 'ruby'
-    execute '!clear && ruby %'
-  elseif currentFileType == 'go'
-    execute '!clear && go run %'
-  elseif currentFileType == 'c'
-    execute '!clear && clang % && ./a.out'
-  elseif currentFileType == 'cpp'
-    execute '!clear && g++ % -o output && ./output'
-  elseif currentFileType == 'lua'
-    execute '!clear && lua %'
-  elseif currentFileType == 'python'
-    execute '!clear && python3 %'
-  else
-    echo 'Unknown file type. Reminder: If commonly used, add to vimrc.'
-  end
-endfunction
-
 " Create file (&&|| directories recursively) relative to the current working
 " directory. This is an alternative to the `autochdir` vim setting, which isn't
 " ideal when attempting to open files outside of the relative directory.
