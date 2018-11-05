@@ -115,7 +115,6 @@ Plug 'janko-m/vim-test'
 Plug 'craigemery/vim-autotag'
 Plug 'tpope/vim-fugitive'
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
@@ -123,7 +122,6 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'andrewradev/splitjoin.vim'
-
 Plug 'autozimu/LanguageClient-neovim', {
      \ 'branch': 'next',
      \ 'do': 'bash install.sh',
