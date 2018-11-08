@@ -38,7 +38,7 @@ dev() {
     __DEV_LOADED=true
   fi
 
-  eval dev
+  eval dev $@
 }
 
 [ -d $HOME/.bin ] && export PATH=$HOME/.bin:$PATH
