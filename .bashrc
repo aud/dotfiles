@@ -28,6 +28,18 @@ bind 'set menu-complete-display-prefix on'
 bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
 
+# Lazy load dev
+__dev_hook_prompt() { :; }
+
+__DEV_LOADED=
+dev() {
+  if [ ! $__DEV_LOADED ] && [ -f /opt/dev/dev.sh ]; then
+    source /opt/dev/dev.sh
+    __DEV_LOADED=true
+  fi
+
+  eval dev
+}
+
 [ -d $HOME/.bin ] && export PATH=$HOME/.bin:$PATH
-[ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
