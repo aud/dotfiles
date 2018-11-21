@@ -41,5 +41,9 @@ dev() {
   eval dev $@
 }
 
+chruby() {
+  command -v chruby >/dev/null 2>&1 && source /opt/dev/sh/chruby/chruby.sh && chruby $@
+}
+
 [ -d $HOME/.bin ] && export PATH=$HOME/.bin:$PATH
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
