@@ -1,6 +1,6 @@
 # Source all files in ~/.bash, assume they are executable.
 for file in $HOME/.bash/*; do
-  source $file
+  . $file
 done
 
 # Set default fzf command for vim to use rg instead of find.
@@ -34,7 +34,7 @@ __dev_hook_prompt() { :; }
 __DEV_LOADED=
 dev() {
   if [ ! $__DEV_LOADED ] && [ -f /opt/dev/dev.sh ]; then
-    source /opt/dev/dev.sh
+    . /opt/dev/dev.sh
     __DEV_LOADED=true
   fi
 
@@ -42,8 +42,8 @@ dev() {
 }
 
 chruby() {
-  command -v chruby >/dev/null 2>&1 && source /opt/dev/sh/chruby/chruby.sh && chruby $@
+  command -v chruby >/dev/null 2>&1 && . /opt/dev/sh/chruby/chruby.sh && chruby $@
 }
 
 [ -d $HOME/.bin ] && export PATH=$HOME/.bin:$PATH
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.fzf.bash ] && . ~/.fzf.bash

@@ -1,7 +1,7 @@
 tap 'homebrew/cask-versions'
 
 brew 'bash'
-brew 'bash-completion'
+brew 'bash-completion2'
 brew 'tmux'
 brew 'vim'
 brew 'git'
