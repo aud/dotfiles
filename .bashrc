@@ -20,6 +20,7 @@ export GOPATH=$HOME
 # Add golang to PATH
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$GOPATH/bin:$PATH
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Tab autocomplete options
 bind 'TAB:menu-complete'
