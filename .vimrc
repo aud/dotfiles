@@ -3,9 +3,6 @@ set nocompatible
 " Remap leader to ,
 let mapleader=","
 
-" Ignore .netrwhist history
-let g:netrw_dirhistmax = 0
-
 " Security
 set modelines=0
 
@@ -106,7 +103,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Plug
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -122,23 +118,7 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'andrewradev/splitjoin.vim'
-Plug 'autozimu/LanguageClient-neovim', {
-     \ 'branch': 'next',
-     \ 'do': 'bash install.sh',
-     \ }
 call plug#end()
-
-" Register lsp for typescript-language-server
-" https://github.com/sourcegraph/javascript-typescript-langserver
-if executable('javascript-typescript-langserver')
-  let g:LanguageClient_serverCommands = {
-        \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio']
-        \ }
-
-  " Completely remove the gutter, resizing is distracting and the optional
-  " quickfix list is a much less intrusive workflow.
-  let g:LanguageClient_diagnosticsSignsMax = 0
-endif
 
 " vim-test output to vimux
 let test#strategy = 'vimux'
