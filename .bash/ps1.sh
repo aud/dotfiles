@@ -3,4 +3,4 @@ function parsed_git_branch {
   [ -d '.git' ] && git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/(&)/'
 }
 
-export PS1="\W\[\033[33m\]\$(parsed_git_branch)\[\033[00m\] \$ "
+PS1="\W\[\033[33m\]\$(parsed_git_branch)\[\033[00m\] \$ "

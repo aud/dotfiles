@@ -7,16 +7,16 @@ done
 export FZF_DEFAULT_COMMAND='rg --files --follow --hidden --glob "!.git/*"'
 
 # Remove duplicate entries in history file
-export HISTCONTROL=ignoreboth:erasedups
+HISTCONTROL=ignoreboth:erasedups
 
 # Number of lines in history file
-export HISTFILESIZE=50000
+HISTFILESIZE=50000
 
 # Number of lines in history to keep in memory
-export HISTSIZE=10000
+HISTSIZE=10000
 
 # Ignore common commands from history
-export HISTIGNORE="&:[ ]*:exit:ls:fg:bg:tmux:vi:vim:c:clear*"
+HISTIGNORE="&:[ ]*:exit:ls:fg:bg:tmux:vi:vim:c:clear*"
 
 # Configure PATH
 export GOPATH=$HOME/go

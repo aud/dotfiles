@@ -1,8 +1,8 @@
 # Renames tmux window to current working directory name.
 function rename_tmux_window_to_wd {
-  local last_pwd=''
+  local last_pwd=
 
-  if [[ $TERM == 'xterm' && $PWD != $last_pwd ]]; then
+  if [[ $TERM == 'xterm-256color' && $PWD != $last_pwd ]]; then
     last_pwd=$PWD
     tmux rename-window ${PWD//*\//}
   fi
