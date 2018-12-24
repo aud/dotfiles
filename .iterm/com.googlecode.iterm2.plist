@@ -363,10 +363,21 @@
 	</data>
 	<key>NSTableView Supports v2 KeyBingingTable</key>
 	<true/>
+	<key>NSToolbar Configuration com.apple.NSColorPanel</key>
+	<dict>
+		<key>TB Is Shown</key>
+		<integer>1</integer>
+	</dict>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>530 493 620 392 0 0 1680 1050 </string>
+	<key>NSWindow Frame SessionsPreferences</key>
+	<string>269 126 606 469 0 0 1680 1050 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>273 159 796 486 0 0 1680 1050 </string>
+	<string>273 221 937 514 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>0 0 1680 1050 0 0 1680 1050 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>212 106 570 352 0 0 1680 1050 </string>
 	<key>NeverWarnAboutOverrides</key>
 	<true/>
 	<key>NeverWarnAboutOverrides_selection</key>
@@ -1032,6 +1043,8 @@
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
 	<integer>0</integer>
+	<key>NoSyncPermissionToShowTip</key>
+	<false/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>561410351.16317499</real>
 	<key>OnlyWhenMoreTabs</key>
@@ -1086,7 +1099,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-10-16T19:20:00Z</date>
+	<date>2018-11-26T18:21:29Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
@@ -1108,6 +1121,6 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.2.4beta2</string>
+	<string>3.2.6beta4</string>
 </dict>
 </plist>

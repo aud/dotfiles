@@ -3,12 +3,10 @@ set nocompatible
 " Remap leader to ,
 let mapleader=","
 
-" Security
 set modelines=0
 
 " 256 colours
 set termguicolors
-set t_Co=256
 
 " Turn on syntax
 syntax on
@@ -26,9 +24,6 @@ nmap <C-w>< :vertical resize -15<CR>
 set invnumber
 nmap <leader>L :set invnumber<CR>
 
-" Encoding UTF
-set encoding=utf-8
-
 " Change dotted split seperator to solid line.
 set fillchars+=vert:│
 
@@ -45,20 +40,6 @@ set smartcase
 " Highlight matching braces
 set showmatch
 
-" Text wrapping
-set wrap
-set textwidth=79
-set formatoptions=tcqrn1
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-set noshiftround
-
-" Cursor motions
-set scrolloff=3
-set backspace=indent,eol,start
-
 " Hidden buffers
 set hidden
 
@@ -74,20 +55,12 @@ autocmd Filetype go setlocal ts=4 sw=4
 " Remap ESC to kj
 inoremap kj <Esc>
 
-" Remap split switching
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
-
 " Remap keys for vim-test
 nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 
 " FZF remappings
-nnoremap <leader>p :GFiles<CR>
 nnoremap <leader>f :Files<CR>
 
 " Prefer tmux panes instead of vim
@@ -118,17 +91,28 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'andrewradev/splitjoin.vim'
+
+Plug 'autozimu/LanguageClient-neovim', {
+     \ 'branch': 'next',
+     \ 'do': 'bash install.sh',
+     \ }
 call plug#end()
+
+if executable('javascript-typescript-langserver')
+  let g:LanguageClient_serverCommands = {
+        \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio']
+        \ }
+   " Completely remove the gutter, resizing is distracting and the optional
+  " quickfix list is a much less intrusive workflow.
+  let g:LanguageClient_diagnosticsSignsMax = 0
+endif
 
 " vim-test output to vimux
 let test#strategy = 'vimux'
 
-" Custom aliases
-" Replace all matches in project. Syntax: ReplaceAll foo bar
-command! -nargs=+ ReplaceAll :call ReplaceFunc(<f-args>)
-function! ReplaceFunc(arg1, arg2)
-  execute "vimgrep /" . a:arg1 . "/gj **/* | cfdo %s/" . a:arg1 . "/" . a:arg2 . "/g | update"
-endfunction
+" " Disable italics
+let g:dracula_italic = 0
+color dracula
 
 " Strip trailing whitespace automatically
 function! <SID>StripTrailingWhitespaces()
@@ -142,36 +126,6 @@ function! <SID>StripTrailingWhitespaces()
   call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-
-" Create file (&&|| directories recursively) relative to the current working
-" directory. This is an alternative to the `autochdir` vim setting, which isn't
-" ideal when attempting to open files outside of the relative directory.
-command! -nargs=1 Cwd :call NewFileInCwd(<q-args>)
-function! NewFileInCwd(path)
-  let cwd = expand('%:h')
-  let path = a:path
-
-  let splitArgs = split(path, '/')
-
-  if len(splitArgs) == 1
-    let name = splitArgs[0]
-    let cmd = 'e ' . cwd . '/' . name
-  else
-    let name = splitArgs[-1]
-
-    " Extract all arguments except for last elm and join back into list.
-    let pathToBeCreated = join(splitArgs[0:-2], '/')
-    let dirFullPathToBeCreated = cwd . '/' . pathToBeCreated
-
-    if !isdirectory(dirFullPathToBeCreated)
-      call mkdir(dirFullPathToBeCreated, 'p')
-    end
-
-    let cmd = 'e ' . dirFullPathToBeCreated . '/' . name
-  end
-
-  execute cmd
-endfunction
 
 " Custom strategy for vim-test to allow jest to recognize `debugger`.
 " More specifically, this prefixes the jest call with node inspect,
@@ -243,7 +197,3 @@ let s:rgoptions='rg
       \ --follow
       \ --glob "!.git/*"
       \ --color "always" '
-
-" Disable italics
-let g:dracula_italic = 0
-color dracula
