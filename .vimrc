@@ -14,6 +14,8 @@ syntax on
 " Disable annoying fucking visual bell
 set belloff=all
 
+set backspace=indent,eol,start
+
 " Increase vim pane resizing size, as the default is quite low.
 nmap <C-w>+ :resize +15<CR>
 nmap <C-w>- :resize -15<CR>
