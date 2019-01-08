@@ -1,47 +1,43 @@
 [user]
-  email = elliot.dohm@shopify.com
-  name = Elliot Dohm
+	email = elliot.dohm@shopify.com
+	name = Elliot Dohm
+
 [core]
-  editor = vim
-  excludesfile = ~/.gitignore
+	editor = vim
+	excludesfile = ~/.gitignore
 
 [alias]
-  # git push && git push -f
-  branch-name = "!git rev-parse --abbrev-ref HEAD"
+	branch-name = "!git rev-parse --abbrev-ref HEAD"
+	publish = "!f() { if [ $# -eq 0 ]; then git push -u origin $(git branch-name); elif [ $1 == '-f' ]; then git push --force-with-lease origin $(git branch-name); fi }; f"
+	cob = "checkout -b"
+	s = "status"
+	d = "diff"
+	rh = "reset --hard origin/master"
+	co = "checkout"
+	rbm = "!git rebase -i origin/master"
+	branch-desc="!f() { git branch --sort=-committerdate | head -n4 ; }; f"
+	branch-asc="!f() { git branch --sort=committerdate | head -n4 ; }; f"
 
-  ac = "!sh ~/.git_functions/add_commit_push.sh"
-  publish = "!sh ~/.git_functions/publish.sh"
-
-  cob = "checkout -b"
-  s = "status"
-  d = "diff"
-  dm = "diff master"
-  rh = "reset --hard origin/master"
-  co = "checkout"
-  rbm = "!git rebase -i origin/master"
-  branch-desc="!f() { git branch --sort=-committerdate | head -n4 ; }; f"
-  branch-asc="!f() { git branch --sort=committerdate | head -n4 ; }; f"
-  c = "commit -m"
-
-  # Show commits with diff.
-  fl = "log -u"
-  # Show log in short form with colour and branch/tag annotations.
-  lg = "log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative"
-  # List commits showing files changed, with changed +- stat
-  ls = "log --pretty=format:"%C(yellow)%h%Cred%d\\ [%ad]\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat --date=relative"
-  # List all git aliases
-  la = "!git config -l | grep alias | cut -c 7-"
+	# Show commits with diff
+	fl = "log -u"
+	# Show log in short form with colour and branch/tag annotations
+	lg = "log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative"
+	# List commits showing files changed, with changed +- stat
+	ls = "log --pretty=format:"%C(yellow)%h%Cred%d\\ [%ad]\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat --date=relative"
+	# List all git aliases
+	la = "!git config -l | grep alias | cut -c 7-"
 
 [commit]
-  verbose = true
+	verbose = true
 
 [interactive]
-  singleKey = true
+	singleKey = true
 
 [status]
-  showUntrackedFiles = all
+	showUntrackedFiles = all
 
 [diff]
-  algorithm = patience
+	algorithm = patience
+
 [protocol]
-  version = 2
+	version = 2
