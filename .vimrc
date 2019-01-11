@@ -8,6 +8,9 @@ set modelines=0
 " 256 colours
 set termguicolors
 
+" Disable warning message on swp files
+set shortmess+=A
+
 " Turn on syntax
 syntax on
 
@@ -84,12 +87,12 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
 Plug 'janko-m/vim-test'
 Plug 'craigemery/vim-autotag'
-Plug 'tpope/vim-fugitive'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
 Plug 'dracula/vim', { 'as': 'dracula' }
+
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'andrewradev/splitjoin.vim'
@@ -112,7 +115,7 @@ endif
 " vim-test output to vimux
 let test#strategy = 'vimux'
 
-" " Disable italics
+" Disable italics
 let g:dracula_italic = 0
 color dracula
 
@@ -172,17 +175,6 @@ function! ToggleStatusBar()
     set laststatus=2
     set ruler
   endif
-endfunction
-
-" Paste without identation in insert mode.
-let &t_SI .= "\<Esc>[?2004h"
-let &t_EI .= "\<Esc>[?2004l"
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
 endfunction
 
 " Use ripgrep for fzf and alias to <leader>g. Credit to:
