@@ -18,6 +18,12 @@ HISTSIZE=10000
 # Ignore common commands from history
 HISTIGNORE="&:[ ]*:exit:ls:fg:bg:tmux:vi:vim:c:clear*"
 
+# Append to history instead of clobbering on exit
+shopt -s histappend
+
+# Append to history post command and reread
+PROMPT_COMMAND="history -a; history -n;${PROMPT_COMMAND:-:}"
+
 # Configure PATH
 export GOPATH=$HOME/go
 export CARGO_PATH=$HOME/.cargo/bin

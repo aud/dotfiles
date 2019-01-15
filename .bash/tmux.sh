@@ -8,4 +8,4 @@ function rename_tmux_window_to_wd {
   fi
 }
 
-export PROMPT_COMMAND="rename_tmux_window_to_wd;${PROMPT_COMMAND:-:}"
+PROMPT_COMMAND="rename_tmux_window_to_wd;${PROMPT_COMMAND:-:}"
