@@ -97,8 +97,7 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
-Plug 'dracula/vim', { 'as': 'dracula' }
-
+Plug 'nanotech/jellybeans.vim'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'andrewradev/splitjoin.vim'
@@ -121,9 +120,7 @@ endif
 " vim-test output to vimux
 let test#strategy = 'vimux'
 
-" Disable italics
-let g:dracula_italic = 0
-color dracula
+colorscheme jellybeans
 
 " Strip trailing whitespace automatically
 function! <SID>StripTrailingWhitespaces()
