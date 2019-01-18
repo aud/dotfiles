@@ -54,6 +54,12 @@ set ttyfast
 " Display command output
 set showcmd
 
+" Indentation rules
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
 " Set tabstop/shiftwidth to 4 for Go
 autocmd Filetype go setlocal ts=4 sw=4
 
