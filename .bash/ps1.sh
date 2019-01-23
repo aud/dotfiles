@@ -1,5 +1,5 @@
 # Fetch current branch name and wrap in parenthesis if exists.
-function parsed_git_branch {
+parsed_git_branch() {
   [ -d '.git' ] && git rev-parse --abbrev-ref HEAD 2> /dev/null | sed 's/.*/(&)/'
 }
 

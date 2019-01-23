@@ -49,6 +49,21 @@ dev() {
   dev $@
 }
 
+# Hack to source dev if not already loaded on git commands. This is done to
+# bring in the galaxy::Shopify remote helpers, which are required for pulling
+# from remote galaxy, as specified in gitconfig
+git() {
+  if [ ! $__DEV_LOADED ] && [[ $(command git remote get-url origin) == galaxy* ]]; then
+    . /opt/dev/dev.sh
+    __DEV_LOADED=true
+
+    # This should be safe, since this is now the dev wrapped git
+    git $@
+  else
+    command git $@
+  fi
+}
+
 __CHRUBY_LOADED=
 chruby() {
   if [ ! $__CHRUBY_LOADED ] && [ -f /opt/dev/sh/chruby/chruby.sh ]; then

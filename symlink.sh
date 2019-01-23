@@ -1,13 +1,13 @@
 # If target file exists, unlink.
-function symlink {
+symlink() {
   ln -sfh $1 $2
 }
 
-function file_match {
+file_match() {
   cmp --silent $1 $2
 }
 
-function dir_match {
+dir_match() {
   diff -r                \
     --exclude=autoload   \
     --exclude=.vim       \
@@ -15,11 +15,11 @@ function dir_match {
     --exclude=plugged  $1 $2
 }
 
-function symlink_exists {
+symlink_exists() {
   readlink $1 == $2 >/dev/null
 }
 
-function begin {
+begin() {
   for file in .[^.]*; do
     local path="$(pwd)/$file"
     local base=$(basename $file)
