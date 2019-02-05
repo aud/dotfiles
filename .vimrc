@@ -92,7 +92,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
 Plug 'janko-m/vim-test'
-Plug 'craigemery/vim-autotag'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'

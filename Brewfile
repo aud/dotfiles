@@ -1,4 +1,5 @@
 tap 'homebrew/cask-versions'
+tap 'universal-ctags/universal-ctags'
 
 brew 'bash'
 brew 'bash-completion2'
@@ -20,6 +21,7 @@ brew 'sqlite'
 brew 'openssl'
 brew 'redis'
 brew 'pkg-config'
+brew 'universal-ctags'
 
 cask 'slack-beta'
 cask 'iterm2-beta'
