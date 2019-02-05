@@ -99,22 +99,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'nanotech/jellybeans.vim'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'andrewradev/splitjoin.vim'
-
-Plug 'autozimu/LanguageClient-neovim', {
-     \ 'branch': 'next',
-     \ 'do': 'bash install.sh',
-     \ }
 call plug#end()
-
-if executable('javascript-typescript-langserver')
-  let g:LanguageClient_serverCommands = {
-        \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio']
-        \ }
-   " Completely remove the gutter, resizing is distracting and the optional
-  " quickfix list is a much less intrusive workflow.
-  let g:LanguageClient_diagnosticsSignsMax = 0
-endif
 
 " vim-test output to vimux
 let test#strategy = 'vimux'
