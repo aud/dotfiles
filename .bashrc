@@ -53,7 +53,7 @@ dev() {
 # bring in the galaxy::Shopify remote helpers, which are required for pulling
 # from remote galaxy, as specified in gitconfig
 git() {
-  if [ ! $__DEV_LOADED ] && [[ $(command git remote get-url origin) == galaxy* ]]; then
+  if [ ! $__DEV_LOADED ] && [ -d '.git' ] && [[ $(command git remote get-url origin) == galaxy* ]]; then
     . /opt/dev/dev.sh
     __DEV_LOADED=true
 
