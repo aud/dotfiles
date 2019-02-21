@@ -16,7 +16,7 @@ HISTFILESIZE=50000
 HISTSIZE=10000
 
 # Ignore common commands from history
-HISTIGNORE="&:[ ]*:exit:ls:fg:bg:tmux:vi:vim:c:clear*"
+HISTIGNORE="&:[ ]*:exit:ls:fg:bg:tmux:vi:vim:curl*:c:clear*"
 
 # Append to history instead of clobbering on exit
 shopt -s histappend
