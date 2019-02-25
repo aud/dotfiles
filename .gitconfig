@@ -14,10 +14,7 @@
 	co = "checkout"
 	rbm = "!git rebase -i origin/master"
 	branch-sort = "!f() { [ $1 == 'desc' ] && __dir='-'; git branch --all --sort=${__dir}committerdate --color=always | head -n20; }; f"
-	# Show log in short form with colour and branch/tag annotations
-	lg = "log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative"
-	# List commits showing files changed, with changed +- stat
-	ls = "log --pretty=format:"%C(yellow)%h%Cred%d\\ [%ad]\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat --date=relative"
+	ls = "log --pretty=format:"%C(yellow)%h%Cred%d\\ [%ad]\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat --date=human"
 [commit]
 	verbose = true
 [interactive]
