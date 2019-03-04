@@ -10,10 +10,10 @@ export FZF_DEFAULT_COMMAND='rg --files --follow --hidden --glob "!.git/*"'
 HISTCONTROL=ignoreboth:erasedups
 
 # Number of lines in history file
-HISTFILESIZE=50000
+HISTFILESIZE=100000
 
 # Number of lines in history to keep in memory
-HISTSIZE=10000
+HISTSIZE=50000
 
 # Ignore common commands from history
 HISTIGNORE="&:[ ]*:exit:ls:fg:bg:tmux:vi:vim:c:clear*"
