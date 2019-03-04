@@ -35,9 +35,6 @@ nmap <C-w>< :vertical resize -15<CR>
 set invnumber
 nmap <leader>L :set invnumber<CR>
 
-" Change dotted split seperator to solid line.
-set fillchars+=vert:│
-
 " Highlight search matches
 set hlsearch
 
@@ -111,6 +108,11 @@ call plug#end()
 let test#strategy = 'vimux'
 
 colorscheme jellybeans
+
+" Change dashed seperator to line. This needs to run after the colorscheme is
+" set, otherwise it will be clobbered.
+set fillchars+=vert:│
+hi VertSplit guibg=NONE
 
 " Strip trailing whitespace automatically
 function! <SID>StripTrailingWhitespaces()
