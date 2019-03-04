@@ -3,6 +3,12 @@ set nocompatible
 " Remap leader to ,
 let mapleader=","
 
+" Change netrw browser to tree
+let g:netrw_liststyle = 3
+
+" Disable netrw banner
+let g:netrw_banner = 0
+
 set modelines=0
 
 " 256 colours
