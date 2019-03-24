@@ -112,7 +112,9 @@ colorscheme jellybeans
 " Change dashed seperator to line. This needs to run after the colorscheme is
 " set, otherwise it will be clobbered.
 set fillchars+=vert:│
-hi VertSplit guibg=NONE
+" hi VertSplit guibg=NONE
+hi VertSplit ctermbg=NONE guibg=NONE cterm=NONE
+
 
 " Strip trailing whitespace automatically
 function! <SID>StripTrailingWhitespaces()

@@ -5,3 +5,6 @@
 !/log/.keep
 !/tmp/.keep
 /node_modules
+public
+tmp
+.dev/*

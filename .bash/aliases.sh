@@ -10,7 +10,7 @@ alias ctags="/usr/local/bin/ctags"
 alias vi="/usr/local/bin/vim"
 
 # Default ruby
-alias ruby="/opt/rubies/2.6.1/bin/ruby"
+# alias ruby="/opt/rubies/2.6.1/bin/ruby"
 
 # Default to xterm with ssh
 alias ssh='TERM=xterm ssh'
