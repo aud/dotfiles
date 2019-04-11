@@ -8,3 +8,6 @@
 public
 tmp
 .dev/*
+coverage
+*.DS_STORE
+.yarn-error.log

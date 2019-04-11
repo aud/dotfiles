@@ -9,6 +9,10 @@ let g:netrw_liststyle = 3
 " Disable netrw banner
 let g:netrw_banner = 0
 
+" Per default, netrw leaves unmodified buffers open. This autocommand
+" deletes netrw's buffer once it's hidden (using ':q', for example)
+autocmd FileType netrw setl bufhidden=delete
+
 set modelines=0
 
 " 256 colours
@@ -99,7 +103,7 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
-Plug 'nanotech/jellybeans.vim'
+Plug 'morhetz/gruvbox'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
@@ -107,14 +111,12 @@ call plug#end()
 " vim-test output to vimux
 let test#strategy = 'vimux'
 
-colorscheme jellybeans
+color gruvbox
 
 " Change dashed seperator to line. This needs to run after the colorscheme is
 " set, otherwise it will be clobbered.
 set fillchars+=vert:│
-" hi VertSplit guibg=NONE
 hi VertSplit ctermbg=NONE guibg=NONE cterm=NONE
-
 
 " Strip trailing whitespace automatically
 function! <SID>StripTrailingWhitespaces()
