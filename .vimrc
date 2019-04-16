@@ -9,8 +9,8 @@ let g:netrw_liststyle = 3
 " Disable netrw banner
 let g:netrw_banner = 0
 
-" Per default, netrw leaves unmodified buffers open. This autocommand
-" deletes netrw's buffer once it's hidden (using ':q', for example)
+" Per default, netrw leaves unmodified buffers open. This autocommand deletes
+" netrw's buffer once it's hidden (using ':q', for example)
 autocmd FileType netrw setl bufhidden=delete
 
 set modelines=0
@@ -24,7 +24,7 @@ set shortmess+=A
 " Turn on syntax
 syntax on
 
-" Disable annoying fucking visual bell
+" Disable visual bell
 set belloff=all
 
 set backspace=indent,eol,start
@@ -176,9 +176,9 @@ function! ToggleStatusBar()
   endif
 endfunction
 
-" Use ripgrep for fzf and alias to <leader>g. Credit to:
+" Use ripgrep for fzf and alias to <leader>g. Modified version of:
 " https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
-command! -bang -nargs=* Rgrep call fzf#vim#grep(s:rgoptions.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* Rgrep call fzf#vim#grep(s:rgoptions.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 nnoremap <leader>g :Rgrep<CR>
 let s:rgoptions='rg
       \ --column
