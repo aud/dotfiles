@@ -131,6 +131,30 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
+" Alias for invoking `bin/style` linter. We source dev to get a cheap
+" interactive shell, also because it's lazy loaded in my current environment.
+" Running `DevStyle` with no arguments lints the current file. If any
+" arguments are provided, they are passed down to `bin/style`. The output of
+" the lint command is added to the quickfix list.
+command! -nargs=? DevStyle :call ExecuteDevStyle(<f-args>)
+function! ExecuteDevStyle(...)
+  if !a:0
+    let file = @%
+  else
+    let file = join(a:000)
+  endif
+
+  let devsh = !empty(glob('/opt/dev/dev.sh'))
+  let binstyle = !empty(glob('bin/style'))
+
+  if !devsh || !binstyle
+    cexpr 'Missing required files. `/opt/dev/dev.sh`: ' . devsh . '. `bin/style`: ' . binstyle
+    return
+  endif
+
+  cexpr system('. /opt/dev/dev.sh && bin/style ' . file)
+endfunction
+
 " Custom strategy for vim-test to allow jest to recognize `debugger`.
 " More specifically, this prefixes the jest call with node inspect,
 " then resets after the test is complete.
