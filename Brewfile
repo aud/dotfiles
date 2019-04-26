@@ -22,6 +22,7 @@ brew 'openssl'
 brew 'redis'
 brew 'pkg-config'
 brew 'universal-ctags'
+brew 'htop'
 
 cask 'slack-beta'
 cask 'iterm2-beta'

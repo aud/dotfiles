@@ -9,6 +9,9 @@ let g:netrw_liststyle = 3
 " Disable netrw banner
 let g:netrw_banner = 0
 
+" Set scroll in all modes
+set mouse=a
+
 " Per default, netrw leaves unmodified buffers open. This autocommand deletes
 " netrw's buffer once it's hidden (using ':q', for example)
 autocmd FileType netrw setl bufhidden=delete
@@ -103,7 +106,10 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
+" Plug 'dracula/vim'
+Plug 'nlknguyen/papercolor-theme'
+
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
@@ -111,8 +117,12 @@ call plug#end()
 " vim-test output to vimux
 let test#strategy = 'vimux'
 
-color gruvbox
+" let g:dracula_italic = 0
+" color dracula
 
+" color gruvbox
+
+colorscheme PaperColor
 " Change dashed seperator to line. This needs to run after the colorscheme is
 " set, otherwise it will be clobbered.
 set fillchars+=vert:│

@@ -59,4 +59,4 @@ chruby() {
   chruby $@
 }
 
-[ -f $HOME/.fzf.bash ] && . $HOME/.fzf.bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
