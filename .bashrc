@@ -27,7 +27,8 @@ PROMPT_COMMAND="history -a; history -n;${PROMPT_COMMAND:-:}"
 # Configure PATH
 export GOPATH=$HOME
 export CARGO_PATH=$HOME/.cargo/bin
-export PATH=$CARGO_PATH:$GOPATH:$PATH
+export CDN_PATH=$HOME/x/cmd/x
+export PATH=$CARGO_PATH:$GOPATH:$PATH:$CDN_PATH
 
 # Tab autocomplete options
 bind 'TAB:menu-complete'
