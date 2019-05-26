@@ -106,9 +106,9 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
-" Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 " Plug 'dracula/vim'
-Plug 'nlknguyen/papercolor-theme'
+" Plug 'nlknguyen/papercolor-theme'
 
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
@@ -120,9 +120,9 @@ let test#strategy = 'vimux'
 " let g:dracula_italic = 0
 " color dracula
 
-" color gruvbox
+color gruvbox
+" colorscheme PaperColor
 
-colorscheme PaperColor
 " Change dashed seperator to line. This needs to run after the colorscheme is
 " set, otherwise it will be clobbered.
 set fillchars+=vert:│

@@ -38,8 +38,6 @@ bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
 
 # Lazy load dev
-__dev_hook_prompt() { :; }
-
 __DEV_LOADED=
 dev() {
   if [ ! $__DEV_LOADED ] && [ -f /opt/dev/dev.sh ]; then
