@@ -24,6 +24,12 @@ shopt -s histappend
 # Append to history post command and reread
 PROMPT_COMMAND="history -a; history -n;${PROMPT_COMMAND:-:}"
 
+# Congiure default editor
+export EDITOR=vim
+
+# Disable spring
+export DISABLE_SPRING=1
+
 # Configure PATH
 export GOPATH=$HOME
 export CARGO_PATH=$HOME/.cargo/bin
