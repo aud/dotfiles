@@ -12,6 +12,9 @@ let g:netrw_banner = 0
 " Set scroll in all modes
 set mouse=a
 
+" Disable vim-go warning (https://github.com/fatih/vim-go/issues/2301)
+let g:go_null_module_warning = 0
+
 " Per default, netrw leaves unmodified buffers open. This autocommand deletes
 " netrw's buffer once it's hidden (using ':q', for example)
 autocmd FileType netrw setl bufhidden=delete
