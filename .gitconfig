@@ -12,7 +12,6 @@
 	d = "diff"
 	rh = "reset --hard origin/master"
 	co = "checkout"
-	rbm = "!git rebase -i origin/master"
 	ls = "log --pretty=format:"%C(yellow)%h%Cred%d\\ [%ad]\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat --date=human"
 [commit]
 	verbose = true

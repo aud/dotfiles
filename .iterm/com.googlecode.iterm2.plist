@@ -1779,13 +1779,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.11759774386882782</real>
+				<real>0.14901960784313725</real>
 				<key>Color Space</key>
-				<string>Calibrated</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.11759573966264725</real>
+				<real>0.14901960784313725</real>
 				<key>Red Component</key>
-				<real>0.11759927868843079</real>
+				<real>0.14901960784313725</real>
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
@@ -2296,12 +2296,17 @@
 			<string>/Users/elliotdohm</string>
 		</dict>
 	</array>
+	<key>NoSyncAllAppVersions</key>
+	<array>
+		<string>3.3.0beta11</string>
+		<string>3.3.0beta10</string>
+	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1680, 1050}}</string>
 		<key>topLeft</key>
-		<string>{702, 881}</string>
+		<string>{701, 883}</string>
 	</dict>
 	<key>NoSyncHaveUsedCopyMode</key>
 	<true/>
@@ -2310,7 +2315,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>4D973409-4B2E-4355-AE78-18C8DC2E6EFC</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>347</integer>
+	<integer>414</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2596,6 +2601,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>commandLine</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>jobPid</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -2751,6 +2764,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>currentTab.currentSession.commandLine</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>currentTab.currentSession.hostname</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -2842,7 +2863,7 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession.path</string>
+				<string>currentSession.pid</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2898,7 +2919,7 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession.pid</string>
+				<string>currentSession.path</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2933,17 +2954,16 @@
 	</dict>
 	<key>NoSyncSearchHistory</key>
 	<array>
+		<string>pourstatus</string>
+		<string>user</string>
+		<string>country</string>
+		<string>currency</string>
+		<string>time</string>
+		<string>created</string>
+		<string>plan</string>
+		<string>users</string>
+		<string>permiss</string>
 		<string>webc</string>
-		<string>native-new-zealand.myshopify.om</string>
-		<string>native-new-zealand.myshopify.co</string>
-		<string>milesto</string>
-		<string>tickets</string>
-		<string>ticket_fie</string>
-		<string>field_fiel</string>
-		<string>user/search</string>
-		<string>macros</string>
-		<string>shop_</string>
-		<string>report</string>
 	</array>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>561410351.16317499</real>
@@ -3005,7 +3025,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-05-23T22:07:17Z</date>
+	<date>2019-06-11T20:43:51Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -3035,7 +3055,7 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.3.0beta8</string>
+	<string>3.3.0beta11</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
