@@ -28,7 +28,7 @@ shopt -s histappend
 PROMPT_COMMAND="history -a; history -n;${PROMPT_COMMAND:-:}"
 
 # Congiure default editor
-export EDITOR=vim
+export EDITOR=nvim
 
 # Disable spring
 export DISABLE_SPRING=1

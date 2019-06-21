@@ -2,7 +2,7 @@
 	email = elliot.dohm@shopify.com
 	name = Elliot Dohm
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = ~/.gitignore
 [alias]
 	branch-name = "!git rev-parse --abbrev-ref HEAD"
