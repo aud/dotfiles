@@ -5,6 +5,9 @@ alias rsa="railgun status -a -H -o name | xargs -n1 railgun stop"
 alias c="clear"
 alias ls="ls -Ga"
 
+# Extend git with https://github.com/github/hub
+eval "$(hub alias -s)"
+
 # Overwrite default install with brew package
 alias ctags="/usr/local/bin/ctags"
 

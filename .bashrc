@@ -3,6 +3,9 @@ for file in $HOME/.bash/*; do
   . $file
 done
 
+# Source GITHUB_TOKEN for hub
+. $HOME/.config/hub.sh
+
 # Set default fzf command for vim to use rg instead of find
 export FZF_DEFAULT_COMMAND='rg --files --follow --hidden --glob "!.git/*"'
 

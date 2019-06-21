@@ -26,3 +26,5 @@
 	version = 2
 [credential]
 	helper = osxkeychain
+[hub]
+	protocol = ssh
