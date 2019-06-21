@@ -23,6 +23,7 @@ brew 'redis'
 brew 'pkg-config'
 brew 'universal-ctags'
 brew 'htop'
+brew 'hub'
 
 cask 'slack-beta'
 cask 'iterm2-beta'
