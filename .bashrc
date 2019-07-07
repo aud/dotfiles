@@ -67,4 +67,9 @@ chruby() {
   chruby $@
 }
 
+# Added by nix installer (dev)
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+  . $HOME/.nix-profile/etc/profile.d/nix.sh
+fi
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
