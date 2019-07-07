@@ -112,10 +112,43 @@ Plug 'tpope/vim-eunuch'
 Plug 'morhetz/gruvbox'
 " Plug 'dracula/vim'
 " Plug 'nlknguyen/papercolor-theme'
-
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+endif
 call plug#end()
+
+let g:LanguageClient_echoProjectRoot = 0
+let g:LanguageClient_serverCommands = {
+      \ 'ruby': ['solargraph',  'stdio'],
+      \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+      \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
+      \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
+      \ 'typescript.tsx': ['/usr/local/bin/javascript-typescript-stdio'],
+      \ }
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+
+" Only use deoplete in neovim
+if has('nvim')
+  let g:deoplete#enable_at_startup = 1
+  call deoplete#custom#option('auto_complete', v:false)
+
+  " Open deoplete on tab
+  function! s:is_back_space()
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction
+  inoremap <silent><expr> <tab>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>is_back_space() ? "\<tab>" :
+        \ deoplete#mappings#manual_complete()
+endif
 
 " vim-test output to vimux
 let test#strategy = 'vimux'
@@ -155,17 +188,6 @@ function! ExecuteTestDebug()
   execute ':TestNearest'
 
   let g:test#javascript#jest#executable = jest
-endfunction
-
-" Basic tab autocomplete instead of using a third party package, like Supertab.
-imap <tab> <c-r>=InsertTabWrapper()<cr>
-function! InsertTabWrapper()
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-  else
-    return "\<c-p>"
-  endif
 endfunction
 
 " Disable status bar by default, as it's rarely useful.
