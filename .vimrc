@@ -24,6 +24,8 @@ set modelines=0
 " 256 colours
 set termguicolors
 
+hi LineNr ctermbg=NONE guibg=NONE
+
 " Disable warning message on swp files
 set shortmess+=A
 
@@ -109,7 +111,8 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
-Plug 'morhetz/gruvbox'
+Plug 'liuchengxu/space-vim-dark'
+" Plug 'morhetz/gruvbox'
 " Plug 'dracula/vim'
 " Plug 'nlknguyen/papercolor-theme'
 Plug 'benmills/vimux'
@@ -156,7 +159,12 @@ let test#strategy = 'vimux'
 " let g:dracula_italic = 0
 " color dracula
 
-color gruvbox
+colorscheme space-vim-dark
+hi Normal     ctermbg=NONE guibg=NONE
+hi LineNr     ctermbg=NONE guibg=NONE
+hi SignColumn ctermbg=NONE guibg=NONE
+
+" color gruvbox
 " colorscheme PaperColor
 
 " Change dashed seperator to line. This needs to run after the colorscheme is

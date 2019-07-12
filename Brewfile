@@ -25,6 +25,7 @@ brew 'pkg-config'
 brew 'universal-ctags'
 brew 'htop'
 brew 'hub'
+brew 'ffmpeg'
 
 cask 'slack-beta'
 cask 'iterm2-beta'
