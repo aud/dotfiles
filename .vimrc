@@ -12,9 +12,6 @@ let g:netrw_banner = 0
 " Set scroll in all modes
 set mouse=a
 
-" Disable vim-go warning (https://github.com/fatih/vim-go/issues/2301)
-let g:go_null_module_warning = 0
-
 " Per default, netrw leaves unmodified buffers open. This autocommand deletes
 " netrw's buffer once it's hidden (using ':q', for example)
 autocmd FileType netrw setl bufhidden=delete
@@ -117,41 +114,13 @@ Plug 'dracula/vim'
 " Plug 'nlknguyen/papercolor-theme'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'autozimu/LanguageClient-neovim', {
-    " \ 'branch': 'next',
-    " \ 'do': 'bash install.sh',
-    " \ }
-" if has('nvim')
-  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" endif
+
+" TypeScript
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/denite.nvim'
 call plug#end()
-
-" let g:LanguageClient_echoProjectRoot = 1
-" let g:LanguageClient_serverCommands = {
-"       \ 'ruby': ['solargraph',  'stdio'],
-"       \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-"       \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
-"       \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
-"       \ 'typescript.tsx': ['/usr/local/bin/javascript-typescript-stdio'],
-"       \ }
-" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-
-" " Only use deoplete in neovim
-" if has('nvim')
-"   let g:deoplete#enable_at_startup = 1
-"   call deoplete#custom#option('auto_complete', v:false)
-
-"   " Open deoplete on tab
-"   function! s:is_back_space()
-"     let col = col('.') - 1
-"     return !col || getline('.')[col - 1]  =~ '\s'
-"   endfunction
-"   inoremap <silent><expr> <tab>
-"         \ pumvisible() ? "\<C-n>" :
-"         \ <SID>is_back_space() ? "\<tab>" :
-"         \ deoplete#mappings#manual_complete()
-" endif
 
 " vim-test output to vimux
 let test#strategy = 'vimux'
@@ -228,6 +197,12 @@ function! ToggleStatusBar()
     set ruler
   endif
 endfunction
+
+function! HandleCompletion()
+  call deoplete#enable()
+  set signcolumn=yes
+endfunction
+autocmd FileType typescript call HandleCompletion()
 
 " Use ripgrep for fzf and alias to <leader>g. Modified version of:
 " https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
