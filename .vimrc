@@ -111,57 +111,67 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
-Plug 'liuchengxu/space-vim-dark'
+" Plug 'liuchengxu/space-vim-dark'
 " Plug 'morhetz/gruvbox'
-" Plug 'dracula/vim'
+Plug 'dracula/vim'
 " Plug 'nlknguyen/papercolor-theme'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-endif
+" Plug 'autozimu/LanguageClient-neovim', {
+    " \ 'branch': 'next',
+    " \ 'do': 'bash install.sh',
+    " \ }
+" if has('nvim')
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" endif
 call plug#end()
 
-let g:LanguageClient_echoProjectRoot = 0
-let g:LanguageClient_serverCommands = {
-      \ 'ruby': ['solargraph',  'stdio'],
-      \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-      \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
-      \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
-      \ 'typescript.tsx': ['/usr/local/bin/javascript-typescript-stdio'],
-      \ }
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" let g:LanguageClient_echoProjectRoot = 1
+" let g:LanguageClient_serverCommands = {
+"       \ 'ruby': ['solargraph',  'stdio'],
+"       \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+"       \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
+"       \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
+"       \ 'typescript.tsx': ['/usr/local/bin/javascript-typescript-stdio'],
+"       \ }
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
-" Only use deoplete in neovim
-if has('nvim')
-  let g:deoplete#enable_at_startup = 1
-  call deoplete#custom#option('auto_complete', v:false)
+" " Only use deoplete in neovim
+" if has('nvim')
+"   let g:deoplete#enable_at_startup = 1
+"   call deoplete#custom#option('auto_complete', v:false)
 
-  " Open deoplete on tab
-  function! s:is_back_space()
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-  endfunction
-  inoremap <silent><expr> <tab>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>is_back_space() ? "\<tab>" :
-        \ deoplete#mappings#manual_complete()
-endif
+"   " Open deoplete on tab
+"   function! s:is_back_space()
+"     let col = col('.') - 1
+"     return !col || getline('.')[col - 1]  =~ '\s'
+"   endfunction
+"   inoremap <silent><expr> <tab>
+"         \ pumvisible() ? "\<C-n>" :
+"         \ <SID>is_back_space() ? "\<tab>" :
+"         \ deoplete#mappings#manual_complete()
+" endif
 
 " vim-test output to vimux
 let test#strategy = 'vimux'
 
-" let g:dracula_italic = 0
-" color dracula
+imap <tab> <c-r>=InsertTabWrapper()<cr>
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
 
-colorscheme space-vim-dark
+let g:dracula_italic = 1
+colorscheme dracula
+
+" " colorscheme space-vim-dark
 hi Normal     ctermbg=NONE guibg=NONE
-hi LineNr     ctermbg=NONE guibg=NONE
+" hi LineNr     ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
 
 " color gruvbox
@@ -170,7 +180,7 @@ hi SignColumn ctermbg=NONE guibg=NONE
 " Change dashed seperator to line. This needs to run after the colorscheme is
 " set, otherwise it will be clobbered.
 set fillchars+=vert:│
-hi VertSplit ctermbg=NONE guibg=NONE cterm=NONE
+" hi VertSplit ctermbg=NONE guibg=NONE cterm=NONE
 
 " Strip trailing whitespace automatically
 function! <SID>StripTrailingWhitespaces()

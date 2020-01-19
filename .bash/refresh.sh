@@ -1,34 +1,16 @@
-execute_with_progress() {
-  __PRINTED=
-  __DOT="."
-
-  # Start background process that outputs every 0.05s.
-  (while true; do
-    for c in '-' '/' '|' '\'; do
-      if [ ! $__PRINTED ]; then
-        __PRINTED=true
-        printf "%b" "\e[1;34mRunning '$1'\e[0m  "
-      else
-        printf "\b$c"
-        sleep 0.05
-      fi
-    done
-  done) &
-
-  # Execute command.
-  $1
-
-  # Kill PID once command is complete.
-  kill $! && wait $! 2>/dev/null && echo -n
+printf_with_newline() {
+  printf "\n$1\n"
 }
 
 refresh() {
-  execute_with_progress "brew update"
-  execute_with_progress "brew upgrade"
-  execute_with_progress "brew cleanup"
-  execute_with_progress "nvim --headless +PlugClean! +qall"
-  execute_with_progress "nvim --headless +PlugUpgrade +qall"
-  execute_with_progress "nvim --headless +PlugUpdate +qall"
-
-  echo "done"
+  printf_with_newline "=====================starting brew runner====================="
+  printf_with_newline "running brew update..." && brew update
+  printf_with_newline "running brew upgrade..." && brew upgrade
+  printf_with_newline "running brew cleanup..." && brew cleanup
+  printf_with_newline "=====================brew runner complete====================="
+  printf_with_newline "=====================starting nvim(plug) runner====================="
+  printf_with_newline "running 'nvim --headless +PlugClean! +qall.." && nvim --headless +PlugClean! +qall
+  printf_with_newline "running 'nvim --headless +PlugUpgrade +qall.." && nvim --headless +PlugUpgrade +qall
+  printf_with_newline "running 'nvim --headless +PlugUpdate +qall.." && nvim --headless +PlugUpdate +qall
+  printf_with_newline "=====================nvim(plug) runner complete====================="
 }

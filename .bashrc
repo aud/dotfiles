@@ -3,9 +3,6 @@ for file in $HOME/.bash/*; do
   . $file
 done
 
-# Source GITHUB_TOKEN for hub
-. $HOME/.config/hub.sh
-
 # Set default fzf command for vim to use rg instead of find
 export FZF_DEFAULT_COMMAND='rg --files --follow --hidden --glob "!.git/*"'
 
@@ -37,8 +34,9 @@ export DISABLE_SPRING=1
 export GOPATH=$HOME
 export CARGO_PATH=$HOME/.cargo/bin
 export CDN_PATH=$HOME/x/cmd/x
-export PATH=$CARGO_PATH:$GOPATH:$PATH:$CDN_PATH
-
+export DEFAULT_RUBY_PATH=/opt/rubies/2.7.0/bin
+export PATH=$CARGO_PATH:$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$PATH
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig
 # Tab autocomplete options
 bind 'TAB:menu-complete'
 bind '"\e[Z":menu-complete-backward'
@@ -66,10 +64,5 @@ chruby() {
 
   chruby $@
 }
-
-# Added by nix installer (dev)
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
-  . $HOME/.nix-profile/etc/profile.d/nix.sh
-fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

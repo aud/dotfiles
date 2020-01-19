@@ -11,3 +11,5 @@ tmp
 coverage
 *.DS_STORE
 .yarn-error.log
+.config
+KEYFILE
