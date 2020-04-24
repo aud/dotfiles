@@ -13,3 +13,5 @@ coverage
 .yarn-error.log
 .config
 KEYFILE
+playground/.env
+.git/*

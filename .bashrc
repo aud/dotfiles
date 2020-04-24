@@ -4,7 +4,7 @@ for file in $HOME/.bash/*; do
 done
 
 # Set default fzf command for vim to use rg instead of find
-export FZF_DEFAULT_COMMAND='rg --files --follow --hidden --glob "!.git/*"'
+export FZF_DEFAULT_COMMAND='rg --files --hidden'
 
 # Remove duplicate entries in history file
 HISTCONTROL=ignoreboth:erasedups
@@ -37,6 +37,8 @@ export CDN_PATH=$HOME/x/cmd/x
 export DEFAULT_RUBY_PATH=/opt/rubies/2.7.0/bin
 export PATH=$CARGO_PATH:$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$PATH
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig
+export PATH=$GOPATH/bin:$PATH
+
 # Tab autocomplete options
 bind 'TAB:menu-complete'
 bind '"\e[Z":menu-complete-backward'

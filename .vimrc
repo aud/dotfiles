@@ -16,6 +16,9 @@ set mouse=a
 " netrw's buffer once it's hidden (using ':q', for example)
 autocmd FileType netrw setl bufhidden=delete
 
+" Auto update cwd
+" set autochdir
+
 set modelines=0
 
 " 256 colours
@@ -83,15 +86,6 @@ nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>l :TestLast<CR>
 
-" FZF remappings
-nnoremap <leader>f :Files<CR>
-
-" Prefer tmux panes instead of vim
-let g:fzf_prefer_tmux = 1
-
-" Set fzf height to 20%
-let g:fzf_layout = { 'down': '20%' }
-
 " Install vim plug if not already installed.
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -108,18 +102,19 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
-" Plug 'liuchengxu/space-vim-dark'
+Plug 'liuchengxu/space-vim-dark'
 " Plug 'morhetz/gruvbox'
-Plug 'dracula/vim'
+" Plug 'dracula/vim'
 " Plug 'nlknguyen/papercolor-theme'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
+" Plug 'andrewradev/splitjoin.vim'
 
 " TypeScript
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-Plug 'Shougo/deoplete.nvim'
-Plug 'Shougo/denite.nvim'
+" Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+" Plug 'Shougo/deoplete.nvim'
+" Plug 'Shougo/denite.nvim'
 call plug#end()
 
 " vim-test output to vimux
@@ -135,12 +130,12 @@ function! InsertTabWrapper()
   endif
 endfunction
 
-let g:dracula_italic = 1
-colorscheme dracula
+" let g:dracula_italic = 1
+" colorscheme dracula
 
-" " colorscheme space-vim-dark
+colorscheme space-vim-dark
 hi Normal     ctermbg=NONE guibg=NONE
-" hi LineNr     ctermbg=NONE guibg=NONE
+hi LineNr     ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
 
 " color gruvbox
@@ -164,9 +159,13 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
+" " Use sewing-kit runner in athena*
+" let parent_cwd = split(getcwd(), '/')[-1]
+" if parent_cwd == 'athena-flex' || parent_cwd == 'athena'
+"   let g:test#javascript#jest#executable = "yarn run sewing-kit test --no-graphql --no-watch"
+" endif
+
 " Custom strategy for vim-test to allow jest to recognize `debugger`.
-" More specifically, this prefixes the jest call with node inspect,
-" then resets after the test is complete.
 command! TestDebug :call ExecuteTestDebug()
 function! ExecuteTestDebug()
   let jest = test#javascript#jest#executable()
@@ -176,6 +175,9 @@ function! ExecuteTestDebug()
 
   let g:test#javascript#jest#executable = jest
 endfunction
+
+" Temp disable gopls
+let g:go_gopls_enabled = 0
 
 " Disable status bar by default, as it's rarely useful.
 nnoremap <leader>S :call ToggleStatusBar()<CR>
@@ -198,23 +200,31 @@ function! ToggleStatusBar()
   endif
 endfunction
 
-function! HandleCompletion()
-  call deoplete#enable()
-  set signcolumn=yes
-endfunction
-autocmd FileType typescript call HandleCompletion()
+" function! HandleCompletion()
+"   call deoplete#enable()
+"   set signcolumn=yes
+" endfunction
+" autocmd FileType typescript call HandleCompletion()
 
-" Use ripgrep for fzf and alias to <leader>g. Modified version of:
-" https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2
-command! -bang -nargs=* Rgrep call fzf#vim#grep(s:rgoptions.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-nnoremap <leader>g :Rgrep<CR>
-let s:rgoptions='rg
-      \ --column
-      \ --line-number
-      \ --no-heading
-      \ --fixed-strings
-      \ --ignore-case
-      \ --hidden
-      \ --follow
-      \ --glob "!.git/*"
-      \ --color "always" '
+" FZF remappings
+nnoremap <leader>f :Files<CR>
+
+" Prefer tmux panes instead of vim
+let g:fzf_prefer_tmux = 1
+
+" Disable preview window (for builtin :Files command)
+let g:fzf_preview_window = ''
+
+" Set fzf height to 20%
+let g:fzf_layout = { 'down': '20%' }
+
+function! RgContents(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --ignore-case --hidden %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let options = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, options, a:fullscreen)
+endfunction
+
+command! -nargs=* -bang Rg call RgContents(<q-args>, <bang>0)
+nnoremap <leader>g :Rg<CR>
