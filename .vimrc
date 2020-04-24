@@ -4,17 +4,17 @@ set nocompatible
 let mapleader=","
 
 " Change netrw browser to tree
-let g:netrw_liststyle = 3
+" let g:netrw_liststyle = 3
 
 " Disable netrw banner
-let g:netrw_banner = 0
+" let g:netrw_banner = 0
 
 " Set scroll in all modes
 set mouse=a
 
 " Per default, netrw leaves unmodified buffers open. This autocommand deletes
 " netrw's buffer once it's hidden (using ':q', for example)
-autocmd FileType netrw setl bufhidden=delete
+" autocmd FileType netrw setl bufhidden=delete
 
 " Auto update cwd
 " set autochdir
@@ -115,6 +115,8 @@ Plug 'christoomey/vim-tmux-navigator'
 " Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 " Plug 'Shougo/deoplete.nvim'
 " Plug 'Shougo/denite.nvim'
+
+Plug 'justinmk/vim-dirvish'
 call plug#end()
 
 " vim-test output to vimux
@@ -224,3 +226,9 @@ endfunction
 
 command! -nargs=* -bang Rg call RgContents(<q-args>, <bang>0)
 nnoremap <leader>g :Rg<CR>
+
+" Dirvish aliases
+let g:loaded_netrwPlugin = 1
+command Explore execute "normal \<Plug>(dirvish_up)"
+command Exp execute "normal \<Plug>(dirvish_up)"
+command Ex execute "normal \<Plug>(dirvish_up)"
