@@ -181,22 +181,18 @@ let g:go_gopls_enabled = 0
 
 " Disable status bar by default, as it's rarely useful.
 nnoremap <leader>S :call ToggleStatusBar()<CR>
-let g:statusHidden = 0
+let g:status_hidden = 0
 
-set laststatus=0
+set laststatus=2
 set noruler
 
 function! ToggleStatusBar()
-  if g:statusHidden
-    let g:statusHidden = 0
-
+  if g:status_hidden
+    let g:status_hidden = 0
     set laststatus=0
-    set noruler
   else
-    let g:statusHidden = 1
-
+    let g:status_hidden = 1
     set laststatus=2
-    set ruler
   endif
 endfunction
 
