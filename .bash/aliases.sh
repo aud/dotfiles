@@ -14,3 +14,6 @@ alias vi="/usr/local/bin/nvim"
 
 # Default to xterm with ssh
 alias ssh='TERM=xterm ssh'
+
+# Remove newline
+alias nn="tr -d '\n'"
