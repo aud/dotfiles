@@ -110,6 +110,8 @@ Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 " Plug 'andrewradev/splitjoin.vim'
 
+Plug 'rhysd/git-messenger.vim'
+
 " TypeScript
 " Plug 'HerringtonDarkholme/yats.vim'
 " Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
@@ -118,6 +120,9 @@ Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'justinmk/vim-dirvish'
 call plug#end()
+
+" https://github.com/rhysd/git-messenger.vim#ggit_messenger_always_into_popup-default-vfalse
+let g:git_messenger_always_into_popup = v:true
 
 " vim-test output to vimux
 let test#strategy = 'vimux'
