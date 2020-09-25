@@ -1,17 +1,6 @@
 # Shutdown all Railgun vms
 rsa() {
-  local railgun_stop_all="railgun status -a -H -o name | xargs -n1 railgun stop"
-  local kill_node="kill -9 `ps aux | rg 'bin/[n]ode' | awk '{print $2}'` 2>/dev/null"
-  local kill_sewing_kit="kill -9 `ps aux | rg '.bin/[s]ewing-kit' | awk '{print $2}'` 2>/dev/null"
-
-  echo "running ${railgun_stop_all}"
-  eval "$railgun_stop_all"
-
-  echo "running ${kill_node}"
-  eval "$kill_node"
-
-  echo "running ${kill_sewing_kit}"
-  eval "$kill_sewing_kit"
+  ruby $HOME/dotfiles/scripts/kill.rb
 }
 
 # Common
