@@ -26,6 +26,7 @@ brew 'htop'
 brew 'ffmpeg'
 brew 'cloc'
 brew 'coreutils'
+brew 'rbspy'
 
 cask 'slack-beta'
 cask 'iterm2-beta'
