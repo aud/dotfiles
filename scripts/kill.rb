@@ -3,6 +3,7 @@
 require 'open3'
 
 activity = false
+threads = []
 
 # Kill any matching processes
 %w(
@@ -26,11 +27,13 @@ activity = false
       pid = p[0]
       initiating_command = p[4..].join(' ')
 
-      puts "killing process: #{initiating_command}"
-      _stdout, stderr, status = Open3.capture3("kill -9 #{pid}")
+      threads << Thread.new do
+        puts "killing process: #{initiating_command}"
+        _stdout, stderr, status = Open3.capture3("kill -9 #{pid}")
 
-      unless status.success?
-        puts stderr
+        unless status.success?
+          puts stderr
+        end
       end
     end
   end
@@ -44,11 +47,13 @@ if status.success?
   running_vms.each do |vm|
     activity = true
 
-    puts "killing railgun vm: #{vm}"
-    stdout, stderr, status = Open3.capture3("railgun stop #{vm}")
+    threads << Thread.new do
+      puts "killing railgun vm: #{vm}"
+      stdout, stderr, status = Open3.capture3("railgun stop #{vm}")
 
-    unless status.success?
-      puts stderr
+      unless status.success?
+        puts stderr
+      end
     end
   end
 else
@@ -56,7 +61,9 @@ else
 end
 
 if activity
+  threads.each(&:join)
+
   puts 'done'
 else
-  puts "nothing todo"
+  puts 'nothing todo'
 end
