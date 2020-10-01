@@ -11,7 +11,7 @@ threads = []
   node
   sewing-kit
 ).each do |process_name|
-  stdout, _stderr, _status = Open3.capture3("pgrep -i #{process_name} | xargs ps")
+  stdout, _stderr, _status = Open3.capture3("pgrep -if #{process_name} | xargs ps")
 
   # Remove column headers
   processes = stdout.split("\n")[1..]
