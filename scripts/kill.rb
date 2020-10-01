@@ -10,6 +10,7 @@ threads = []
   ruby
   node
   sewing-kit
+  puma
 ).each do |process_name|
   stdout, _stderr, _status = Open3.capture3("pgrep -if #{process_name} | xargs ps")
 
