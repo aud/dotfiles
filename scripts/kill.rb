@@ -2,6 +2,10 @@
 
 require 'open3'
 
+PERSISTED_PROCESSES = [
+  'ruby lulu_new.rb',
+]
+
 activity = false
 threads = []
 
@@ -30,6 +34,11 @@ threads = []
     process.split(' ').tap do |p|
       pid = p[0]
       initiating_command = p[4..].join(' ')
+
+      if PERSISTED_PROCESSES.include?(initiating_command)
+        puts "skipping process: #{initiating_command}"
+        next
+      end
 
       threads << Thread.new do
         puts "killing process: #{initiating_command}"
