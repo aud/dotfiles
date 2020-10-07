@@ -8,9 +8,12 @@ threads = []
 # Kill any matching processes
 %w(
   ruby
+  python
   node
   sewing-kit
   puma
+  sidekiq
+  ngrok
 ).each do |process_name|
   stdout, _stderr, _status = Open3.capture3("pgrep -if #{process_name} | xargs ps")
 
