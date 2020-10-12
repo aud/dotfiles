@@ -10,10 +10,10 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden'
 HISTCONTROL=ignoreboth:erasedups
 
 # Number of lines in history file
-HISTFILESIZE=100000
+HISTFILESIZE=1000000
 
 # Number of lines in history to keep in memory
-HISTSIZE=50000
+HISTSIZE=100000
 
 # Ignore common commands from history
 HISTIGNORE="&:[ ]*:exit:ls:fg:bg:tmux:vi:vim:c:clear*"
