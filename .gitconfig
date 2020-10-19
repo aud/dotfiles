@@ -5,6 +5,7 @@
 	editor = nvim
 	excludesfile = ~/.gitignore
 	commitGraph = true
+	attributesfile = /Users/elliotdohm/.gitattributes
 [alias]
 	branch-name = "!git rev-parse --abbrev-ref HEAD"
 	publish = "!f() { if [ $# -eq 0 ]; then git push -u origin $(git branch-name); elif [ $1 == '-f' ]; then git push --force-with-lease origin $(git branch-name); fi }; f"
