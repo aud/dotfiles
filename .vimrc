@@ -110,6 +110,7 @@ Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 " Plug 'andrewradev/splitjoin.vim'
 
+Plug 'aud/strip-trailing-whitespace.vim'
 Plug 'rhysd/git-messenger.vim'
 
 " TypeScript
@@ -152,19 +153,6 @@ hi SignColumn ctermbg=NONE guibg=NONE
 " set, otherwise it will be clobbered.
 set fillchars+=vert:│
 " hi VertSplit ctermbg=NONE guibg=NONE cterm=NONE
-
-" Strip trailing whitespace automatically
-function! <SID>StripTrailingWhitespaces()
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-
-  %s/\s\+$//e
-
-  let @/=_s
-  call cursor(l, c)
-endfunction
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 " " Use sewing-kit runner in athena*
 " let parent_cwd = split(getcwd(), '/')[-1]
