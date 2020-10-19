@@ -17,3 +17,7 @@ playground/.env
 .git/*
 .yalc/*
 yalc.lock
+.vim/plugged
+.vim/.netrwhist
+.vim/autoload/plug.vim
+.vim/autoload/plug.vim.old
