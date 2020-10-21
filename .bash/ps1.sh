@@ -3,4 +3,5 @@ parsed_git_branch() {
   [ -d '.git' ] && echo "($(git rev-parse --abbrev-ref HEAD 2>/dev/null))"
 }
 
-PS1="\W\[\e[34m\]\$(parsed_git_branch)\[\e[m\] \$ "
+__FUCHSIA_COLOR='\[\e[0;38;5;169m\]'
+PS1="\W\[${__FUCHSIA_COLOR}\$(parsed_git_branch)\[\e[m\] \$ "
