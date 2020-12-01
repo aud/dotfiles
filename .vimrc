@@ -75,9 +75,6 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-" Set tabstop/shiftwidth to 4 for Go
-autocmd Filetype go setlocal ts=4 sw=4
-
 " Remap ESC to kj
 inoremap kj <Esc>
 
@@ -102,14 +99,16 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-eunuch'
-Plug 'liuchengxu/space-vim-dark'
-" Plug 'morhetz/gruvbox'
+" Plug 'liuchengxu/space-vim-dark'
+" Plug 'rakr/vim-one'
+Plug 'morhetz/gruvbox'
 " Plug 'dracula/vim'
 " Plug 'nlknguyen/papercolor-theme'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 " Plug 'andrewradev/splitjoin.vim'
 
+" Plug 'Rigellute/shades-of-purple.vim'
 Plug 'aud/strip-trailing-whitespace.vim'
 Plug 'rhysd/git-messenger.vim'
 
@@ -138,15 +137,21 @@ function! InsertTabWrapper()
   endif
 endfunction
 
+syntax enable
+" colorscheme shades_of_purple
+
 " let g:dracula_italic = 1
 " colorscheme dracula
 
-colorscheme space-vim-dark
+" colorscheme one
+" set background=light " for the light version
+
+" colorscheme space-vim-dark
 hi Normal     ctermbg=NONE guibg=NONE
 hi LineNr     ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
 
-" color gruvbox
+color gruvbox
 " colorscheme PaperColor
 
 " Change dashed seperator to line. This needs to run after the colorscheme is
@@ -191,13 +196,15 @@ function! ToggleStatusBar()
   endif
 endfunction
 
+" map <silent><Leader>g :call setbufvar(winbufnr(popup_atcursor(systemlist("cd " . shellescape(fnamemodify(resolve(expand('%:p')), ":h")) . " && git log --no-merges -n 1 -L " . shellescape(line("v") . "," . line(".") . ":" . resolve(expand("%:p")))), { "padding": [1,1,1,1], "pos": "botleft", "wrap": 0 })), "&filetype", "git")<CR>
+
 " function! HandleCompletion()
 "   call deoplete#enable()
 "   set signcolumn=yes
 " endfunction
-" autocmd FileType typescript call HandleCompletion()
+" autocmd FileType typescript call handlecompletion()
 
-" FZF remappings
+" fzf remappings
 nnoremap <leader>f :Files<CR>
 
 " Prefer tmux panes instead of vim
@@ -208,6 +215,9 @@ let g:fzf_preview_window = ''
 
 " Set fzf height to 20%
 let g:fzf_layout = { 'down': '20%' }
+
+autocmd FileType typescript setlocal ts=2 sts=2 sw=2
+au BufNewFile,BufRead *.go setlocal tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 function! RgContents(query, fullscreen)
   let command_fmt = 'rg --column --line-number --no-heading --color=always --ignore-case --hidden %s || true'
