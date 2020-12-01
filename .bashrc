@@ -37,7 +37,6 @@ export CDN_PATH=$HOME/x/cmd/x
 export DEFAULT_RUBY_PATH=/opt/rubies/2.7.1/bin
 export PATH=$CARGO_PATH:$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$PATH
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig
-export PATH=$GOPATH/bin:$PATH
 
 # Tab autocomplete options
 bind 'TAB:menu-complete'
