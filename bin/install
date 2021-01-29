@@ -9,6 +9,32 @@ require 'open3'
 # 5. Source .system (for mac only)
 # 6. Do some stuff to change default shell to bash?
 
+PACKAGES = %w(
+  bash
+  bash-completion2
+  tmux
+  vim
+  neovim
+  git
+  reattach-to-user-namespace
+  ripgrep
+  python3
+  ruby
+  go
+  openssl
+  pkg-config
+  htop
+  ffmpeg
+  coreutils
+  fzf
+)
+
+CASKS = %w(
+  slack-beta
+  iterm2-beta
+  google-chrome-beta
+)
+
 module Utils
   # Common installation utilities
 
@@ -21,7 +47,7 @@ module Utils
 
     # Shell command out to system and output stdout, stderr
     def run_cmd(cmd, silent: false)
-      puts "Running #{cmd}"
+      puts "Running `#{cmd}`"
 
       Open3.popen3(cmd) do |_stdin, stdout, stderr, wait_thr|
         out, err = ""
@@ -59,10 +85,11 @@ end
 
 def install_brew
   task("brew") do
-    unless Utils.cmd_exists?("brew")
+    unless Utils.cmd_exists?("zbrew")
       Utils.run_cmd('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
 
       # Add to path if Linux
+      # https://docs.brew.sh/Homebrew-on-Linux
       if linux?
         Utils.run_cmd("test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)")
         Utils.run_cmd("test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)")
@@ -70,13 +97,28 @@ def install_brew
         Utils.run_cmd('echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile')
       end
 
-      # Utils.run_cmd("brew bundle")
+      if darwin?
+        # non-darwin setups assumed to be headless
+        CASKS.each do |cask|
+          Utils.run_cmd("brew install #{cask} --cask")
+        end
+      end
+
+      PACKAGES.each do |package|
+        Utils.run_cmd("brew install #{package}")
+      end
     end
   end
 end
 
+def setup_symlinks
+  task("symlinks") do
+    Utils.run_cmd("./symlink.sh")
+  end
+end
 
-install_brew
+# install_brew
+setup_symlinks
 
 # set -euox pipefail
 
