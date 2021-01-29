@@ -21,29 +21,52 @@ module Utils
     # Shell command out to system and output stdout, stderr
     def run_cmd(cmd)
       Open3.popen3(cmd) do |_stdin, stdout, stderr, wait_thr|
+        out, err = ""
+
         while line = stdout.gets
+          out = line
           puts line
         end
         while line = stderr.gets
+          err = line
           puts line
         end
 
-        return wait_thr.value.success?
+        return out, err, wait_thr.value
       end
     end
   end
 end
 
-def install_brew
-  puts "Task: Install brew.."
+def task(name)
+  puts "[start] #{name}"
+  yield
+  puts "[finish] #{name}"
+end
 
-  if Utils.cmd_exists?("brew")
-    puts "Skipping.. command exists"
-  else
-    puts "Installing brew.."
-    Utils.run_cmd('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
+def darwin?
+  Utils.run_cmd("uname").strip! == "Darwin"
+end
+
+def linux?
+  Utils.run_cmd("uname").strip! == "Linux"
+end
+
+def install_brew
+  task("brew") do
+    unless Utils.cmd_exists?("brew")
+      Utils.run_cmd('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
+
+      # Add to path if Linux
+      if linux?
+        puts "Do path stuff?"
+      end
+
+      Utils.run_cmd("brew bundle")
+    end
   end
 end
+
 
 install_brew
 
