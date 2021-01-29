@@ -20,19 +20,32 @@ module Utils
 
     # Shell command out to system and output stdout, stderr
     def run_cmd(cmd)
-      stdout, stderr, status = Open3.capture3(cmd)
-      puts stdout unless stdout.empty?
-      puts stderr unless stderr.empty?
+      Open3.popen3(cmd) do |_stdin, stdout, stderr, wait_thr|
+        while line = stdout.gets
+          puts line
+        end
+        while line = stderr.gets
+          puts line
+        end
 
-      status.success?
+        return wait_thr.value.success?
+      end
     end
   end
 end
 
-# Download homebrew
-unless Utils.cmd_exists?("brew")
-  Utils.run_cmd('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
+def install_brew
+  puts "Task: Install brew.."
+
+  if Utils.cmd_exists?("brew")
+    puts "Skipping.. command exists"
+  else
+    puts "Installing brew.."
+    Utils.run_cmd('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
+  end
 end
+
+install_brew
 
 # set -euox pipefail
 
