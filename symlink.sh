@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # If target file exists, unlink.
 symlink() {
   ln -sfh $1 $2
