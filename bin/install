@@ -21,6 +21,8 @@ module Utils
 
     # Shell command out to system and output stdout, stderr
     def run_cmd(cmd, silent: false)
+      puts "Running #{cmd}"
+
       Open3.popen3(cmd) do |_stdin, stdout, stderr, wait_thr|
         out, err = ""
 
@@ -57,12 +59,13 @@ end
 
 def install_brew
   task("brew") do
-    unless Utils.cmd_exists?("zbrew")
+    unless Utils.cmd_exists?("brew")
       Utils.run_cmd('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
 
       # Add to path if Linux
       if linux?
-        puts "Do path stuff?"
+        Utils.run_cmd("echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/spin/.zprofile")
+        Utils.run_cmd("eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)")
       end
 
       # Utils.run_cmd("brew bundle")
