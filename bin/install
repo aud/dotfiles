@@ -64,8 +64,10 @@ def install_brew
 
       # Add to path if Linux
       if linux?
-        Utils.run_cmd("echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/spin/.zprofile")
-        Utils.run_cmd("eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)")
+        Utils.run_cmd("test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)")
+        Utils.run_cmd("test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)")
+        Utils.run_cmd('test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile')
+        Utils.run_cmd('echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile')
       end
 
       # Utils.run_cmd("brew bundle")
