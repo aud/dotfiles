@@ -15,21 +15,22 @@ module Utils
   class << self
     # Check if command exists
     def cmd_exists?(cmd)
-      run_cmd("which #{cmd} >/dev/null 2>&1")
+      *, status = run_cmd("which #{cmd}", silent: true)
+      status.success?
     end
 
     # Shell command out to system and output stdout, stderr
-    def run_cmd(cmd)
+    def run_cmd(cmd, silent: false)
       Open3.popen3(cmd) do |_stdin, stdout, stderr, wait_thr|
         out, err = ""
 
         while line = stdout.gets
           out = line
-          puts line
+          puts line unless silent
         end
         while line = stderr.gets
           err = line
-          puts line
+          puts line unless silent
         end
 
         return out, err, wait_thr.value
@@ -45,16 +46,18 @@ def task(name)
 end
 
 def darwin?
-  Utils.run_cmd("uname").strip! == "Darwin"
+  uname, * = Utils.run_cmd("uname", silent: true)
+  uname.strip == "Darwin"
 end
 
 def linux?
-  Utils.run_cmd("uname").strip! == "Linux"
+  uname, * = Utils.run_cmd("uname", silent: true)
+  uname.strip == "Linux"
 end
 
 def install_brew
   task("brew") do
-    unless Utils.cmd_exists?("brew")
+    unless Utils.cmd_exists?("zbrew")
       Utils.run_cmd('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
 
       # Add to path if Linux
@@ -62,7 +65,7 @@ def install_brew
         puts "Do path stuff?"
       end
 
-      Utils.run_cmd("brew bundle")
+      # Utils.run_cmd("brew bundle")
     end
   end
 end
