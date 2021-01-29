@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'open3'
+require 'fileutils'
 
 # 1. Download homebrew
 # 2. Running brew bundle (partly for many only - casks)
@@ -113,7 +114,20 @@ end
 
 def setup_symlinks
   task("symlinks") do
-    Utils.run_cmd("./symlink.sh")
+    dotfiles = Dir.entries(".").select do |file|
+      file.start_with?(".")
+    end.reject do |file|
+      file == "." || file == ".." || file == ".git" || file == ".config"
+    end
+
+    dotfiles.each do |dotfile|
+      task("symlinking #{dotfile}") do
+        from = "#{Dir.pwd}/#{dotfile}"
+        to = "#{File.expand_path('~')}/#{dotfile}"
+
+        FileUtils.ln_s(from, to, force: true)
+      end
+    end
   end
 end
 
