@@ -144,12 +144,12 @@ def setup_symlinks
   end
 end
 
+setup_symlinks
 if ARGV.any? { |arg| arg == "--light" || arg == "-light" }
   install_brew(light: true)
 else
   install_brew
 end
-setup_symlinks
 
 # set -euox pipefail
 
