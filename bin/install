@@ -7,7 +7,7 @@ set -euox pipefail
 # bash
 
 bash --rcfile <(echo "ruby bin/symlink.rb; exit")
-bash --rcfile <(echo "ruby bin/brew.rb; exit")
+bash --rcfile <(echo "source ~/.bashrc && ruby bin/brew.rb; exit")
 
 
 # 1. Download homebrew
