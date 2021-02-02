@@ -24,9 +24,13 @@ alias ls="ls -Ga"
 # Overwrite default install with brew package
 alias ctags="/usr/local/bin/ctags"
 
-# Use neovim instead
-alias vim="/usr/local/bin/nvim"
-alias vi="/usr/local/bin/nvim"
+if [[ $(uname) == "Linux" ]]; then
+  alias vim="/home/linuxbrew/.linuxbrew/bin/nvim"
+  alias vi="/home/linuxbrew/.linuxbrew/bin/nvim"
+elif [[ $(uname) == "Darwin" ]]; then
+  alias vim="/usr/local/bin/nvim"
+  alias vi="/usr/local/bin/nvim"
+fi
 
 # Default to xterm with ssh
 alias ssh='TERM=xterm ssh'
