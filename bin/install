@@ -100,6 +100,7 @@ def install_brew(light: false)
       if linux?
         Utils.run_cmd("test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)")
         Utils.run_cmd('test -r ~/.bash_profile && echo "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >>~/.bashrc')
+        Utils.run_cmd("source ~/.bashrc")
         # Utils.run_cmd("echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile")
       end
 
