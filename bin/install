@@ -105,6 +105,7 @@ def install_brew
         end
       end
 
+      # Run on both darwin and linux
       PACKAGES.each do |package|
         Utils.run_cmd("brew install #{package}")
       end
@@ -131,7 +132,7 @@ def setup_symlinks
   end
 end
 
-# install_brew
+install_brew
 setup_symlinks
 
 # set -euox pipefail
