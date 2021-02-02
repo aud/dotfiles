@@ -38,6 +38,15 @@ export DEFAULT_RUBY_PATH=/opt/rubies/2.7.1/bin
 export PATH=$CARGO_PATH:$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$PATH
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig
 
+if [[ $(uname) == "Linux" ]]; then
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
+  export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar";
+  export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew";
+  export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
+  export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:";
+  export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}";
+fi
+
 # Tab autocomplete options
 bind 'TAB:menu-complete'
 bind '"\e[Z":menu-complete-backward'
