@@ -1,7 +1,14 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env bash
 
-require 'open3'
-require 'fileutils'
+set -euox pipefail
+
+# Launch into bash shell. Eventually we should chsh, but it requires elevated
+# permissions ATM.
+# bash
+
+bash --rcfile <(echo "ruby bin/symlink.rb; exit")
+bash --rcfile <(echo "ruby bin/brew.rb; exit")
+
 
 # 1. Download homebrew
 # 2. Running brew bundle (partly for many only - casks)
@@ -10,160 +17,10 @@ require 'fileutils'
 # 5. Source .system (for mac only)
 # 6. Do some stuff to change default shell to bash?
 
-PACKAGES = %w(
-  bash
-  bash-completion2
-  tmux
-  vim
-  neovim
-  git
-  reattach-to-user-namespace
-  ripgrep
-  python3
-  ruby
-  go
-  openssl
-  pkg-config
-  htop
-  ffmpeg
-  coreutils
-  fzf
-)
+# setup_symlinks
+# if ARGV.any? { |arg| arg == "--light" || arg == "-light" }
+#   install_brew(light: true)
+# else
+#   install_brew
+# end
 
-LIGHT_PACKAGES = %w(
-  neovim
-  ripgrep
-  htop
-)
-
-CASKS = %w(
-  slack-beta
-  iterm2-beta
-  google-chrome-beta
-)
-
-module Utils
-  # Common installation utilities
-
-  class << self
-    # Check if command exists
-    def cmd_exists?(cmd)
-      *, status = run_cmd("which #{cmd}", silent: true)
-      status.success?
-    end
-
-    # Shell command out to system and output stdout, stderr
-    def run_cmd(cmd, silent: false)
-      puts "Running `#{cmd}`"
-
-      Open3.popen3(cmd) do |_stdin, stdout, stderr, wait_thr|
-        out, err = ""
-
-        while line = stdout.gets
-          out = line
-          puts line unless silent
-        end
-        while line = stderr.gets
-          err = line
-          puts line unless silent
-        end
-
-        return out, err, wait_thr.value
-      end
-    end
-  end
-end
-
-def task(name)
-  puts "[start] #{name}"
-  yield
-  puts "[finish] #{name}"
-end
-
-def darwin?
-  uname, * = Utils.run_cmd("uname", silent: true)
-  uname.strip == "Darwin"
-end
-
-def linux?
-  uname, * = Utils.run_cmd("uname", silent: true)
-  uname.strip == "Linux"
-end
-
-def install_brew(light: false)
-  task("brew") do
-    unless Utils.cmd_exists?("brew")
-      Utils.run_cmd('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
-
-      # Add to path if Linux
-      # https://docs.brew.sh/Homebrew-on-Linux
-      # if linux?
-      #   # Utils.run_cmd("test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)")
-      #   # Utils.run_cmd('test -r ~/.bash_profile && echo "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >>~/.bashrc')
-      #   # Utils.run_cmd("source ~/.bashrc")
-      #   # Utils.run_cmd("echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile")
-      # end
-
-      if darwin?
-        # non-darwin setups assumed to be headless
-        CASKS.each do |cask|
-          Utils.run_cmd("brew install #{cask} --cask")
-        end
-      end
-
-      # Run on both darwin and linux
-      if light
-        LIGHT_PACKAGES.each do |package|
-          Utils.run_cmd("brew install #{package}")
-        end
-      else
-        PACKAGES.each do |package|
-          Utils.run_cmd("brew install #{package}")
-        end
-      end
-    end
-  end
-end
-
-def setup_symlinks
-  task("symlinks") do
-    dotfiles = Dir.entries(".").select do |file|
-      file.start_with?(".")
-    end.reject do |file|
-      file == "." || file == ".." || file == ".git" || file == ".config"
-    end
-
-    dotfiles.each do |dotfile|
-      task("symlinking #{dotfile}") do
-        from = "#{Dir.pwd}/#{dotfile}"
-        to = "#{File.expand_path('~')}/#{dotfile}"
-
-        FileUtils.ln_s(from, to, force: true)
-      end
-    end
-  end
-end
-
-setup_symlinks
-if ARGV.any? { |arg| arg == "--light" || arg == "-light" }
-  install_brew(light: true)
-else
-  install_brew
-end
-
-# set -euox pipefail
-
-# cd $HOME
-# git clone https://github.com/aud/dotfiles
-# cd dotfiles
-
-# if ! command -v brew >/dev/null 2>&1; then
-#   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# fi
-
-# if test -f 'Brewfile' && command -v brew bundle check >/dev/null 2>&1; then
-#   brew bundle
-# fi
-
-# . './symlink.sh'
-# . './.bashrc'
