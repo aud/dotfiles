@@ -25,11 +25,16 @@ alias ls="ls -Ga"
 alias ctags="/usr/local/bin/ctags"
 
 # Use neovim instead
-alias vim="/usr/local/bin/nvim"
-alias vi="/usr/local/bin/nvim"
+if [[ $SPIN ]]; then
+  alias vim="/usr/bin/nvim"
+  alias vi="/usr/bin/nvim"
+else
+  alias vim="/usr/local/bin/nvim"
+  alias vi="/usr/local/bin/nvim"
+fi
 
 # Default to xterm with ssh
-alias ssh='TERM=xterm ssh'
+# alias ssh='TERM=xterm ssh'
 
 # Remove newline
 alias nn="tr -d '\n'"
