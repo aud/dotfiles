@@ -21,6 +21,10 @@ if [[ $SPIN ]]; then
     set +x
   done
 
+  set -x
+  ln -sf ~/dotfiles/.config/nvim/init.vim ~/.config/nvim/init.vim
+  set +x
+
   echo "installing deps.."
 
   if ! command -v rg &> /dev/null; then
