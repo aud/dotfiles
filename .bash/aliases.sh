@@ -3,6 +3,10 @@ rsa() {
   ruby $HOME/dotfiles/scripts/kill.rb
 }
 
+ssa() {
+  spin list | awk '{print $1}' | sed "1,2d" | xargs -n1 -I{} spin destroy {}
+}
+
 # Scripting to see most common bash commands (bash_history out of ~50k)
 # revealed that `gi tpull` and `gi ts` (`git pull`, `git status`) are fairly
 # common commands. This is probably because the t key is sticky. Recover this
