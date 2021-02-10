@@ -7,6 +7,20 @@
 
 set -euo pipefail
 
+if [ $SPIN ]; then
+  if ! command -v rg &> /dev/null; then
+    sudo apt-get install -y ripgrep
+  fi
+
+  # if ! command -v htop &> /dev/null; then
+  #   sudo apt-get install -y htop
+  # fi
+
+  # if ! command -v nvim &> /dev/null; then
+  #   sudo apt-get install -y neovim
+  # fi
+fi
+
 # # echo "installing dotfiles.."
 
 # if [[ $SPIN ]]; then
