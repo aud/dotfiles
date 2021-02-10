@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
-# set -euo pipefail
+if [[ $SPIN ]]; then
+  echo "lol"
+fi
+# sudo chsh /bin/bash
 
-# echo "installing dotfiles.."
+# # set -euo pipefail
 
-# if [[ $SPIN ]]; then
+# # echo "installing dotfiles.."
+
+# if [ $SPIN ]; then
 #   echo "symlinking.."
 
 #   for file in .[^.]*; do
