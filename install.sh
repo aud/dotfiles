@@ -19,6 +19,24 @@ if [ $SPIN ]; then
   if ! command -v nvim &> /dev/null; then
     sudo apt-get install -y neovim
   fi
+
+  for file in .[^.]*; do
+    from="$(pwd)/$file"
+    to="$HOME/$(basename $file)"
+
+    # Don't symlink .git
+    if [[ $file == ".git" ]]; then
+      continue
+    fi
+
+    set -x
+    ln -sf $from $to
+    set +x
+  done
+
+  set -x
+  ln -sf ~/dotfiles/.config/nvim/init.vim ~/.config/nvim/init.vim
+  set +x
 fi
 
 # # echo "installing dotfiles.."
