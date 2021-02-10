@@ -5,7 +5,7 @@ if [[ $SPIN ]]; then
 fi
 # sudo chsh /bin/bash
 
-# set -euo pipefail
+set -euo pipefail
 
 # echo "installing dotfiles.."
 
