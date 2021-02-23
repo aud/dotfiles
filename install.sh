@@ -3,11 +3,13 @@
 # if [[ $SPIN ]]; then
 #   echo "lol"
 # fi
-# # sudo chsh /bin/bash
 
 set -euo pipefail
 
 if [ $SPIN ]; then
+  echo "Configuring bash to default shell"
+  sudo chsh -s /bin/bash
+
   if ! command -v rg &> /dev/null; then
     sudo apt-get install -y ripgrep
   fi
