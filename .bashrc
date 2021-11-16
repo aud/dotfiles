@@ -74,8 +74,9 @@ chruby() {
   if [ ! $__CHRUBY_LOADED ] && [ -f /opt/dev/sh/chruby/chruby.sh ]; then
     . /opt/dev/sh/chruby/chruby.sh
     __CHRUBY_LOADED=true
-    chruby "$@"
   fi
+
+  chruby $@
 }
 
 [[ -x /usr/local/bin/brew ]] && eval $(/usr/local/bin/brew shellenv)
