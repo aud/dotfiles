@@ -1,6 +1,7 @@
 [user]
 	email = elliot.dohm@shopify.com
 	name = Elliot Dohm
+	signingkey = 9FBA5CAC85A3268C
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore
@@ -10,6 +11,7 @@
 	branch-name = "!git rev-parse --abbrev-ref HEAD"
 	publish = "!f() { if [ $# -eq 0 ]; then git push -u origin $(git branch-name); elif [ $1 == '-f' ]; then git push --force-with-lease origin $(git branch-name); fi }; f"
 	cob = "checkout -b"
+	recent = "branch --sort=-committerdate --format=\"%(committerdate:relative)%09%(refname:short)\""
 	s = "status"
 	d = "diff"
 	rh = "reset --hard origin/master"
@@ -17,6 +19,7 @@
 	ls = "log --pretty=format:"%C(yellow)%h%Cred%d\\ [%ad]\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat --date=human"
 [commit]
 	verbose = true
+	gpgsign = true
 [interactive]
 	singleKey = true
 [status]
@@ -37,5 +40,5 @@
 [pull]
 	rebase = true
 [credential]
-	helper = 
+	helper =
 	helper = store --file /opt/dev/var/private/git_credential_store

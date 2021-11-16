@@ -38,6 +38,19 @@ export DEFAULT_RUBY_PATH=/opt/rubies/2.7.1/bin
 export PATH=$CARGO_PATH:$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$PATH
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig
 
+# Android PATH
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# Gpg config
+export GPG_TTY=$(tty)
+
+# Temp testing new nvim
+alias nvimnew="$HOME/nvim-osx64/bin/nvim"
+
 # Tab autocomplete options
 bind 'TAB:menu-complete'
 bind '"\e[Z":menu-complete-backward'
@@ -61,9 +74,13 @@ chruby() {
   if [ ! $__CHRUBY_LOADED ] && [ -f /opt/dev/sh/chruby/chruby.sh ]; then
     . /opt/dev/sh/chruby/chruby.sh
     __CHRUBY_LOADED=true
+    chruby "$@"
   fi
-
-  chruby $@
 }
+
+[[ -x /usr/local/bin/brew ]] && eval $(/usr/local/bin/brew shellenv)
+
+# gsutil
+source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

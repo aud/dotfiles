@@ -1,10 +1,16 @@
 # Shutdown all Railgun vms
 rsa() {
-  ruby $HOME/dotfiles/scripts/kill.rb
+  $HOME/dotfiles/scripts/kill.rb
 }
 
 ssa() {
   spin list | awk '{print $1}' | sed "1,2d" | xargs -n1 -I{} spin destroy {}
+}
+
+latest() {
+  local latest=$(chruby | xargs ruby -e "puts ARGV.reject{|a| a == '*'}.max")
+  echo "switching to ${latest}"
+  chruby "$latest"
 }
 
 # Scripting to see most common bash commands (bash_history out of ~50k)
@@ -18,6 +24,16 @@ gi() {
     git status
   else
     echo "-bash: gi: command not found" >&2
+  fi
+}
+
+git() {
+  local repo=$(pwd | awk -F "/" '{print $7}')
+
+  if [[ "$1" == "co" || "$1" == "checkout" ]] && [[ "$2" == "master" ]] && [[ "$repo" == "help" ]]; then
+    command git checkout main
+  else
+    command git "$@"
   fi
 }
 

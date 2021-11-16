@@ -16,6 +16,7 @@ brew 'pkg-config'
 brew 'htop'
 brew 'ffmpeg'
 brew 'coreutils'
+brew 'tree'
 
 cask 'slack-beta'
 cask 'iterm2-beta'
