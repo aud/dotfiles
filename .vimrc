@@ -112,7 +112,9 @@ Plug 'christoomey/vim-tmux-navigator'
 " Plug 'joshdick/onedark.vim'
 " Plug 'yashguptaz/calvera-dark.nvim'
 " Plug 'sainnhe/everforest'
-Plug 'marko-cerovac/material.nvim'
+" Plug 'marko-cerovac/material.nvim'
+
+Plug 'morhetz/gruvbox'
 
 " Plug 'Rigellute/shades-of-purple.vim'
 Plug 'aud/strip-trailing-whitespace.vim'
@@ -163,13 +165,16 @@ syntax enable
 " let g:everforest_background = 'hard'
 " colorscheme everforest
 
-let g:material_style = 'oceanic'
-" let g:material_style = 'darker'
-let g:material_italic_comments = 1
-let g:material_italic_keywords = 1
-let g:material_italic_functions = 1
-let g:material_contrast = 1
-colorscheme material
+" let g:material_style = 'oceanic'
+" " let g:material_style = 'darker'
+" let g:material_italic_comments = 1
+" let g:material_italic_keywords = 1
+" let g:material_italic_functions = 1
+" let g:material_contrast = 1
+" colorscheme material
+
+set background=dark
+colorscheme gruvbox
 
 if (has("nvim"))
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1

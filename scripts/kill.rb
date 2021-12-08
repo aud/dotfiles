@@ -1,9 +1,11 @@
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 require 'open3'
 
 PERSISTED_PROCESSES = [
-  'ruby lulu_new.rb',
+  # Process started by dev that is always alive (self healing)
+  "/usr/bin/ruby --disable-gems /opt/dev/bin/user/backend-dev",
 ]
 
 activity = false
@@ -35,18 +37,13 @@ threads = []
       pid = p[0]
       initiating_command = p[4..].join(' ')
 
-      if PERSISTED_PROCESSES.include?(initiating_command)
-        puts "skipping process: #{initiating_command}"
-        next
-      end
+      next if PERSISTED_PROCESSES.include?(initiating_command)
 
       threads << Thread.new do
         puts "killing process: #{initiating_command}"
         _stdout, stderr, status = Open3.capture3("kill -9 #{pid}")
 
-        unless status.success?
-          puts stderr
-        end
+        puts stderr unless status.success?
       end
     end
   end
@@ -64,9 +61,7 @@ if status.success?
       puts "killing railgun vm: #{vm}"
       stdout, stderr, status = Open3.capture3("railgun stop #{vm}")
 
-      unless status.success?
-        puts stderr
-      end
+      puts stderr unless status.success?
     end
   end
 else
@@ -75,7 +70,6 @@ end
 
 if activity
   threads.each(&:join)
-
   puts 'done'
 else
   puts 'nothing todo'
