@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'open3'
+require "open3"
+require "json"
 
 PERSISTED_PROCESSES = [
   # Process started by dev that is always alive (self healing)
@@ -33,11 +34,13 @@ threads = []
   processes.each do |process|
     activity = true
 
-    process.split(' ').tap do |p|
+    process.split(" ").tap do |p|
       pid = p[0]
       initiating_command = p[4..].join(' ')
 
       next if PERSISTED_PROCESSES.include?(initiating_command)
+      next if initiating_command.match?(/sshuttle/)
+      next if initiating_command.match?(/isogun/)
 
       threads << Thread.new do
         puts "killing process: #{initiating_command}"
@@ -49,17 +52,16 @@ threads = []
   end
 end
 
-# Shutdown active Railgun vms
-stdout, stderr, status = Open3.capture3('railgun status -a -H -o name')
-
+# Shutdown all active docker vms
+stdout, stderr, status = Open3.capture3("docker ps --format '{\"id\":\"{{ .ID }}\", \"name\":\"{{ .Names }}\"}' | jq --slurp")
 if status.success?
-  running_vms = stdout.split("\n")
-  running_vms.each do |vm|
-    activity = true
-
+  JSON.parse(stdout).each do |vm|
     threads << Thread.new do
-      puts "killing railgun vm: #{vm}"
-      stdout, stderr, status = Open3.capture3("railgun stop #{vm}")
+      id = vm.fetch("id")
+      name = vm.fetch("name")
+
+      puts "killing docker vm: #{name}"
+      stdout, stderr, status = Open3.capture3("docker stop #{id}")
 
       puts stderr unless status.success?
     end
@@ -70,7 +72,7 @@ end
 
 if activity
   threads.each(&:join)
-  puts 'done'
+  puts "done"
 else
-  puts 'nothing todo'
+  puts "nothing todo"
 end
