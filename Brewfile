@@ -1,7 +1,7 @@
 tap 'homebrew/cask-versions'
 
 brew 'bash'
-brew 'bash-completion2'
+brew 'bash-completion@2'
 brew 'tmux'
 brew 'vim'
 brew 'neovim'
@@ -24,3 +24,4 @@ cask 'google-chrome-beta'
 cask 'spotify'
 cask '1password'
 cask 'ngrok'
+brew 'jq'

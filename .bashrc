@@ -1,6 +1,8 @@
+[[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
+
 # Source all files in ~/.bash, assume they are executable
 for file in $HOME/.bash/*; do
-  . $file
+  source $file
 done
 
 # Set default fzf command for vim to use rg instead of find
@@ -48,9 +50,6 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 # Gpg config
 export GPG_TTY=$(tty)
 
-# Temp testing new nvim
-alias nvimnew="$HOME/nvim-osx64/bin/nvim"
-
 # Tab autocomplete options
 bind 'TAB:menu-complete'
 bind '"\e[Z":menu-complete-backward'
@@ -62,7 +61,7 @@ bind 'set completion-ignore-case on'
 __DEV_LOADED=
 dev() {
   if [ ! $__DEV_LOADED ] && [ -f /opt/dev/dev.sh ]; then
-    . /opt/dev/dev.sh
+    source /opt/dev/dev.sh
     __DEV_LOADED=true
   fi
 
@@ -72,18 +71,18 @@ dev() {
 __CHRUBY_LOADED=
 chruby() {
   if [ ! $__CHRUBY_LOADED ] && [ -f /opt/dev/sh/chruby/chruby.sh ]; then
-    . /opt/dev/sh/chruby/chruby.sh
+    source /opt/dev/sh/chruby/chruby.sh
     __CHRUBY_LOADED=true
   fi
 
   chruby $@
 }
 
-[[ -x /usr/local/bin/brew ]] && eval $(/usr/local/bin/brew shellenv)
+# Lazy: configure default ruby
+chruby 2.7.3
 
 # gsutil
-source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc
+# source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc
 
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-. "$HOME/.cargo/env"
