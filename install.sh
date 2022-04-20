@@ -7,10 +7,8 @@ if [ $SPIN ]; then
 
   sudo add-apt-repository -y ppa:neovim-ppa/stable
   sudo apt-get update -y
-
-  sudo /usr/bin/apt-get install -y \
-    neovim \
-    ripgrep
+  sudo apt-get install -y neovim
+    # ripgrep
 
   for file in .[^.]*; do
     from="$(pwd)/$file"
