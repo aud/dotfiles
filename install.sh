@@ -1,10 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -eux
 
 if [ $SPIN ]; then
   echo "Sleeping because.."
-  sleep 30
 
   sudo add-apt-repository -y ppa:neovim-ppa/stable
   sudo apt-get update -y
