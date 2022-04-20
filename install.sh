@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-# if [[ $SPIN ]]; then
-#   echo "lol"
-# fi
+set -euo pipefail
 
-# set -euo pipefail
+# Lightweight
+if [ $SPIN ]; then
+  sudo chsh spin -s /bin/bash
+fi
 
-# if [ $SPIN ]; then
 #   # echo "Configuring bash to default shell"
 #   # sudo chsh spin -s /bin/bash
 
