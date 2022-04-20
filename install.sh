@@ -3,6 +3,8 @@
 set -euo pipefail
 
 if [ $SPIN ]; then
+  sudo add-apt-repository -y ppa:neovim-ppa/stable
+  sudo apt-get update -y
   sudo apt-get install -y \
     neovim \
     ripgrep
@@ -19,11 +21,16 @@ if [ $SPIN ]; then
     echo "Symlinking $from to $to"
     ln -sf $from $to
   done
+
+  alias vi="nvim"
+  alias vim="nvim"
+  alias c="clear"
+  alias ls="ls -Ga"
+  ln -sf $HOME/dotfiles/.config/nvim/init.vim $HOME/.config/nvim/init.vim
 fi
 
 
   # set -x
-  # ln -sf ~/dotfiles/.config/nvim/init.vim ~/.config/nvim/init.vim
   # set +x
 
 # # # echo "installing dotfiles.."
