@@ -12,10 +12,9 @@ if [ $SPIN ]; then
     neovim \
     ripgrep
 
-  alias vi="nvim"
-  alias vim="nvim"
-  alias c="clear"
-  alias ls="ls -Ga"
+  echo 'alias vi="nvim"' >> $HOME/.zshrc
+  echo 'alias vim="nvim"' >> $HOME/.zshrc
+  echo 'alias c="clear"' >> $HOME/.zshrc
 
   mkdir -p $HOME/.config/nvim
   ln -sf $HOME/dotfiles/.config/nvim/init.vim $HOME/.config/nvim/init.vim
