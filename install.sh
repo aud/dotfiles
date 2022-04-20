@@ -7,7 +7,8 @@ if [ $SPIN ]; then
 
   sudo add-apt-repository -y ppa:neovim-ppa/stable
   sudo apt-get update -y
-  sudo apt-get install -y \
+
+  sudo /usr/bin/apt-get install -y \
     neovim \
     ripgrep
 
