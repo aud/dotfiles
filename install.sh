@@ -3,19 +3,22 @@
 set -eux
 
 if [ $SPIN ]; then
-  echo "Sleeping because.."
-  sleep 180
-
-  # sudo apt-get install -y software-properties-common
-  # sudo add-apt-repository -y ppa:neovim-ppa/unstable
-  # sudo apt-get update
-  # sudo apt-get install -y neovim
+  # Some spin services already ready and fail if we run too early
+  sleep 60
 
   sudo add-apt-repository -y ppa:neovim-ppa/stable
   sudo apt-get update -y
   sudo apt-get install -y \
     neovim \
     ripgrep
+
+  alias vi="nvim"
+  alias vim="nvim"
+  alias c="clear"
+  alias ls="ls -Ga"
+
+  mkdir -p $HOME/.config/nvim
+  ln -sf $HOME/dotfiles/.config/nvim/init.vim $HOME/.config/nvim/init.vim
 
   for file in .[^.]*; do
     from="$(pwd)/$file"
@@ -29,12 +32,4 @@ if [ $SPIN ]; then
     echo "Symlinking $from to $to"
     ln -sf $from $to
   done
-
-  alias vi="nvim"
-  alias vim="nvim"
-  alias c="clear"
-  alias ls="ls -Ga"
-
-  mkdir -p $HOME/.config/nvim
-  ln -sf $HOME/dotfiles/.config/nvim/init.vim $HOME/.config/nvim/init.vim
 fi
