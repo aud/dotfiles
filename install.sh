@@ -32,7 +32,6 @@ if [ $SPIN ]; then
     ln -sf $from $to
   done
 
-  nvim -c ':PlugUpgrade | qa!'
   nvim -c ':PlugUpdate | qa!'
-
+  nvim -c ':PlugUpgrade | qa!'
 fi
