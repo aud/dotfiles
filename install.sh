@@ -16,6 +16,8 @@ if [ $SPIN ]; then
   echo 'alias vim="nvim"' >> $HOME/.zshrc
   echo 'alias c="clear"' >> $HOME/.zshrc
 
+  nvim --noplugin --headless -c 'PlugInstall' -c 'qa'
+
   mkdir -p $HOME/.config/nvim
   ln -sf $HOME/dotfiles/.config/nvim/init.vim $HOME/.config/nvim/init.vim
 
@@ -31,7 +33,4 @@ if [ $SPIN ]; then
     echo "Symlinking $from to $to"
     ln -sf $from $to
   done
-
-  nvim -c ':PlugUpdate | qa!'
-  nvim -c ':PlugUpgrade | qa!'
 fi
