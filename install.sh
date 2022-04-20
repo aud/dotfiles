@@ -19,9 +19,6 @@ if [ $SPIN ]; then
   mkdir -p $HOME/.config/nvim
   ln -sf $HOME/dotfiles/.config/nvim/init.vim $HOME/.config/nvim/init.vim
 
-  nvim -c ':PlugUpgrade | qa!'
-  nvim -c ':PlugUpdate | qa!'
-
   for file in .[^.]*; do
     from="$(pwd)/$file"
     to="$HOME/$(basename $file)"
@@ -34,4 +31,8 @@ if [ $SPIN ]; then
     echo "Symlinking $from to $to"
     ln -sf $from $to
   done
+
+  nvim -c ':PlugUpgrade | qa!'
+  nvim -c ':PlugUpdate | qa!'
+
 fi
