@@ -4,7 +4,7 @@ set -eux
 
 if [ $SPIN ]; then
   # Some spin services already ready and fail if we run too early
-  # sleep 60
+  sleep 60
 
   sudo add-apt-repository -y ppa:neovim-ppa/stable
   sudo apt-get update -y
