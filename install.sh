@@ -7,7 +7,7 @@ if [ $SPIN ]; then
     [ -d '.git' ] && echo "($(git rev-parse --abbrev-ref head 2>/dev/null))"
   }
   __COLOR='\[\e[0;36;5;169m\]'
-  PS1="\W\[${___COLOR}\$(parsed_git_branch)\[\e[m\] \$ "
+  PS1="\W\[${__COLOR}\$(parsed_git_branch)\[\e[m\] \$ "
 
   sudo chsh spin -s /bin/bash
 
