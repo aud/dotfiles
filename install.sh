@@ -2,44 +2,37 @@
 
 set -euo pipefail
 
-# Lightweight
 if [ $SPIN ]; then
+  parsed_git_branch() {
+    [ -d '.git' ] && echo "($(git rev-parse --abbrev-ref head 2>/dev/null))"
+  }
+  __COLOR='\[\e[0;36;5;169m\]'
+  PS1="\W\[${___COLOR}\$(parsed_git_branch)\[\e[m\] \$ "
+
   sudo chsh spin -s /bin/bash
+
+  sudo apt-get install -y \
+    neovim \
+    ripgrep
+
+  for file in .[^.]*; do
+    from="$(pwd)/$file"
+    to="$HOME/$(basename $file)"
+
+    # Don't symlink .git
+    if [ $file == ".git" ]; then
+      continue
+    fi
+
+    echo "Symlinking $from to $to"
+    ln -sf $from $to
+  done
 fi
 
-#   # echo "Configuring bash to default shell"
-#   # sudo chsh spin -s /bin/bash
 
-#   if ! command -v rg &> /dev/null; then
-#     sudo apt-get install -y ripgrep
-#   fi
-
-#   if ! command -v htop &> /dev/null; then
-#     sudo apt-get install -y htop
-#   fi
-
-#   if ! command -v nvim &> /dev/null; then
-#     sudo apt-get install -y neovim
-#   fi
-
-#   for file in .[^.]*; do
-#     from="$(pwd)/$file"
-#     to="$HOME/$(basename $file)"
-
-#     # Don't symlink .git
-#     if [[ $file == ".git" ]]; then
-#       continue
-#     fi
-
-#     set -x
-#     ln -sf $from $to
-#     set +x
-#   done
-
-#   set -x
-#   ln -sf ~/dotfiles/.config/nvim/init.vim ~/.config/nvim/init.vim
-#   set +x
-# fi
+  # set -x
+  # ln -sf ~/dotfiles/.config/nvim/init.vim ~/.config/nvim/init.vim
+  # set +x
 
 # # # echo "installing dotfiles.."
 
