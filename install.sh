@@ -1,14 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -eux
+# set -eux
 
 if [ $SPIN ]; then
   echo "Sleeping because.."
+  sleep 180
 
-  sudo add-apt-repository -y ppa:neovim-ppa/stable
-  sudo apt-get update -y
+  sudo apt-get install -y software-properties-common
+  sudo add-apt-repository -y ppa:neovim-ppa/unstable
+  sudo apt-get update
   sudo apt-get install -y neovim
-    # ripgrep
+
+#   sudo add-apt-repository -y ppa:neovim-ppa/stable
+#   sudo apt-get update -y
+#   sudo apt-get install -y neovim
+#     # ripgrep
 
   for file in .[^.]*; do
     from="$(pwd)/$file"
