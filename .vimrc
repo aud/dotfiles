@@ -134,6 +134,8 @@ Plug 'glepnir/lspsaga.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+" Test out Github Copilot
+Plug 'github/copilot.vim'
 call plug#end()
 
 " https://github.com/rhysd/git-messenger.vim#ggit_messenger_always_into_popup-default-vfalse
