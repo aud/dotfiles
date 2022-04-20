@@ -15,6 +15,7 @@ if [ $SPIN ]; then
   echo 'alias vi="nvim"' >> $HOME/.zshrc
   echo 'alias vim="nvim"' >> $HOME/.zshrc
   echo 'alias c="clear"' >> $HOME/.zshrc
+  echo '/usr/share/doc/fzf/examples/key-bindings.zsh' >> $HOME/.zshrc
 
   nvim --noplugin --headless -c 'PlugInstall' -c 'qa'
 
