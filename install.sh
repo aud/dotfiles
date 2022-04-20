@@ -3,12 +3,9 @@
 set -eux
 
 if [ $SPIN ]; then
-  # Some spin services already ready and fail if we run too early
-  # sleep 60
-
   sudo add-apt-repository -y ppa:neovim-ppa/stable
-  sudo apt-get update -y
-  sudo apt-get install -y \
+  sudo apt-get update -o DPkg::Lock::Timeout=60 -y
+  sudo apt-get install -o DPkg::Lock::Timeout=60 -y \
     neovim \
     ripgrep
 
