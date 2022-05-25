@@ -17,6 +17,7 @@ brew 'htop'
 brew 'ffmpeg'
 brew 'coreutils'
 brew 'tree'
+brew 'trash'
 
 cask 'slack-beta'
 cask 'iterm2-beta'

@@ -127,6 +127,7 @@ Plug 'rhysd/git-messenger.vim'
 " Plug 'Shougo/denite.nvim'
 
 Plug 'justinmk/vim-dirvish'
+Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
 
 Plug 'neovim/nvim-lspconfig'
 " Test the LSP UI thing
