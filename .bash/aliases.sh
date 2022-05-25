@@ -3,13 +3,8 @@ rsa() {
   $HOME/dotfiles/scripts/kill.rb
 }
 
-ssa() {
-  spin list | awk '{print $1}' | sed "1,2d" | xargs -n1 -I{} spin destroy {}
-}
-
 latest() {
   local latest=$(chruby | xargs ruby -e "puts ARGV.reject{|a| a == '*'}.max")
-  echo "switching to ${latest}"
   chruby "$latest"
 }
 
@@ -44,10 +39,10 @@ alias ls="ls -Ga"
 alias vim="/opt/homebrew/bin/nvim"
 alias vi="/opt/homebrew/bin/nvim"
 
+alias cat="bat --paging=never"
+
 # Default to xterm with ssh
 # alias ssh='TERM=xterm ssh'
 
 # Remove newline
 alias nn="tr -d '\n'"
-
-# alias ruby="/opt/rubies/2.7.3/bin/ruby"

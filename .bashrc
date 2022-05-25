@@ -78,8 +78,7 @@ chruby() {
   chruby $@
 }
 
-# Lazy: configure default ruby
-chruby 2.7.3
+latest
 
 # gsutil
 # source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc
