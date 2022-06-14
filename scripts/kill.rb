@@ -3,11 +3,8 @@
 
 require "open3"
 require "json"
+require "pry-byebug"
 
-PERSISTED_PROCESSES = [
-  # Process started by dev that is always alive (self healing)
-  "/usr/bin/ruby --disable-gems /opt/dev/bin/user/backend-dev",
-]
 
 activity = false
 threads = []
@@ -26,10 +23,7 @@ threads = []
 
   # Remove column headers
   processes = stdout.split("\n")[1..]
-
-  if processes.nil?
-    next
-  end
+  next if processes.nil?
 
   processes.each do |process|
     activity = true
@@ -38,9 +32,9 @@ threads = []
       pid = p[0]
       initiating_command = p[4..].join(' ')
 
-      next if PERSISTED_PROCESSES.include?(initiating_command)
       next if initiating_command.match?(/sshuttle/)
       next if initiating_command.match?(/isogun/)
+      next if initiating_command == "/usr/bin/ruby --disable-gems /opt/dev/bin/user/backend-dev"
 
       threads << Thread.new do
         puts "killing process: #{initiating_command}"
@@ -53,15 +47,18 @@ threads = []
 end
 
 # Shutdown all active docker vms
-stdout, stderr, status = Open3.capture3("docker ps --format '{\"id\":\"{{ .ID }}\", \"name\":\"{{ .Names }}\"}' | jq --slurp")
+stdout, stderr, status = Open3.capture3("podman stats --all --no-stream --no-reset --format=json")
+
 if status.success?
   JSON.parse(stdout).each do |vm|
     threads << Thread.new do
       id = vm.fetch("id")
       name = vm.fetch("name")
+      cpu_percent = vm.fetch("cpu_percent")
+      mem_usage = vm.fetch("mem_usage")
 
-      puts "killing docker vm: #{name}"
-      stdout, stderr, status = Open3.capture3("docker stop #{id}")
+      puts "killing podman vm: #{name}, cpu_perc: #{cpu_percent}, mem_usage: #{mem_usage}"
+      stdout, stderr, status = Open3.capture3("podman stop #{id}")
 
       puts stderr unless status.success?
     end
