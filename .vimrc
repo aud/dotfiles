@@ -128,6 +128,12 @@ Plug 'L3MON4D3/LuaSnip'
 " Manager for LSP
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'williamboman/mason.nvim'
+
+" Copilot
+" Plug 'github/copilot.vim'
+
+Plug 'zbirenbaum/copilot.lua'
+Plug 'zbirenbaum/copilot-cmp'
 call plug#end()
 
 " Colorscheme
@@ -282,6 +288,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+-- copilot_cmp
+
+require("copilot_cmp").setup()
+
+require("copilot").setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
+
 -- Set up nvim-cmp.
 local cmp = require('cmp')
 
@@ -300,6 +315,7 @@ cmp.setup({
     ['<tab>'] = cmp.mapping.confirm({ select = true }),
   }),
   sources = cmp.config.sources({
+    { name = "copilot" },
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   }, {
