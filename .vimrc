@@ -3,21 +3,8 @@ set nocompatible
 " Remap leader to ,
 let mapleader=","
 
-" Change netrw browser to tree
-" let g:netrw_liststyle = 3
-
-" Disable netrw banner
-" let g:netrw_banner = 0
-
 " Set scroll in all modes
 set mouse=a
-
-" Per default, netrw leaves unmodified buffers open. This autocommand deletes
-" netrw's buffer once it's hidden (using ':q', for example)
-" autocmd FileType netrw setl bufhidden=delete
-
-" Auto update cwd
-" set autochdir
 
 set modelines=0
 
@@ -83,6 +70,22 @@ nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>l :TestLast<CR>
 
+" Disable status bar by default, as it's rarely useful.
+nnoremap <leader>S :call ToggleStatusBar()<CR>
+let g:status_hidden = 0
+set noruler
+set laststatus=2
+
+function! ToggleStatusBar()
+  if g:status_hidden
+    let g:status_hidden = 0
+    set laststatus=0
+  else
+    let g:status_hidden = 1
+    set laststatus=2
+  endif
+endfunction
+
 " Install vim plug if not already installed.
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -95,49 +98,55 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
 Plug 'janko-m/vim-test'
-Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
-Plug 'tpope/vim-eunuch'
-" Plug 'liuchengxu/space-vim-dark'
-" Plug 'rakr/vim-one'
-" Plug 'morhetz/gruvbox'
-" Plug 'dracula/vim'
-" Plug 'nlknguyen/papercolor-theme'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'andrewradev/splitjoin.vim'
-" Plug 'ajmwagar/vim-deus'
-" Plug 'sainnhe/sonokai'
-
-" Plug 'joshdick/onedark.vim'
-" Plug 'yashguptaz/calvera-dark.nvim'
-" Plug 'sainnhe/everforest'
-" Plug 'marko-cerovac/material.nvim'
-
-Plug 'morhetz/gruvbox'
-
-" Plug 'Rigellute/shades-of-purple.vim'
 Plug 'aud/strip-trailing-whitespace.vim'
 Plug 'rhysd/git-messenger.vim'
 
-" TypeScript
-" Plug 'HerringtonDarkholme/yats.vim'
-" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'Shougo/denite.nvim'
-
+Plug 'rebelot/kanagawa.nvim'
 Plug 'justinmk/vim-dirvish'
+
+" Try to use vim-dirvish-dovish for a bit instead.
+" Plug 'tpope/vim-eunuch'
 Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
 
-Plug 'neovim/nvim-lspconfig'
-" Test the LSP UI thing
-Plug 'glepnir/lspsaga.nvim'
-
+" Treesitter / syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-" Test out Github Copilot
-Plug 'github/copilot.vim'
+" LSP config.. Again
+"  Uncomment these if you want to manage LSP servers from neovim
+
+" LSP Support
+Plug 'neovim/nvim-lspconfig'
+" Autocompletion
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'L3MON4D3/LuaSnip'
+
+Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'dev-v3'}
+
+" Manager for LSP
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'williamboman/mason.nvim'
 call plug#end()
+
+" Colorscheme
+lua <<EOF
+require('kanagawa').setup({
+  colors = {
+    theme = {
+      all = {
+        ui = {
+          bg_gutter = "none"
+        }
+      }
+    }
+  }
+})
+
+vim.cmd("colorscheme kanagawa")
+EOF
 
 " https://github.com/rhysd/git-messenger.vim#ggit_messenger_always_into_popup-default-vfalse
 let g:git_messenger_always_into_popup = v:true
@@ -145,39 +154,21 @@ let g:git_messenger_always_into_popup = v:true
 " vim-test output to vimux
 let test#strategy = 'vimux'
 
-imap <tab> <c-r>=InsertTabWrapper()<cr>
-function! InsertTabWrapper()
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-  else
-    return "\<c-p>"
-  endif
-endfunction
+" Poor mans autocomplete:
+"
+" Replaced by a proper LSP
+"
+" imap <tab> <c-r>=InsertTabWrapper()<cr>
+" function! InsertTabWrapper()
+"   let col = col('.') - 1
+"   if !col || getline('.')[col - 1] !~ '\k'
+"     return "\<tab>"
+"   else
+"     return "\<c-p>"
+"   endif
+" endfunction
 
 syntax enable
-
-
-" " For dark version.
-" set background=dark
-" " For light version.
-" " set background=light
-" " Set contrast.
-" " This configuration option should be placed before `colorscheme everforest`.
-" " Available values: 'hard', 'medium'(default), 'soft'
-" let g:everforest_background = 'hard'
-" colorscheme everforest
-
-" let g:material_style = 'oceanic'
-" " let g:material_style = 'darker'
-" let g:material_italic_comments = 1
-" let g:material_italic_keywords = 1
-" let g:material_italic_functions = 1
-" let g:material_contrast = 1
-" colorscheme material
-
-set background=dark
-colorscheme gruvbox
 
 if (has("nvim"))
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -196,35 +187,6 @@ function! ExecuteTestDebug()
   execute ':TestNearest'
 
   let g:test#javascript#jest#executable = jest
-endfunction
-
-
-" Handle portal
-let parent_cwd = split(getcwd(), "/")[-1]
-if parent_cwd == "help"
-  let g:test#ruby#minitest#executable = "components/portal/bin/rails test"
-  let g:test#ruby#rails#executable = "components/portal/bin/rails test"
-endif
-
-
-" Temp disable gopls
-let g:go_gopls_enabled = 0
-
-" Disable status bar by default, as it's rarely useful.
-nnoremap <leader>S :call ToggleStatusBar()<CR>
-let g:status_hidden = 0
-
-set laststatus=2
-set noruler
-
-function! ToggleStatusBar()
-  if g:status_hidden
-    let g:status_hidden = 0
-    set laststatus=0
-  else
-    let g:status_hidden = 1
-    set laststatus=2
-  endif
 endfunction
 
 " fzf remappings
@@ -262,54 +224,67 @@ command Ex execute "normal \<Plug>(dirvish_up)"
 " Treesitter config
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  incremental_selection = {
+  ensure_installed = "all",
+
+  sync_install = false,
+  auto_install = true,
+
+  highlight = {
     enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
   },
-  indent = {
-    enable = true
-  }
 }
 EOF
 
-" LSP config
-lua << EOF
-local nvim_lsp = require('lspconfig')
-nvim_lsp.tsserver.setup {}
-nvim_lsp.solargraph.setup{}
+" Attempt at an LSP config..
+lua <<EOF
+local lsp = require('lsp-zero').preset({})
+lsp.on_attach(function(client, bufnr)
+  -- see :help lsp-zero-keybindings
+  -- to learn the available actions
+  lsp.default_keymaps({buffer = bufnr})
+end)
 
+lsp.extend_cmp()
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+-- Configure Mason
 
-  --Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {
+    'tsserver',
+    -- TODO: Eventually migrate to ruby-lsp
+    -- Solargraph is not great..
+    'solargraph',
+    'terraformls',
+    'bashls',
+    'cssls',
+    'gopls',
+    'vimls',
+    'sqlls',
+    'jsonls',
+    'graphql',
+    'dockerls',
+    'clangd'
+  },
+  handlers = {lsp.default_setup},
+})
 
-  local opts = { noremap=true, silent=true }
-
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-end
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { "solargraph", "tsserver" }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 100,
-    }
-  }
-end
+-- Configure cmp
+-- The main thing here is <tab>
+local cmp = require('cmp')
+cmp.setup({
+  sources = {{name = 'nvim_lsp'}},
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
+})
 EOF
-nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
-nnoremap <silent> gs :Lspsaga signature_help<CR>
