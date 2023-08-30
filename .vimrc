@@ -115,16 +115,15 @@ Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " LSP config.. Again
-"  Uncomment these if you want to manage LSP servers from neovim
-
-" LSP Support
 Plug 'neovim/nvim-lspconfig'
-" Autocompletion
-Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+" Autocompletion
+Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip'
-
-Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'dev-v3'}
 
 " Manager for LSP
 Plug 'williamboman/mason-lspconfig.nvim'
@@ -237,44 +236,83 @@ EOF
 
 " Attempt at an LSP config..
 lua <<EOF
-local lsp = require('lsp-zero').preset({})
-lsp.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
-  -- to learn the available actions
-  lsp.default_keymaps({buffer = bufnr})
-end)
-
-lsp.extend_cmp()
+local lang_servers = {
+  'tsserver',
+  'ruby_ls',
+  'terraformls',
+  'bashls',
+  'cssls',
+  'gopls',
+  'vimls',
+  'sqlls',
+  'jsonls',
+  'graphql',
+  'dockerls',
+  'clangd',
+  'yamlls',
+}
 
 -- Configure Mason
-
+-- Mason controls autocomplete.
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {
-    'tsserver',
-    -- TODO: Eventually migrate to ruby-lsp
-    -- Solargraph is not great..
-    'solargraph',
-    'terraformls',
-    'bashls',
-    'cssls',
-    'gopls',
-    'vimls',
-    'sqlls',
-    'jsonls',
-    'graphql',
-    'dockerls',
-    'clangd',
-    'yamlls',
-  },
-  handlers = {lsp.default_setup},
+  ensure_installed = lang_servers
 })
 
--- Configure cmp
+-- Configure lspconfig
+-- Requires setting up a lang server for each one
+local lspconfig = require('lspconfig')
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+  end,
+})
+
+-- Set up nvim-cmp.
 local cmp = require('cmp')
+
 cmp.setup({
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
   mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ['<tab>'] = cmp.mapping.confirm({ select = true }),
   }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  }, {
+    { name = 'buffer' },
+  })
 })
+
+-- Set up lspconfig.
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+for _, lsp in ipairs(lang_servers) do
+  require('lspconfig')[lsp].setup {
+    capabilities = capabilities
+  }
+end
 EOF
