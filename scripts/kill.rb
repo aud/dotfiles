@@ -3,7 +3,6 @@
 
 require "open3"
 require "json"
-require "pry-byebug"
 
 
 activity = false
@@ -32,12 +31,13 @@ threads = []
       pid = p[0]
       initiating_command = p[4..].join(' ')
 
+      # Persistent processes
       next if initiating_command.match?(/sshuttle/)
       next if initiating_command.match?(/isogun/)
       next if initiating_command == "/usr/bin/ruby --disable-gems /opt/dev/bin/user/backend-dev"
 
       threads << Thread.new do
-        puts "killing process: #{initiating_command}"
+        puts "sigkill process: #{initiating_command}"
         _stdout, stderr, status = Open3.capture3("kill -9 #{pid}")
 
         puts stderr unless status.success?

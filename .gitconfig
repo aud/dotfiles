@@ -1,10 +1,7 @@
 [user]
 	email = elliot.dohm@shopify.com
 	name = Elliot Dohm
-	signingkey = 350B18B1
 [core]
-	editor = nvim
-	excludesfile = ~/.gitignore
 	attributesfile = /Users/elliotdohm/.gitattributes
 	compression = 0
 [alias]
@@ -17,7 +14,6 @@
 	ls = "log --pretty=format:"%C(yellow)%h%Cred%d\\ [%ad]\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat --date=human"
 [commit]
 	verbose = true
-	gpgsign = true
 [interactive]
 	singleKey = true
 [status]

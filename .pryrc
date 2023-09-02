@@ -6,7 +6,7 @@
 
 #   private
 
-#   def c; system('clear'); end
+#   def c; system("clear"); end
 #   alias_method(:clear, :c)
 
 #   def r; reload!; end
@@ -27,7 +27,7 @@
 #   def pbcopy(data)
 #     out = data.is_a?(String) ? data : data.inspect
 
-#     IO.popen('tr -d "\n" | pbcopy', 'w') do |io|
+#     IO.popen("tr -d "\n" | pbcopy", "w") do |io|
 #       io.puts(out)
 #     end
 #   end
@@ -35,5 +35,20 @@
 
 # include QuickCommands
 
-# def c; system('clear'); end
+# def c; system("clear"); end
 # def clear; c; end
+
+# Pry.config.history.file = "~/.pry_history"
+
+
+begin
+  require "rb-readline"
+  require "readline"
+
+  if defined?(RbReadline)
+    def RbReadline.rl_reverse_search_history(sign, key)
+      rl_insert_text  `cat ~/.pry_history | fzf --tac |  tr "\n" " "`
+    end
+  end
+rescue LoadError
+end
