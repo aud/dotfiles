@@ -95,6 +95,9 @@ nnoremap <leader>f :Files<CR>
 command! -nargs=* -bang Rg call RgContents(<q-args>, <bang>0)
 nnoremap <leader>g :Rg<CR>
 
+" Remap gS to toggle split/join
+nnoremap gS :TSJToggle<CR>
+
 " Disable status bar by default, as it's rarely useful.
 nnoremap <leader>S :call ToggleStatusBar()<CR>
 
@@ -161,6 +164,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'RRethy/nvim-treesitter-endwise'
+Plug 'Wansmer/treesj'
 
 " LSP config.. Again
 Plug 'neovim/nvim-lspconfig'
@@ -337,4 +341,13 @@ for _, lsp in ipairs(lang_servers) do
     capabilities = capabilities
   }
 end
+EOF
+
+lua <<EOF
+-- =====================================
+-- Treesitter [splitjoin]
+-- =====================================
+require('treesj').setup({
+  max_join_length = 120,
+})
 EOF
