@@ -90,10 +90,9 @@ nmap <C-w>- :resize -15<CR>
 nmap <C-w>> :vertical resize +15<CR>
 nmap <C-w>< :vertical resize -15<CR>
 
-" Fzf remappings
-nnoremap <leader>f :Files<CR>
-command! -nargs=* -bang Rg call RgContents(<q-args>, <bang>0)
-nnoremap <leader>g :Rg<CR>
+" Fzf-lua remappings
+nnoremap <leader>f :lua require("fzf-lua").files()<CR>
+nnoremap <leader>g :lua require("fzf-lua").grep_project()<CR>
 
 " Remap gS to toggle split/join
 nnoremap gS :TSJToggle<CR>
@@ -123,14 +122,6 @@ function! ExecuteTestDebug()
   let g:test#javascript#jest#executable = jest
 endfunction
 
-function! RgContents(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --ignore-case --hidden %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let options = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, options, a:fullscreen)
-endfunction
-
 function! ToggleStatusBar()
   if g:status_hidden
     let g:status_hidden = 0
@@ -152,7 +143,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'ibhagwan/fzf-lua'
 Plug 'tpope/vim-commentary'
 Plug 'janko-m/vim-test'
 Plug 'benmills/vimux'
@@ -221,17 +212,6 @@ let g:git_messenger_always_into_popup = v:true
 "
 " Output to vimux
 let test#strategy = 'vimux'
-
-" fzf:
-"
-" Prefer tmux panes instead of vim
-let g:fzf_prefer_tmux = 1
-
-" Disable preview window (for builtin :Files command)
-let g:fzf_preview_window = ''
-
-" Set fzf height to 20%
-let g:fzf_layout = { 'down': '20%' }
 
 " =====================================
 " Treesitter config
@@ -349,5 +329,32 @@ lua <<EOF
 -- =====================================
 require('treesj').setup({
   max_join_length = 120,
+})
+EOF
+
+lua <<EOF
+-- =====================================
+-- Fzf lua
+-- =====================================
+require("fzf-lua").setup({
+  fzf_bin = "fzf-tmux",
+  -- Docs: `fzf-tmux --help`
+  fzf_tmux_opts = {
+    -- We need to reset `-p`, as the default from the fzf-lua plugin conflicts
+    -- when the `-d` option is set. See
+    -- https://github.com/ibhagwan/fzf-lua/issues/865
+    ["-p"] = false,
+    ["-d"] = "20%",
+  },
+  winopts = {
+    preview = {
+      hidden = "hidden"
+    }
+  },
+  -- https://github.com/ibhagwan/fzf-lua/wiki#how-do-i-get-maximum-performance-out-of-fzf-lua
+  files = {
+    git_icons = false,
+    file_icons = false,
+  }
 })
 EOF
