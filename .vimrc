@@ -65,6 +65,9 @@ set expandtab
 " Remap ESC to kj
 inoremap kj <Esc>
 
+" Remap W to w
+command! W w
+
 " Remap keys for vim-test
 nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>

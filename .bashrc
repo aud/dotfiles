@@ -70,20 +70,7 @@ dev() {
   dev $@
 }
 
-__CHRUBY_LOADED=
-chruby() {
-  if [ ! $__CHRUBY_LOADED ] && [ -f /opt/dev/sh/chruby/chruby.sh ]; then
-    source /opt/dev/sh/chruby/chruby.sh
-    __CHRUBY_LOADED=true
-  fi
-
-  chruby $@
-}
-
-latest
-
-# gsutil
-# source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc
-
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+[[ -f /opt/dev/sh/chruby/chruby.sh ]] && { type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; } }
