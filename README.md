@@ -1,6 +1,3 @@
 Personal dotfiles.
 
-Install:
-```
-git clone https://github.com/aud/dotfiles && cd dotfiles && ./install.sh
-```
+Predictable install is sort of flaky, but `./install.sh` should get you most of the way there.
