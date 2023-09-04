@@ -156,6 +156,7 @@ Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'RRethy/nvim-treesitter-endwise'
 Plug 'Wansmer/treesj'
+Plug 'ibhagwan/smartyank.nvim'
 
 " LSP config.. Again
 Plug 'neovim/nvim-lspconfig'
