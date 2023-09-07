@@ -316,9 +316,16 @@ cmp.setup({
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+local on_attach = function(client, bufnr)
+  -- Disable lsp formatexpr (use the internal one)
+  -- This allows `gq` to work when the lsp is attached
+  vim.opt.formatexpr = ""
+end
+
 -- Finally, setup each lang server
 for _, lsp in ipairs(lang_servers) do
   require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
     capabilities = capabilities
   }
 end
