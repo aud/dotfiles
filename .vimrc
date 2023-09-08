@@ -93,6 +93,7 @@ nmap <C-w>< :vertical resize -15<CR>
 " Fzf-lua remappings
 nnoremap <leader>f :lua require("fzf-lua").files()<CR>
 nnoremap <leader>g :lua require("fzf-lua").grep_project()<CR>
+command! Buffers :lua require("fzf-lua").buffers()<CR>
 
 " Remap gS to toggle split/join
 nnoremap gS :TSJToggle<CR>
