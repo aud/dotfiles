@@ -34,12 +34,11 @@ export DISABLE_SPRING=1
 
 # Configure PATH
 export GOPATH=$HOME
-export CARGO_PATH=$HOME/.cargo/bin
 export CDN_PATH=$HOME/x/cmd/x
 export DEFAULT_RUBY_PATH=/opt/rubies/2.7.1/bin
 export GIT_ALIAS_PATH=$HOME/.git-aliases
 
-export PATH=$CARGO_PATH:$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$GIT_ALIAS_PATH:$PATH
+export PATH=$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$GIT_ALIAS_PATH:$PATH
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig
 
 # Android PATH
