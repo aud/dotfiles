@@ -51,6 +51,9 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 # Gpg config
 export GPG_TTY=$(tty)
 
+# cloudplatform: add Shopify clusters to your local kubernetes config
+export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}/Users/elliotdohm/.kube/config:/Users/elliotdohm/.kube/config.shopify.cloudplatform
+
 # Tab autocomplete options
 bind 'TAB:menu-complete'
 bind '"\e[Z":menu-complete-backward'
@@ -72,6 +75,6 @@ dev() {
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"
 
 [[ -f /opt/dev/sh/chruby/chruby.sh ]] && { type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; } }

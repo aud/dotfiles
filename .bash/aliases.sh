@@ -46,3 +46,5 @@ alias cat="bat --paging=never"
 
 # Remove newline
 alias nn="tr -d '\n'"
+
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"

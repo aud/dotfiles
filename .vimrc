@@ -214,6 +214,8 @@ let g:git_messenger_always_into_popup = v:true
 "
 " Output to vimux
 let test#strategy = 'vimux'
+" Pass in config for vitest
+let test#javascript#vitest#options = '--config=config/vitest.config.ts'
 
 " =====================================
 " Treesitter config
