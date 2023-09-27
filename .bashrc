@@ -72,4 +72,6 @@ dev() {
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+
 [[ -f /opt/dev/sh/chruby/chruby.sh ]] && { type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; } }
