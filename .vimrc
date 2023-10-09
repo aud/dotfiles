@@ -197,6 +197,9 @@ require('kanagawa').setup({
 
 vim.cmd("colorscheme kanagawa")
 EOF
+" vim.g.lua_embark_transparent = true
+" vim.cmd("colorscheme lua-embark")
+
 " Change dashed seperator to line. This needs to run after the colorscheme is
 " set, otherwise it will be clobbered.
 set fillchars+=vert:│
@@ -288,6 +291,16 @@ require('copilot_cmp').setup()
 require('copilot').setup({
   suggestion = { enabled = false },
   panel = { enabled = false },
+})
+
+-- =====================================
+-- Smartyank
+-- =====================================
+-- https://github.com/ibhagwan/smartyank.nvim
+require('smartyank').setup({
+  highlight = {
+    enabled = false,
+  },
 })
 
 -- =====================================
