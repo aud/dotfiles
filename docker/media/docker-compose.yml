@@ -1,0 +1,90 @@
+---
+version: "2.1"
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+      - VERSION=docker
+      - PLEX_CLAIM=
+    volumes:
+      - "/mnt/media-server/plex-config:/config"
+      - "/mnt/media-server/TV Shows:/tv"
+      - "/mnt/media-server/Movies:/movies"
+    restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+      - TRANSMISSION_WEB_HOME= # optional
+      - USER= # optional
+      - PASS= # optional
+      - WHITELIST= # optional
+      - PEERPORT= # optional
+      - HOST_WHITELIST= # optional
+    volumes:
+      - "/mnt/media-server/transmission-config:/config"
+      - "/mnt/media-server/transmission-downloads:/downloads"
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: always
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+    volumes:
+      - "/mnt/media-server/radarr-config:/config"
+      - "/mnt/media-server/Movies:/movies"
+      - "/mnt/media-server/transmission-downloads:/downloads"
+    ports:
+      - 7878:7878
+    restart: always
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+    volumes:
+      - "/mnt/media-server/prowlarr-config:/config"
+    ports:
+      - 9696:9696
+    restart: always
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:develop # v4 beta (stable enough)
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Toronto
+    volumes:
+      - "/mnt/media-server/sonarr-config:/config"
+      - "/mnt/media-server/TV Shows:/tv"
+      - "/mnt/media-server/transmission-downloads:/downloads"
+    ports:
+      - 8989:8989
+    restart: always
