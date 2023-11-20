@@ -1,0 +1,12 @@
+---
+version: "2.1"
+services:
+  golink:
+    image: ghcr.io/tailscale/golink:main
+    container_name: golink
+    environment:
+      - PUID=65532
+      - PGID=65532
+    volumes:
+      - /home/elliot/golink/docker-data:/home/nonroot
+    restart: always
