@@ -151,7 +151,13 @@ Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'aud/strip-trailing-whitespace.vim'
 Plug 'rhysd/git-messenger.vim'
-Plug 'rebelot/kanagawa.nvim'
+" Plug 'rebelot/kanagawa.nvim'
+Plug 'ellisonleao/gruvbox.nvim'
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'savq/melange-nvim'
+
 Plug 'justinmk/vim-dirvish'
 Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -182,20 +188,36 @@ call plug#end()
 " =====================================
 " Theme
 " =====================================
-lua <<EOF
-require('kanagawa').setup({
-  colors = {
-    theme = {
-      all = {
-        ui = {
-          bg_gutter = "none"
-        }
-      }
-    }
-  }
-})
 
-vim.cmd("colorscheme kanagawa")
+" colorscheme dracula
+
+lua <<EOF
+require("gruvbox").setup({
+  terminal_colors = true, -- add neovim terminal colors
+  undercurl = true,
+  underline = true,
+  bold = true,
+  italic = {
+    strings = true,
+    emphasis = true,
+    comments = true,
+    operators = false,
+    folds = true,
+  },
+  strikethrough = true,
+  invert_selection = false,
+  invert_signs = false,
+  invert_tabline = false,
+  invert_intend_guides = false,
+  inverse = true, -- invert background for search, diffs, statuslines and errors
+  contrast = "soft", -- can be "hard", "soft" or empty string
+  palette_overrides = {},
+  overrides = {},
+  dim_inactive = false,
+  transparent_mode = false,
+})
+vim.o.background = "dark"
+vim.cmd("colorscheme gruvbox")
 EOF
 " vim.g.lua_embark_transparent = true
 " vim.cmd("colorscheme lua-embark")
@@ -245,19 +267,7 @@ lua <<EOF
 -- LSP config
 -- =====================================
 local lang_servers = {
-  'tsserver',
-  'ruby_ls',
-  'terraformls',
-  'bashls',
-  'cssls',
-  'gopls',
-  'vimls',
-  'sqlls',
-  'jsonls',
-  'graphql',
-  'dockerls',
-  'clangd',
-  'yamlls',
+  'ruby_lsp',
 }
 
 -- Configure Mason
@@ -352,7 +362,7 @@ lua <<EOF
 -- Treesitter [splitjoin]
 -- =====================================
 require('treesj').setup({
-  max_join_length = 120,
+  max_join_length = 500,
 })
 EOF
 
