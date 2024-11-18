@@ -114,15 +114,6 @@ command Ex execute "normal \<Plug>(dirvish_up)"
 " Custom funcs
 " =====================================
 
-function! ExecuteTestDebug()
-  let jest = test#javascript#jest#executable()
-  let g:test#javascript#jest#executable = 'node inspect ' . jest
-
-  execute ':TestNearest'
-
-  let g:test#javascript#jest#executable = jest
-endfunction
-
 function! ToggleStatusBar()
   if g:status_hidden
     let g:status_hidden = 0
@@ -158,12 +149,7 @@ require("lazy").setup({
   'benmills/vimux',
   'christoomey/vim-tmux-navigator',
   'aud/strip-trailing-whitespace.vim',
-  -- 'rebelot/kanagawa.nvim',
   'ellisonleao/gruvbox.nvim',
-  -- 'dracula/vim',
-  -- 'catppuccin/nvim',
-  -- 'dracula/vim',
-  -- 'savq/melange-nvim',
   'justinmk/vim-dirvish',
   { 'roginfarrer/vim-dirvish-dovish', branch = 'main' },
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
@@ -193,8 +179,6 @@ EOF
 " Theme
 " =====================================
 
-" colorscheme dracula
-
 lua <<EOF
 require("gruvbox").setup({
   terminal_colors = true, -- add neovim terminal colors
@@ -223,8 +207,6 @@ require("gruvbox").setup({
 vim.o.background = "dark"
 vim.cmd("colorscheme gruvbox")
 EOF
-" vim.g.lua_embark_transparent = true
-" vim.cmd("colorscheme lua-embark")
 
 " Change dashed seperator to line. This needs to run after the colorscheme is
 " set, otherwise it will be clobbered.
