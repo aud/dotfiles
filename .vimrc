@@ -136,53 +136,58 @@ endfunction
 " =====================================
 " Plugin mgmt
 " =====================================
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+lua <<EOF
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--branch=stable", -- latest stable release
+    "https://github.com/folke/lazy.nvim.git",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-call plug#begin('~/.vim/plugged')
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'ibhagwan/fzf-lua'
-Plug 'tpope/vim-commentary'
-Plug 'janko-m/vim-test'
-Plug 'benmills/vimux'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'aud/strip-trailing-whitespace.vim'
-" Plug 'rebelot/kanagawa.nvim'
-Plug 'ellisonleao/gruvbox.nvim'
-" Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
-" Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'savq/melange-nvim'
-
-Plug 'justinmk/vim-dirvish'
-Plug 'roginfarrer/vim-dirvish-dovish', {'branch': 'main'}
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'RRethy/nvim-treesitter-endwise'
-Plug 'Wansmer/treesj'
-Plug 'ibhagwan/smartyank.nvim'
-
-" LSP config.. Again
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-" Autocompletion
-Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'L3MON4D3/LuaSnip'
-
-" Manager for LSP
-Plug 'williamboman/mason-lspconfig.nvim'
-Plug 'williamboman/mason.nvim'
-
-" Copilot
-Plug 'zbirenbaum/copilot.lua'
-Plug 'zbirenbaum/copilot-cmp'
-call plug#end()
+require("lazy").setup({
+  { 'junegunn/fzf', build = './install --all' },
+  'ibhagwan/fzf-lua',
+  'tpope/vim-commentary',
+  'janko-m/vim-test',
+  'benmills/vimux',
+  'christoomey/vim-tmux-navigator',
+  'aud/strip-trailing-whitespace.vim',
+  -- 'rebelot/kanagawa.nvim',
+  'ellisonleao/gruvbox.nvim',
+  -- 'dracula/vim',
+  -- 'catppuccin/nvim',
+  -- 'dracula/vim',
+  -- 'savq/melange-nvim',
+  'justinmk/vim-dirvish',
+  { 'roginfarrer/vim-dirvish-dovish', branch = 'main' },
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  'RRethy/nvim-treesitter-endwise',
+  'Wansmer/treesj',
+  'ibhagwan/smartyank.nvim',
+  -- LSP config
+  'neovim/nvim-lspconfig',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-cmdline',
+  'hrsh7th/nvim-cmp',
+  -- Autocompletion
+  'saadparwaiz1/cmp_luasnip',
+  'L3MON4D3/LuaSnip',
+  -- Manager for LSP
+  'williamboman/mason-lspconfig.nvim',
+  'williamboman/mason.nvim',
+  -- Copilot
+  'zbirenbaum/copilot.lua',
+  'zbirenbaum/copilot-cmp',
+})
+EOF
 
 " =====================================
 " Theme
