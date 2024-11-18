@@ -48,3 +48,5 @@ alias cat="bat --paging=never"
 alias nn="tr -d '\n'"
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+
+alias python=python3

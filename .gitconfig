@@ -1,6 +1,6 @@
 [user]
-	email = elliot.dohm@shopify.com
-	name = Elliot Dohm
+  email = elliotdohm@gmail.com
+  name = Elliot Dohm
 [core]
 	attributesfile = /Users/elliotdohm/.gitattributes
 	compression = 0
@@ -14,6 +14,7 @@
 	ls = "log --pretty=format:"%C(yellow)%h%Cred%d\\ [%ad]\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat --date=human"
 [commit]
 	verbose = true
+  ; gpgsign = true
 [interactive]
 	singleKey = true
 [status]
@@ -26,3 +27,7 @@
 	postBuffer = 1048576000
 [include]
 	path = /Users/elliotdohm/.config/dev/gitconfig
+; [gpg]
+;   format = ssh
+; [gpg "ssh"]
+;   program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"

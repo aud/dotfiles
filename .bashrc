@@ -18,7 +18,7 @@ HISTFILESIZE=1000000
 HISTSIZE=100000
 
 # Ignore common commands from history
-HISTIGNORE="&:[ ]*:exit:ls:fg:bg:tmux:vi:vim:c:clear*"
+# HISTIGNORE="&:[ ]*:exit:ls:fg:bg:tmux:vi:vim:c:clear*"
 
 # Append to history instead of clobbering on exit
 shopt -s histappend
@@ -47,12 +47,10 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 # Gpg config
 export GPG_TTY=$(tty)
-
-# cloudplatform: add Shopify clusters to your local kubernetes config
-export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}/Users/elliotdohm/.kube/config:/Users/elliotdohm/.kube/config.shopify.cloudplatform
 
 # Tab autocomplete options
 bind 'TAB:menu-complete'
@@ -61,20 +59,10 @@ bind 'set menu-complete-display-prefix on'
 bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
 
-# Lazy load dev
-__DEV_LOADED=
-dev() {
-  if [ ! $__DEV_LOADED ] && [ -f /opt/dev/dev.sh ]; then
-    source /opt/dev/dev.sh
-    __DEV_LOADED=true
-  fi
-
-  dev $@
-}
-
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"
 
-[[ -f /opt/dev/sh/chruby/chruby.sh ]] && { type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; } }
+source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh
+source $HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh

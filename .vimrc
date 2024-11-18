@@ -150,7 +150,6 @@ Plug 'janko-m/vim-test'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'aud/strip-trailing-whitespace.vim'
-Plug 'rhysd/git-messenger.vim'
 " Plug 'rebelot/kanagawa.nvim'
 Plug 'ellisonleao/gruvbox.nvim'
 " Plug 'dracula/vim', { 'as': 'dracula' }
