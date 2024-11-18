@@ -149,7 +149,7 @@ require("lazy").setup({
   'benmills/vimux',
   'christoomey/vim-tmux-navigator',
   'aud/strip-trailing-whitespace.vim',
-  'ellisonleao/gruvbox.nvim',
+  -- 'ellisonleao/gruvbox.nvim',
   'justinmk/vim-dirvish',
   { 'roginfarrer/vim-dirvish-dovish', branch = 'main' },
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
@@ -172,6 +172,13 @@ require("lazy").setup({
   -- Copilot
   'zbirenbaum/copilot.lua',
   'zbirenbaum/copilot-cmp',
+
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  }
 })
 EOF
 
@@ -180,33 +187,37 @@ EOF
 " =====================================
 
 lua <<EOF
-require("gruvbox").setup({
-  terminal_colors = true, -- add neovim terminal colors
-  undercurl = true,
-  underline = true,
-  bold = true,
-  italic = {
-    strings = true,
-    emphasis = true,
-    comments = true,
-    operators = false,
-    folds = true,
-  },
-  strikethrough = true,
-  invert_selection = false,
-  invert_signs = false,
-  invert_tabline = false,
-  invert_intend_guides = false,
-  inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = "soft", -- can be "hard", "soft" or empty string
-  palette_overrides = {},
-  overrides = {},
-  dim_inactive = false,
-  transparent_mode = false,
-})
-vim.o.background = "dark"
-vim.cmd("colorscheme gruvbox")
+vim.cmd[[colorscheme tokyonight-storm]]
 EOF
+
+" lua <<EOF
+" require("gruvbox").setup({
+"   terminal_colors = true, -- add neovim terminal colors
+"   undercurl = true,
+"   underline = true,
+"   bold = true,
+"   italic = {
+"     strings = true,
+"     emphasis = true,
+"     comments = true,
+"     operators = false,
+"     folds = true,
+"   },
+"   strikethrough = true,
+"   invert_selection = false,
+"   invert_signs = false,
+"   invert_tabline = false,
+"   invert_intend_guides = false,
+"   inverse = true, -- invert background for search, diffs, statuslines and errors
+"   contrast = "soft", -- can be "hard", "soft" or empty string
+"   palette_overrides = {},
+"   overrides = {},
+"   dim_inactive = false,
+"   transparent_mode = false,
+" })
+" vim.o.background = "dark"
+" vim.cmd("colorscheme gruvbox")
+" EOF
 
 " Change dashed seperator to line. This needs to run after the colorscheme is
 " set, otherwise it will be clobbered.
