@@ -6,19 +6,13 @@ for file in $HOME/.bash/*; do
 done
 
 # Set default fzf command for vim to use rg instead of find
-export FZF_DEFAULT_COMMAND='rg --files --hidden'
-
-# Remove duplicate entries in history file
-HISTCONTROL=ignoreboth:erasedups
+export FZF_DEFAULT_COMMAND="rg --files --hidden"
 
 # Number of lines in history file
-HISTFILESIZE=1000000
+HISTFILESIZE=100000000
 
 # Number of lines in history to keep in memory
-HISTSIZE=100000
-
-# Ignore common commands from history
-# HISTIGNORE="&:[ ]*:exit:ls:fg:bg:tmux:vi:vim:c:clear*"
+HISTSIZE=1000000
 
 # Append to history instead of clobbering on exit
 shopt -s histappend

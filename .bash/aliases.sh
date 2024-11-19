@@ -1,12 +1,5 @@
-# Shutdown all Railgun vms
-rsa() {
-  $HOME/dotfiles/scripts/kill.rb
-}
-
-latest() {
-  local latest=$(chruby | xargs ruby -e "puts ARGV.reject{|a| a == '*'}.max")
-  chruby "$latest"
-}
+alias rsa="$HOME/dotfiles/scripts/kill.rb"
+alias latest="chruby ruby"
 
 # Scripting to see most common bash commands (bash_history out of ~50k)
 # revealed that `gi tpull` and `gi ts` (`git pull`, `git status`) are fairly
@@ -19,16 +12,6 @@ gi() {
     git status
   else
     echo "-bash: gi: command not found" >&2
-  fi
-}
-
-git() {
-  local repo=$(pwd | awk -F "/" '{print $7}')
-
-  if [[ "$1" == "co" || "$1" == "checkout" ]] && [[ "$2" == "master" ]] && [[ "$repo" == "help" ]]; then
-    command git checkout main
-  else
-    command git "$@"
   fi
 }
 

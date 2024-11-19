@@ -1,7 +1,8 @@
-# Fetch current branch name and wrap in parenthesis if exists.
 parsed_git_branch() {
-  [ -d '.git' ] && echo "($(git rev-parse --abbrev-ref HEAD 2>/dev/null))"
+  local branch=$(git branch --show-current 2>/dev/null)
+  [[ -n "$branch" ]] && echo "($branch)"
 }
 
-__FUCHSIA_COLOR='\[\e[0;36;5;169m\]'
-PS1="\W\[${__FUCHSIA_COLOR}\$(parsed_git_branch)\[\e[m\] \$ "
+__PS1_COLOR='\[\e[38;5;175m\]'
+
+PS1="\W\[${__PS1_COLOR}\$(parsed_git_branch)\[\e[m\] \$ "
