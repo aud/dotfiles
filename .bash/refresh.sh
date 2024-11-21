@@ -5,9 +5,7 @@ refresh() {
   brew upgrade
   brew cleanup
 
-  nvim --headless +PlugClean! +qall
-  nvim --headless +PlugUpgrade +qall
-  nvim --headless +PlugUpdate +qall
+  nvim --headless "+Lazy! sync" +qa
 
   set +x
 }
