@@ -53,10 +53,8 @@ bind 'set menu-complete-display-prefix on'
 bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
 
-[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-source "$(brew --prefix)/share/google-cloud-sdk/path.bash.inc"
-
-source $HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh
-source $HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+[[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
+[[ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc" ]] && source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
+[[ -f "$HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh" ]] && source "$HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh"
+[[ -f "$HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh" ]] && source "$HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh"
