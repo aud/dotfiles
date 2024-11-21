@@ -232,8 +232,6 @@ let g:git_messenger_always_into_popup = v:true
 "
 " Output to vimux
 let test#strategy = 'vimux'
-" Pass in config for vitest
-let test#javascript#vitest#options = '--config=config/vitest.config.ts'
 
 " =====================================
 " Treesitter config
@@ -241,6 +239,8 @@ let test#javascript#vitest#options = '--config=config/vitest.config.ts'
 lua <<EOF
 require('nvim-treesitter.configs').setup {
   ensure_installed = "all",
+
+  ignore_install = { "norg" },
 
   sync_install = false,
   auto_install = true,
