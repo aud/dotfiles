@@ -31,17 +31,12 @@ export GOPATH=$HOME
 export CDN_PATH=$HOME/x/cmd/x
 export DEFAULT_RUBY_PATH=/opt/rubies/2.7.1/bin
 export GIT_ALIAS_PATH=$HOME/.git-aliases
+export OPEN_JDK_PATH="/opt/homebrew/opt/openjdk/bin"
+export PIPX_PATH="$HOME/.local/bin"
 
-export PATH=$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$GIT_ALIAS_PATH:$PATH
+export PATH=$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$GIT_ALIAS_PATH:$OPEN_JDK_PATH:$PIPX_PATH:$PATH
+
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig
-
-# Android PATH
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 # Gpg config
 export GPG_TTY=$(tty)
