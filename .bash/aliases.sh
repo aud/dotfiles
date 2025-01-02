@@ -7,3 +7,4 @@ alias vi="/opt/homebrew/bin/nvim"
 alias cat="bat --paging=never"
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias python=python3
+alias kl="kill -9 %1"

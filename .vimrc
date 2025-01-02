@@ -385,3 +385,11 @@ require("fzf-lua").setup({
   }
 })
 EOF
+
+lua <<EOF
+-- Ensure we reset the cursor to blinking line on exit. Otherwise we get into
+-- a weird case where the bar seems to clobber the $TERM (ghostty) bar.
+vim.api.nvim_create_autocmd("VimLeave", {
+  command = "set guicursor=a:ver25-blinkon1"
+})
+EOF
