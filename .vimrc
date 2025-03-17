@@ -54,7 +54,7 @@ set expandtab
 
 syntax enable
 
-let g:status_hidden = 0
+let g:status_hidden = 2
 set noruler
 set laststatus=2
 
@@ -124,6 +124,10 @@ function! ToggleStatusBar()
   endif
 endfunction
 
+" llama.vim
+" https://github.com/ggml-org/llama.vim/blob/master/doc/llama.txt
+" let g:llama_config = { "show_info": 0 }
+
 " =====================================
 " Plugin mgmt
 " =====================================
@@ -155,22 +159,8 @@ require("lazy").setup({
   'RRethy/nvim-treesitter-endwise',
   'Wansmer/treesj',
   'ibhagwan/smartyank.nvim',
-  -- LSP config
-  'neovim/nvim-lspconfig',
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-path',
-  'hrsh7th/cmp-cmdline',
-  'hrsh7th/nvim-cmp',
-  -- Autocompletion
-  'saadparwaiz1/cmp_luasnip',
-  'L3MON4D3/LuaSnip',
-  -- Manager for LSP
-  'williamboman/mason-lspconfig.nvim',
-  'williamboman/mason.nvim',
-  -- Copilot
-  'zbirenbaum/copilot.lua',
-  'zbirenbaum/copilot-cmp',
+
+  { 'github/copilot.vim', branch = 'release' },
 
   -- Theme
   {
@@ -181,6 +171,12 @@ require("lazy").setup({
   }
 })
 EOF
+
+" MITM debug
+" let g:copilot_proxy = 'http://localhost:8080'
+" let g:copilot_proxy_strict_ssl = v:false
+let g:copilot_settings = #{ selectedCompletionModel: 'gpt-4o-copilot' }
+let g:copilot_integration_id = 'vscode-chat'
 
 " =====================================
 " Theme
@@ -257,46 +253,6 @@ EOF
 
 lua <<EOF
 -- =====================================
--- LSP config
--- =====================================
-local lang_servers = {
-  'ruby_lsp',
-}
-
--- Configure Mason
-require('mason').setup({})
-require('mason-lspconfig').setup({
-  ensure_installed = lang_servers
-})
-
--- Configure lspconfig
-local lspconfig = require('lspconfig')
-
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-  callback = function(ev)
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-    local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  end,
-})
-
--- =====================================
--- Copilot
--- =====================================
-require('copilot_cmp').setup()
-
-require('copilot').setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-})
-
--- =====================================
 -- Smartyank
 -- =====================================
 -- https://github.com/ibhagwan/smartyank.nvim
@@ -305,49 +261,6 @@ require('smartyank').setup({
     enabled = false,
   },
 })
-
--- =====================================
--- Cmp [tab complete]
--- =====================================
-local cmp = require('cmp')
-
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<tab>'] = cmp.mapping.confirm({ select = true }),
-  }),
-  sources = cmp.config.sources({
-    { name = 'copilot' },
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  }, {
-    { name = 'buffer' },
-  })
-})
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-local on_attach = function(client, bufnr)
-  -- Disable lsp formatexpr (use the internal one)
-  -- This allows `gq` to work when the lsp is attached
-  vim.opt.formatexpr = ""
-end
-
--- Finally, setup each lang server
-for _, lsp in ipairs(lang_servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities
-  }
-end
 EOF
 
 lua <<EOF
