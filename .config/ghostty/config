@@ -1,6 +1,10 @@
+# https://ghostty.org/docs/config/reference
+
 theme = GruvboxDark
 quit-after-last-window-closed = true
 mouse-hide-while-typing = true
 
 cursor-style = bar
 cursor-style-blink = true
+
+scrollback-limit = 500000000
