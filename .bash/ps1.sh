@@ -3,6 +3,6 @@ parsed_git_branch() {
   [[ -n "$branch" ]] && echo "($branch)"
 }
 
-__PS1_COLOR='\[\e[38;5;175m\]'
+__PS1_COLOR='\[\e[38;5;69m\]'
 
 PS1="\W\[${__PS1_COLOR}\$(parsed_git_branch)\[\e[m\] \$ "
