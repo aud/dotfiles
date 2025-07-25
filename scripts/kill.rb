@@ -10,6 +10,8 @@ threads = []
   "node",
   "puma",
   "sidekiq",
+  "python",
+  "celery"
 ].each do |process_name|
   stdout = `pgrep -if #{process_name} | xargs ps`
 

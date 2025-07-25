@@ -1,10 +1,17 @@
 # https://ghostty.org/docs/config/reference
 
-theme = GruvboxDark
+# theme = Ayu Mirage
+# theme = GruvboxLight
+# theme = GruvboxDark
+theme = nightfox
+
+# theme = darcubox
 quit-after-last-window-closed = true
 mouse-hide-while-typing = true
 
 cursor-style = bar
 cursor-style-blink = true
 
-scrollback-limit = 500000000
+scrollback-limit = 4294967295
+# keybind = shift+enter=text:\n
+keybind = shift+enter=text:\x1b\r

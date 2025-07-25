@@ -8,3 +8,4 @@ alias cat="bat --paging=never"
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias python=python3
 alias kl="kill -9 %1"
+alias ftp="files-to-prompt"

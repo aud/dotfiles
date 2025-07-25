@@ -34,7 +34,8 @@ export GIT_ALIAS_PATH=$HOME/.git-aliases
 export OPEN_JDK_PATH="/opt/homebrew/opt/openjdk/bin"
 export PIPX_PATH="$HOME/.local/bin"
 
-export PATH=$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$GIT_ALIAS_PATH:$OPEN_JDK_PATH:$PIPX_PATH:$PATH
+GNU_SED_PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin"
+export PATH=$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$GIT_ALIAS_PATH:$OPEN_JDK_PATH:$PIPX_PATH:$GNU_SED_PATH:$PATH
 
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig
 

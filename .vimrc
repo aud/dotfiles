@@ -160,15 +160,27 @@ require("lazy").setup({
   'Wansmer/treesj',
   'ibhagwan/smartyank.nvim',
 
-  { 'github/copilot.vim', branch = 'release' },
+  -- { 'github/copilot.vim', branch = 'release' },
 
-  -- Theme
   {
-    "ellisonleao/gruvbox.nvim",
-    priority = 1000,
-    config = true,
-    opts = ...,
-  }
+    "supermaven-inc/supermaven-nvim",
+    config = function()
+      require("supermaven-nvim").setup({})
+    end,
+  },
+
+  -- theme
+  -- {
+  --   "Koalhack/darcubox-nvim",
+  --   config = function() vim.cmd("colorscheme darcubox") end
+  -- }
+  -- {
+  -- "ellisonleao/gruvbox.nvim",
+  -- priority = 1000,
+  -- config = true,
+  --  opts = ...,
+  --  }
+  { "EdenEast/nightfox.nvim" }
 })
 EOF
 
@@ -182,33 +194,37 @@ let g:copilot_integration_id = 'vscode-chat'
 " Theme
 " =====================================
 
+" lua <<EOF
+" require("gruvbox").setup({
+"   terminal_colors = true, -- add neovim terminal colors
+"   undercurl = true,
+"   underline = true,
+"   bold = true,
+"   italic = {
+"     strings = true,
+"     emphasis = true,
+"     comments = true,
+"     operators = false,
+"     folds = true,
+"   },
+"   strikethrough = true,
+"   invert_selection = false,
+"   invert_signs = false,
+"   invert_tabline = false,
+"   invert_intend_guides = false,
+"   inverse = true, -- invert background for search, diffs, statuslines and errors
+"   contrast = "", -- can be "hard", "soft" or empty string
+"   palette_overrides = {},
+"   overrides = {},
+"   dim_inactive = false,
+"   transparent_mode = false,
+" })
+" vim.o.background = "dark"
+" vim.cmd("colorscheme gruvbox")
+" EOF
+
 lua <<EOF
-require("gruvbox").setup({
-  terminal_colors = true, -- add neovim terminal colors
-  undercurl = true,
-  underline = true,
-  bold = true,
-  italic = {
-    strings = true,
-    emphasis = true,
-    comments = true,
-    operators = false,
-    folds = true,
-  },
-  strikethrough = true,
-  invert_selection = false,
-  invert_signs = false,
-  invert_tabline = false,
-  invert_intend_guides = false,
-  inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = "", -- can be "hard", "soft" or empty string
-  palette_overrides = {},
-  overrides = {},
-  dim_inactive = false,
-  transparent_mode = false,
-})
-vim.o.background = "dark"
-vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme nightfox")
 EOF
 
 " Change dashed seperator to line. This needs to run after the colorscheme is
