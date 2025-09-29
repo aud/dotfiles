@@ -2,8 +2,8 @@
 
 # theme = Ayu Mirage
 # theme = GruvboxLight
-# theme = GruvboxDark
-theme = nightfox
+theme = Gruvbox Dark
+# theme = nightfox
 
 # theme = darcubox
 quit-after-last-window-closed = true

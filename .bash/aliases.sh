@@ -1,4 +1,7 @@
+alias docker="podman"
 alias rsa="$HOME/dotfiles/scripts/kill.rb"
+alias cup="$HOME/dotfiles/scripts/cup"
+alias bu="$HOME/dotfiles/scripts/bu"
 alias latest="chruby ruby"
 alias c="clear"
 alias ls="ls -Ga"
@@ -9,3 +12,4 @@ alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias python=python3
 alias kl="kill -9 %1"
 alias ftp="files-to-prompt"
+alias tssh="TERM=xterm-256color tailscale ssh"

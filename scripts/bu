@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# Tiny script to take a diff of all commits on a branch and dump it to a diff
+# file for backup. It's especially useful for peace-of-mind on large changes
+# where you are doing a lot of resetting to create a clean history.
+#
+# Usage:
+#
+#   bu /path/to/backup.diff
+#
+#   Default if path is not provided: `tmp/#{branch}-#{iso8601}.diff`.
+
+set -euo pipefail
+
+if [[ ! -d ".git" ]]; then
+  echo "Error: bu requires a git repository."
+  exit 1
+fi
+
+branch=$(git branch --show-current)
+
+if [[ "$branch" == "main" || "$branch" == "master" ]]; then
+  echo "Error: bu cannot be run on the main/master branch."
+  exit 1
+fi
+
+main_or_master=$(git symbolic-ref refs/remotes/origin/HEAD | sed "s@^refs/remotes/origin/@@")
+
+diff=$(git diff "$main_or_master"..."$branch")
+diff_summary=$(git diff --shortstat --color=always "$main_or_master"..."$branch")
+
+if [[ -z "$diff" ]]; then
+  echo "Error: no changes to backup."
+  exit 1
+fi
+
+if [[ -n "${1:-}" ]]; then
+  backup_file="$1"
+else
+  mkdir -p tmp
+  iso8601=$(date -Iseconds)
+  backup_file="tmp/$branch-$iso8601.diff"
+fi
+
+echo "$diff" > "$backup_file"
+echo "Backup created: $backup_file"
+echo
+echo -e "Diff summary: $diff_summary"

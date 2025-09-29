@@ -33,9 +33,10 @@ export DEFAULT_RUBY_PATH=/opt/rubies/2.7.1/bin
 export GIT_ALIAS_PATH=$HOME/.git-aliases
 export OPEN_JDK_PATH="/opt/homebrew/opt/openjdk/bin"
 export PIPX_PATH="$HOME/.local/bin"
+export BUN_PATH="$HOME/.bun/bin"
 
 GNU_SED_PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin"
-export PATH=$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$GIT_ALIAS_PATH:$OPEN_JDK_PATH:$PIPX_PATH:$GNU_SED_PATH:$PATH
+export PATH=$GOPATH:$DEFAULT_RUBY_PATH:$CDN_PATH:$GIT_ALIAS_PATH:$OPEN_JDK_PATH:$PIPX_PATH:$GNU_SED_PATH:$BUN_PATH:$PATH
 
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig
 
