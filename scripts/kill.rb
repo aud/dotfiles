@@ -1,9 +1,7 @@
 #!/usr/bin/env ruby --disable-gems
-# frozen_string_literal: true
 
 threads = []
 
-# Kill any matching processes
 [
   "ruby",
   "python",
@@ -23,7 +21,7 @@ threads = []
   processes.each do |process|
     p = process.split(" ")
     pid = p[0]
-    initiating_command = p[4..].join(' ')
+    initiating_command = p[4..].join(" ")
 
     threads << Thread.new do
       puts "sigkill process: #{initiating_command}"
