@@ -11,7 +11,8 @@ threads = []
   "puma",
   "sidekiq",
   "python",
-  "celery"
+  "celery",
+  "caddy"
 ].each do |process_name|
   stdout = `pgrep -if #{process_name} | xargs ps`
 
@@ -30,6 +31,9 @@ threads = []
       puts result unless $?.success?
     end
   end
+
+  # Cleanup any sock files
+  `rm ~/src/github.com/withpage/page/.overmind-*`
 end
 
 if threads.empty?

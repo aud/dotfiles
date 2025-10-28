@@ -98,6 +98,10 @@ command! Buffers :lua require("fzf-lua").buffers()<CR>
 " Remap gS to toggle split/join
 nnoremap gS :TSJToggle<CR>
 
+" Remap gq to gw (LSP overrides formatexpr, breaking gq for text wrapping)
+nnoremap gq gw
+xnoremap gq gw
+
 " Disable status bar by default, as it's rarely useful.
 nnoremap <leader>S :call ToggleStatusBar()<CR>
 
@@ -123,10 +127,6 @@ function! ToggleStatusBar()
     set laststatus=2
   endif
 endfunction
-
-" llama.vim
-" https://github.com/ggml-org/llama.vim/blob/master/doc/llama.txt
-" let g:llama_config = { "show_info": 0 }
 
 " =====================================
 " Plugin mgmt
@@ -156,72 +156,75 @@ require("lazy").setup({
   'justinmk/vim-dirvish',
   { 'roginfarrer/vim-dirvish-dovish', branch = 'main' },
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
   'RRethy/nvim-treesitter-endwise',
   'Wansmer/treesj',
   'ibhagwan/smartyank.nvim',
-
-  -- { 'github/copilot.vim', branch = 'release' },
-
+  -- {
+  -- "ellisonleao/gruvbox.nvim",
+  -- priority = 1000,
+  -- config = true,
+  -- opts = ...,
+  -- },
   {
-    "supermaven-inc/supermaven-nvim",
+    'sainnhe/gruvbox-material',
+    lazy = false,
+    priority = 1000,
     config = function()
-      require("supermaven-nvim").setup({})
-    end,
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      vim.g.gruvbox_material_enable_italic = true
+      vim.g.gruvbox_material_background = 'hard'
+      vim.cmd.colorscheme('gruvbox-material')
+
+    end
   },
 
-  -- theme
-  -- {
-  --   "Koalhack/darcubox-nvim",
-  --   config = function() vim.cmd("colorscheme darcubox") end
-  -- }
+
   {
-      "ellisonleao/gruvbox.nvim",
-      priority = 1000,
-      config = true,
-      opts = ...,
+    "github/copilot.vim"
   }
-  -- { "EdenEast/nightfox.nvim" }
 })
 EOF
 
 " MITM debug
 " let g:copilot_proxy = 'http://localhost:8080'
 " let g:copilot_proxy_strict_ssl = v:false
-let g:copilot_settings = #{ selectedCompletionModel: 'gpt-4o-copilot' }
-let g:copilot_integration_id = 'vscode-chat'
+" let g:copilot_settings = #{ selectedCompletionModel: 'gpt-4o-copilot' }
+" let g:copilot_integration_id = 'vscode-chat'
 
 " =====================================
 " Theme
 " =====================================
 
-lua <<EOF
-require("gruvbox").setup({
-  terminal_colors = true, -- add neovim terminal colors
-  undercurl = true,
-  underline = true,
-  bold = true,
-  italic = {
-    strings = true,
-    emphasis = true,
-    comments = true,
-    operators = false,
-    folds = true,
-  },
-  strikethrough = true,
-  invert_selection = false,
-  invert_signs = false,
-  invert_tabline = false,
-  invert_intend_guides = false,
-  inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = "", -- can be "hard", "soft" or empty string
-  palette_overrides = {},
-  overrides = {},
-  dim_inactive = false,
-  transparent_mode = false,
-})
-vim.o.background = "dark"
-vim.cmd("colorscheme gruvbox")
-EOF
+" lua <<EOF
+" require("gruvbox").setup({
+"   terminal_colors = true, -- add neovim terminal colors
+"   undercurl = true,
+"   underline = true,
+"   bold = true,
+"   italic = {
+"     strings = true,
+"     emphasis = true,
+"     comments = true,
+"     operators = false,
+"     folds = true,
+"   },
+"   strikethrough = true,
+"   invert_selection = false,
+"   invert_signs = false,
+"   invert_tabline = false,
+"   invert_intend_guides = false,
+"   inverse = true, -- invert background for search, diffs, statuslines and errors
+"   contrast = "", -- can be "hard", "soft" or empty string
+"   palette_overrides = {},
+"   overrides = {},
+"   dim_inactive = false,
+"   transparent_mode = false,
+" })
+" vim.o.background = "dark"
+" vim.cmd("colorscheme gruvbox")
+" EOF
 
 " lua <<EOF
 " vim.cmd("colorscheme nightfox")
@@ -244,6 +247,36 @@ let g:git_messenger_always_into_popup = v:true
 "
 " Output to vimux
 let test#strategy = 'vimux'
+
+" =====================================
+" Lsp
+" =====================================
+lua <<EOF
+vim.lsp.config('ruby-lsp', {
+  cmd = {'/Users/elliot/.gem/ruby/3.4.3/bin/ruby-lsp'},
+  filetypes = {'ruby', 'eruby'},
+})
+
+vim.lsp.enable('ruby-lsp')
+
+vim.lsp.config('copilot', {
+  cmd = { 'bun', 'run', 'copilot-language-server', '--stdio' },
+})
+
+vim.lsp.enable('copilot')
+
+vim.diagnostic.config({
+  virtual_text = true,  -- Show errors inline
+  signs = true,         -- Show signs in gutter (the red E)
+  underline = true,     -- Underline errors
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    border = 'rounded',
+    source = 'always',
+  },
+})
+EOF
 
 " =====================================
 " Treesitter config
