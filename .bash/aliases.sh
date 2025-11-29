@@ -1,6 +1,5 @@
 alias docker="podman"
 alias rsa="$HOME/dotfiles/scripts/kill.rb"
-alias cup="$HOME/dotfiles/scripts/cup"
 alias bu="$HOME/dotfiles/scripts/bu"
 alias latest="chruby ruby-3.4.7"
 alias c="clear"

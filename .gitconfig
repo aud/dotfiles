@@ -35,3 +35,5 @@
 	sort = -committerdate
 [pack]
 	windowMemory = 4096m
+[rebase]
+	autosquash = true
