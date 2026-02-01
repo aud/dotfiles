@@ -10,9 +10,11 @@ threads = []
   "sidekiq",
   "python",
   "celery",
-  "caddy"
+  "caddy",
+  /\bbun\b/,
 ].each do |process_name|
-  stdout = `pgrep -if #{process_name} | xargs ps`
+  pattern = process_name.is_a?(Regexp) ? process_name.source : process_name
+  stdout = `pgrep -if #{pattern} | xargs ps`
 
   # Remove column headers
   processes = stdout.split("\n")[1..]
