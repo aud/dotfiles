@@ -20,3 +20,4 @@ yalc.lock
 .vim/.netrwhist
 .vim/autoload/plug.vim
 .vim/autoload/plug.vim.old
+.config

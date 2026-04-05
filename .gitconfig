@@ -37,3 +37,5 @@
 	windowMemory = 4096m
 [rebase]
 	autosquash = true
+[url "git@github.com:WithPage/"]
+	insteadOf = https://github.com/WithPage/

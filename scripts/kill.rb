@@ -11,6 +11,7 @@ threads = []
   "python",
   "celery",
   "caddy",
+  "claude",
   /\bbun\b/,
 ].each do |process_name|
   pattern = process_name.is_a?(Regexp) ? process_name.source : process_name

@@ -133,7 +133,7 @@ endfunction
 " =====================================
 lua <<EOF
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -146,43 +146,57 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  { 'junegunn/fzf', build = './install --all' },
-  'ibhagwan/fzf-lua',
-  'tpope/vim-commentary',
-  'janko-m/vim-test',
-  'benmills/vimux',
-  'christoomey/vim-tmux-navigator',
-  'aud/strip-trailing-whitespace.vim',
-  'justinmk/vim-dirvish',
-  { 'roginfarrer/vim-dirvish-dovish', branch = 'main' },
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-  { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
-  'RRethy/nvim-treesitter-endwise',
-  'Wansmer/treesj',
-  'ibhagwan/smartyank.nvim',
-  -- {
-  -- "ellisonleao/gruvbox.nvim",
-  -- priority = 1000,
-  -- config = true,
-  -- opts = ...,
-  -- },
+  { 'junegunn/fzf', build = './install --all', commit = '18315000185a6e6461b9b4aa4a4cb6cd164e0e35' },
+  { 'ibhagwan/fzf-lua', commit = '9f0432fdd7825ab163520045831a40b6df82ea28' },
+  { 'tpope/vim-commentary', commit = '64a654ef4a20db1727938338310209b6a63f60c9' },
+  { 'janko-m/vim-test', commit = '6eb2e5e7b32c321d373d2954199f4510be804713' },
+  { 'benmills/vimux', commit = 'd6cb7f63a8bb428ffc27060b7f83c77fb115589c' },
+  { 'christoomey/vim-tmux-navigator', commit = 'e41c431a0c7b7388ae7ba341f01a0d217eb3a432' },
+  { 'aud/strip-trailing-whitespace.vim', commit = '83c4f33272cb555e49b12befc99577df0c18a63d' },
+  { 'justinmk/vim-dirvish', commit = '6be56227a4207c93cd8b607f52f567a1e13dddb1' },
+  { 'roginfarrer/vim-dirvish-dovish', commit = '04c77b6010f7e45e72b4d3c399c120d42f7c5d47' },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    build = ':TSUpdate',
+    init = function()
+      vim.api.nvim_create_autocmd('FileType', {
+        callback = function()
+          pcall(vim.treesitter.start)
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
+      local parsers = {
+        "bash", "c", "cpp", "css", "diff", "git_config", "git_rebase",
+        "gitcommit", "gitignore", "go", "html", "javascript", "json",
+        "lua", "markdown", "markdown_inline", "python", "regex", "ruby",
+        "rust", "sql", "toml", "typescript", "vim", "yaml",
+      }
+      local installed = require('nvim-treesitter.config').get_installed()
+      local to_install = vim.iter(parsers):filter(function(p)
+        return not vim.tbl_contains(installed, p)
+      end):totable()
+      if #to_install > 0 then
+        require('nvim-treesitter').install(to_install)
+      end
+    end,
+  },
+  { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main', commit = '93d60a475f0b08a8eceb99255863977d3a25f310' },
+  { 'RRethy/nvim-treesitter-endwise', commit = '8fe8a95630f4f2c72a87ba1927af649e0bfaa244' },
+  { 'Wansmer/treesj', commit = '26bc2a8432ba3ea79ed6aa346fba780a3d372570' },
+  { 'ibhagwan/smartyank.nvim', commit = 'c4e53e0d9316ca790a6f5d78aad73206a763873b' },
   {
     'sainnhe/gruvbox-material',
     lazy = false,
     priority = 1000,
+    commit = 'afb275d8e6dc379762d122bd24e1773fc057abf3',
     config = function()
       -- Optionally configure and load the colorscheme
       -- directly inside the plugin declaration.
       vim.g.gruvbox_material_enable_italic = true
-      vim.g.gruvbox_material_background = 'hard'
+      vim.g.gruvbox_material_background = 'medium'
       vim.cmd.colorscheme('gruvbox-material')
-
     end
-  },
-
-
-  {
-    "github/copilot.vim"
   }
 })
 EOF
@@ -253,7 +267,7 @@ let test#strategy = 'vimux'
 " =====================================
 lua <<EOF
 vim.lsp.config('ruby-lsp', {
-  cmd = {'/Users/elliot/.gem/ruby/3.4.3/bin/ruby-lsp'},
+  cmd = {'/Users/elliot/.gem/ruby/4.0.1/bin/ruby-lsp'},
   filetypes = {'ruby', 'eruby'},
 })
 
@@ -281,24 +295,8 @@ EOF
 " =====================================
 " Treesitter config
 " =====================================
-lua <<EOF
-require('nvim-treesitter.configs').setup {
-  ensure_installed = "all",
-
-  ignore_install = { "norg" },
-
-  sync_install = false,
-  auto_install = true,
-
-  highlight = {
-    enable = true,
-  },
-
-  endwise = {
-    enable = true,
-  },
-}
-EOF
+" Highlighting + parser install now handled via init() in lazy.nvim spec above.
+" Endwise attaches automatically via nvim-treesitter-endwise plugin.
 
 lua <<EOF
 -- =====================================
@@ -326,7 +324,7 @@ lua <<EOF
 -- Fzf lua
 -- =====================================
 require("fzf-lua").setup({
-  fzf_bin = "fzf-tmux",
+  -- fzf_bin = "fzf-tmux",
   -- Docs: `fzf-tmux --help`
   fzf_tmux_opts = {
     -- We need to reset `-p`, as the default from the fzf-lua plugin conflicts

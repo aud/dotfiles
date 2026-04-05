@@ -17,9 +17,6 @@ HISTSIZE=1000000
 # Append to history instead of clobbering on exit
 shopt -s histappend
 
-# Append to history post command and reread
-PROMPT_COMMAND="history -a; history -n;${PROMPT_COMMAND:-:}"
-
 # Congiure default editor
 export EDITOR=nvim
 
@@ -55,3 +52,15 @@ bind 'set completion-ignore-case on'
 [[ -f "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc" ]] && source "$HOMEBREW_PREFIX/share/google-cloud-sdk/path.bash.inc"
 [[ -f "$HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh" ]] && source "$HOMEBREW_PREFIX/opt/chruby/share/chruby/chruby.sh"
 [[ -f "$HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh" ]] && source "$HOMEBREW_PREFIX/opt/chruby/share/chruby/auto.sh"
+
+# Ruby
+latest
+
+export USE_BUILTIN_RIPGREP=0
+export CLAUDE_CODE_NO_FLICKER=1
+
+# export SILENCE_OTEL=1
+
+# Append to history post command and reread
+PROMPT_COMMAND="history -a; history -n;${PROMPT_COMMAND:-:}"
+PROMPT_COMMAND="${PROMPT_COMMAND%;}"

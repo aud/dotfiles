@@ -1,10 +1,8 @@
 # https://ghostty.org/docs/config/reference
 
 # theme = Ayu Mirage
-# theme = GruvboxLight
-# theme = Gruvbox Dark
 # theme = nightfox
-theme = Gruvbox Material
+theme = Gruvbox Material Dark
 
 # theme = darcubox
 quit-after-last-window-closed = true

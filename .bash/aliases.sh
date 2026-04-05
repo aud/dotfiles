@@ -1,7 +1,7 @@
 alias docker="podman"
 alias rsa="$HOME/dotfiles/scripts/kill.rb"
 alias bu="$HOME/dotfiles/scripts/bu"
-alias latest="chruby ruby-3.4.7"
+alias latest="chruby ruby-4.0.1"
 alias c="clear"
 alias ls="ls -Ga"
 alias vim="/opt/homebrew/bin/nvim"
