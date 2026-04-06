@@ -186,63 +186,41 @@ require("lazy").setup({
   { 'Wansmer/treesj', commit = '26bc2a8432ba3ea79ed6aa346fba780a3d372570' },
   { 'ibhagwan/smartyank.nvim', commit = 'c4e53e0d9316ca790a6f5d78aad73206a763873b' },
   {
-    'sainnhe/gruvbox-material',
+    'ellisonleao/gruvbox.nvim',
     lazy = false,
     priority = 1000,
-    commit = 'afb275d8e6dc379762d122bd24e1773fc057abf3',
+    commit = '334d5fd49fc8033f26408425366c66c6390c57bb',
     config = function()
-      -- Optionally configure and load the colorscheme
-      -- directly inside the plugin declaration.
-      vim.g.gruvbox_material_enable_italic = true
-      vim.g.gruvbox_material_background = 'medium'
-      vim.cmd.colorscheme('gruvbox-material')
+      require("gruvbox").setup({
+        terminal_colors = true,
+        undercurl = true,
+        underline = true,
+        bold = true,
+        italic = {
+          strings = true,
+          emphasis = true,
+          comments = true,
+          operators = false,
+          folds = true,
+        },
+        strikethrough = true,
+        invert_selection = false,
+        invert_signs = false,
+        invert_tabline = false,
+        invert_intend_guides = false,
+        inverse = true,
+        contrast = "",
+        palette_overrides = {},
+        overrides = {},
+        dim_inactive = false,
+        transparent_mode = false,
+      })
+      vim.o.background = "dark"
+      vim.cmd.colorscheme('gruvbox')
     end
   }
 })
 EOF
-
-" MITM debug
-" let g:copilot_proxy = 'http://localhost:8080'
-" let g:copilot_proxy_strict_ssl = v:false
-" let g:copilot_settings = #{ selectedCompletionModel: 'gpt-4o-copilot' }
-" let g:copilot_integration_id = 'vscode-chat'
-
-" =====================================
-" Theme
-" =====================================
-
-" lua <<EOF
-" require("gruvbox").setup({
-"   terminal_colors = true, -- add neovim terminal colors
-"   undercurl = true,
-"   underline = true,
-"   bold = true,
-"   italic = {
-"     strings = true,
-"     emphasis = true,
-"     comments = true,
-"     operators = false,
-"     folds = true,
-"   },
-"   strikethrough = true,
-"   invert_selection = false,
-"   invert_signs = false,
-"   invert_tabline = false,
-"   invert_intend_guides = false,
-"   inverse = true, -- invert background for search, diffs, statuslines and errors
-"   contrast = "", -- can be "hard", "soft" or empty string
-"   palette_overrides = {},
-"   overrides = {},
-"   dim_inactive = false,
-"   transparent_mode = false,
-" })
-" vim.o.background = "dark"
-" vim.cmd("colorscheme gruvbox")
-" EOF
-
-" lua <<EOF
-" vim.cmd("colorscheme nightfox")
-" EOF
 
 " Change dashed seperator to line. This needs to run after the colorscheme is
 " set, otherwise it will be clobbered.
@@ -291,12 +269,6 @@ vim.diagnostic.config({
   },
 })
 EOF
-
-" =====================================
-" Treesitter config
-" =====================================
-" Highlighting + parser install now handled via init() in lazy.nvim spec above.
-" Endwise attaches automatically via nvim-treesitter-endwise plugin.
 
 lua <<EOF
 -- =====================================

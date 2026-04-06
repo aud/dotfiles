@@ -2,9 +2,8 @@
 
 # theme = Ayu Mirage
 # theme = nightfox
-theme = Gruvbox Material Dark
+theme = Gruvbox Dark
 
-# theme = darcubox
 quit-after-last-window-closed = true
 mouse-hide-while-typing = true
 

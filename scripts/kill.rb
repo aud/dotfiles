@@ -34,7 +34,7 @@ threads = []
   end
 
   # Cleanup any sock files
-  `rm ~/src/github.com/withpage/page/.overmind-*`
+  `rm -f ~/src/github.com/withpage/page/.overmind-*`
 end
 
 if threads.empty?
