@@ -56,8 +56,11 @@ bind 'set completion-ignore-case on'
 # Ruby
 latest
 
+# https://code.claude.com/docs/en/env-vars
 export USE_BUILTIN_RIPGREP=0
 export CLAUDE_CODE_NO_FLICKER=1
+export CLAUDE_CODE_AUTO_COMPACT_WINDOW=300000
+export CLAUDE_CODE_EFFORT_LEVEL="high"
 
 # export SILENCE_OTEL=1
 
