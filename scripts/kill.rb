@@ -1,45 +1,50 @@
 #!/usr/bin/env ruby --disable-gems
 
-threads = []
+PATTERNS = [
+  /ruby/,
+  /python/,
+  /node/,
+  /puma/,
+  /sidekiq/,
+  /celery/,
+  /caddy/,
+  /claude/,
+  /\bbun\b/
+]
+PAGE_DIR = File.expand_path("~/src/github.com/WithPage/page")
+SOCK_GLOB = "#{PAGE_DIR}/.overmind-*"
+PORT_FILE = "#{PAGE_DIR}/.port"
+MY_PID = Process.pid
 
-[
-  "ruby",
-  "python",
-  "node",
-  "puma",
-  "sidekiq",
-  "python",
-  "celery",
-  "caddy",
-  "claude",
-  /\bbun\b/,
-].each do |process_name|
-  pattern = process_name.is_a?(Regexp) ? process_name.source : process_name
-  stdout = `pgrep -if #{pattern} | xargs ps`
+def run(cmd)
+  warn "+ #{cmd}"
+  out = `#{cmd} 2>&1`
+  warn out unless out.empty?
+  warn "+ exit #{$?.exitstatus}" unless $?.success?
+  out
+end
 
-  # Remove column headers
-  processes = stdout.split("\n")[1..]
-  next if processes.nil?
+count = 0
+PATTERNS.each do |pattern|
+  pids = `pgrep -if #{pattern.source.inspect}`.split.map(&:to_i)
+  pids.reject! { |pid| pid == MY_PID }
+  next if pids.empty?
 
-  processes.each do |process|
-    p = process.split(" ")
-    pid = p[0]
-    initiating_command = p[4..].join(" ")
-
-    threads << Thread.new do
-      puts "sigkill process: #{initiating_command}"
-      result = `kill -9 #{pid} 2>&1`
-      puts result unless $?.success?
+  ps_out = `ps -o pid=,command= -p #{pids.join(',')} 2>/dev/null`
+  ps_out.each_line do |line|
+    pid, cmd = line.strip.split(" ", 2)
+    warn "+ kill -9 #{pid} # #{cmd}"
+    begin
+      Process.kill(:KILL, pid.to_i)
+    rescue Errno::ESRCH
     end
+
+    count += 1
   end
-
-  # Cleanup any sock files
-  `rm -f ~/src/github.com/withpage/page/.overmind-*`
 end
 
-if threads.empty?
-  puts "nothing todo"
-else
-  threads.each(&:join)
-  puts "done"
-end
+socks = Dir.glob(SOCK_GLOB)
+run("rm -f #{SOCK_GLOB}") unless socks.empty?
+run("rm -f #{PORT_FILE}") if File.exist?(PORT_FILE)
+
+puts count > 0 ? "done (#{count})" : "nothing todo"

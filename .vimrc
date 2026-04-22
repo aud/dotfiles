@@ -251,12 +251,6 @@ vim.lsp.config('ruby-lsp', {
 
 vim.lsp.enable('ruby-lsp')
 
-vim.lsp.config('copilot', {
-  cmd = { 'bun', 'run', 'copilot-language-server', '--stdio' },
-})
-
-vim.lsp.enable('copilot')
-
 vim.diagnostic.config({
   virtual_text = true,  -- Show errors inline
   signs = true,         -- Show signs in gutter (the red E)
