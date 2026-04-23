@@ -92,7 +92,7 @@ nmap <C-w>< :vertical resize -15<CR>
 
 " Fzf-lua remappings
 nnoremap <leader>f :lua require("fzf-lua").files()<CR>
-nnoremap <leader>g :lua require("fzf-lua").grep_project()<CR>
+nnoremap <leader>g :lua require("fzf-lua").live_grep()<CR>
 command! Buffers :lua require("fzf-lua").buffers()<CR>
 
 " Remap gS to toggle split/join
@@ -308,6 +308,11 @@ require("fzf-lua").setup({
   files = {
     git_icons = false,
     file_icons = false,
+    winopts = {
+      preview = {
+        hidden = false,
+      },
+    },
   }
 })
 EOF

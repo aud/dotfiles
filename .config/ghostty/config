@@ -14,4 +14,4 @@ scrollback-limit = 4294967295
 # keybind = shift+enter=text:\n
 keybind = shift+enter=text:\x1b\r
 
-auto-update-channel = tip
+# auto-update-channel = tip
